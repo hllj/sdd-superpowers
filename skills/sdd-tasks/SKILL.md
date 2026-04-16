@@ -177,9 +177,9 @@ Check before presenting:
 > Use `sdd-execute` — dispatches a fresh subagent per task with spec-compliance review and code-quality review after each task. Parallel groups dispatched concurrently.
 >
 > **Option B — Manual/inline:**
-> Work through tasks in order, completing each checkbox before starting the next. Use `superpowers:systematic-debugging` immediately when any task fails — don't skip ahead.
+> Work through tasks in order, completing each checkbox before starting the next. Use `systematic-debugging` immediately when any task fails — don't skip ahead.
 >
-> After all tasks: use `sdd-review` (implementation mode) to validate the code matches the spec, then `superpowers:finishing-a-development-branch` to integrate."
+> After all tasks: use `sdd-review` (implementation mode) to validate the code matches the spec, then `finishing-a-development-branch` to integrate."
 
 ## Task Quality Rules
 

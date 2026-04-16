@@ -22,7 +22,7 @@ NO COMPLETION CLAIMS WITHOUT RUNNING VERIFICATION COMMANDS AND READING THEIR OUT
 
 **Claiming complete without evidence = lying, not verifying.**
 
-This is `superpowers:verification-before-completion` applied to SDD artifacts.
+This is `verification-before-completion` applied to SDD artifacts.
 
 ### Common Failures
 
@@ -256,10 +256,10 @@ Confirm:
 If SPEC-ALIGNED:
 > "Implementation review complete — coverage matrix built, tests run (`<N> passing, 0 failing`), all requirements covered. Implementation matches spec.
 >
-> Ready to integrate. Use `superpowers:finishing-a-development-branch` to choose merge, PR, or cleanup."
+> Ready to integrate. Use `finishing-a-development-branch` to choose merge, PR, or cleanup."
 
 If DRIFT DETECTED or INCOMPLETE:
-> "Review found issues (see report above). Address them, then re-run `sdd-review` to confirm alignment before merging. Use `superpowers:systematic-debugging` if any failures have unclear root causes."
+> "Review found issues (see report above). Address them, then re-run `sdd-review` to confirm alignment before merging. Use `systematic-debugging` if any failures have unclear root causes."
 
 ## Review Quality Standards
 

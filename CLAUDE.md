@@ -70,7 +70,7 @@ sdd-execute ──────────────────► Implementa
 sdd-review (impl mode) ───────► Coverage matrix + test verification
  │
  ▼
-superpowers:finishing-a-development-branch ──► merge / PR / keep / discard
+finishing-a-development-branch ──► merge / PR / keep / discard
 ```
 
 ## The Four Hard Gates
@@ -82,17 +82,22 @@ NO CODE without a prior failing test
 NO COMPLETION CLAIM without fresh verification evidence
 ```
 
-## Borrowed from Superpowers
+## Bundled Skills (cloned from Superpowers)
 
-These superpowers skills are invoked at specific SDD workflow points:
+These skills are invoked at specific SDD workflow points and are included in this repo:
+
+| Situation | Skill |
+|-----------|-------|
+| Task fails or behavior unexpected | `systematic-debugging` |
+| About to claim anything is complete | `verification-before-completion` |
+| All tasks done, tests passing | `finishing-a-development-branch` |
+
+The following superpowers skills are used by reference (not bundled):
 
 | Situation | Skill |
 |-----------|-------|
 | Setting up isolated feature workspace | `superpowers:using-git-worktrees` |
 | Any implementation task (every task) | `superpowers:test-driven-development` |
-| Task fails or behavior unexpected | `superpowers:systematic-debugging` |
-| About to claim anything is complete | `superpowers:verification-before-completion` |
-| All tasks done, tests passing | `superpowers:finishing-a-development-branch` |
 
 ## Directory Structure
 
@@ -120,6 +125,12 @@ skills/
   sdd-tasks/              # Plan → executable task list
   sdd-execute/            # Tasks → subagent-driven implementation
   sdd-review/             # Spec/implementation alignment validation
+  systematic-debugging/   # Root-cause investigation before any fix
+    root-cause-tracing.md
+    defense-in-depth.md
+    condition-based-waiting.md
+  verification-before-completion/  # Evidence required before any completion claim
+  finishing-a-development-branch/  # Merge / PR / keep / discard after all tasks done
 ```
 
 ## Quick Start

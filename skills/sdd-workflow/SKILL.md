@@ -31,9 +31,9 @@ This is not optional. This is not negotiable.
 | Ready to execute tasks with agents | `sdd-execute` |
 | Checking spec completeness before planning | `sdd-review` |
 | Checking implementation matches spec after coding | `sdd-review` |
-| A task fails or behavior is unexpected | `superpowers:systematic-debugging` |
-| About to claim a feature is complete | `superpowers:verification-before-completion` |
-| Implementation complete, deciding how to merge | `superpowers:finishing-a-development-branch` |
+| A task fails or behavior is unexpected | `systematic-debugging` |
+| About to claim a feature is complete | `verification-before-completion` |
+| Implementation complete, deciding how to merge | `finishing-a-development-branch` |
 
 ## Skill Priority
 
@@ -44,7 +44,7 @@ This is not optional. This is not negotiable.
 3. `sdd-plan` — establish the technical approach
 4. `sdd-tasks` — establish the ORDER to build it
 5. `sdd-execute` — actually build it
-6. `sdd-review` + `superpowers:verification-before-completion` — confirm it was built correctly
+6. `sdd-review` + `verification-before-completion` — confirm it was built correctly
 
 Never skip steps. "Let's just code it" means `sdd-brainstorm` or `sdd-specify` first.
 
@@ -118,9 +118,9 @@ NO COMPLETION CLAIM without fresh verification evidence
 | "This is small, I'll just code it" | `sdd-specify` first |
 | "The plan is obvious, skip planning" | `sdd-plan` first |
 | "I know what tests to write" | `sdd-tasks` first |
-| "I'm sure it works" | `superpowers:verification-before-completion` |
+| "I'm sure it works" | `verification-before-completion` |
 | "Tests pass so it's done" | `sdd-review` to confirm spec alignment |
-| "Let me just fix this quickly" | `superpowers:systematic-debugging` first |
+| "Let me just fix this quickly" | `systematic-debugging` first |
 
 ## Announcing Skill Usage
 

@@ -161,7 +161,7 @@ Before reporting research as done, confirm:
 - [ ] Recommendations cite specific sources, not just opinions
 
 **Do not say "research complete" without running this checklist.**
-This is the `superpowers:verification-before-completion` principle applied to research output.
+This is the `verification-before-completion` principle applied to research output.
 
 ### Step 7: Handoff
 

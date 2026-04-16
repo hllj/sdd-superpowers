@@ -264,7 +264,7 @@ Before claiming the plan is ready, confirm:
 - [ ] All code in steps is complete, not pseudocode
 
 **Do not say "plan complete" without passing this gate.**
-This is `superpowers:verification-before-completion` applied to plan artifacts.
+This is `verification-before-completion` applied to plan artifacts.
 
 ### Step 7: Handoff
 

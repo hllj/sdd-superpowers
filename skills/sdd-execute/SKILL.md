@@ -145,7 +145,7 @@ After all tasks complete:
 <project test command>
 ```
 
-Read the complete output. Count failures. If any tests fail: Stop. Use `superpowers:systematic-debugging` to find root cause before proceeding.
+Read the complete output. Count failures. If any tests fail: Stop. Use `systematic-debugging` to find root cause before proceeding.
 
 Then dispatch `sdd-review` (implementation mode) to build the full coverage matrix.
 
@@ -155,9 +155,9 @@ After `sdd-review` reports SPEC-ALIGNED:
 
 > "All tasks complete, tests passing, implementation spec-aligned.
 >
-> **REQUIRED:** Use `superpowers:finishing-a-development-branch` to choose how to integrate this work."
+> **REQUIRED:** Use `finishing-a-development-branch` to choose how to integrate this work."
 
-Use `superpowers:finishing-a-development-branch` — do not merge, push, or delete branches directly.
+Use `finishing-a-development-branch` — do not merge, push, or delete branches directly.
 
 ## Model Selection Guide
 
@@ -176,7 +176,7 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 1. Read the failure carefully
 2. Does it reveal a plan problem? → Update `plan.md` and `tasks.md`, continue
 3. Does it reveal a spec ambiguity? → Clarify with user, update `spec.md`, continue
-4. Does it reveal an architectural issue (3+ different fixes all fail)? → Stop, invoke `superpowers:systematic-debugging`, discuss with user
+4. Does it reveal an architectural issue (3+ different fixes all fail)? → Stop, invoke `systematic-debugging`, discuss with user
 
 **Never try a 4th implementation approach without architectural discussion.**
 
@@ -196,8 +196,8 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 
 **Subagents should use:**
 - `superpowers:test-driven-development` — for each implementation task (red-green-refactor)
-- `superpowers:verification-before-completion` — before reporting DONE
+- `verification-before-completion` — before reporting DONE
 
-**On failure:** `superpowers:systematic-debugging`
+**On failure:** `systematic-debugging`
 
-**On completion:** `sdd-review` → `superpowers:finishing-a-development-branch`
+**On completion:** `sdd-review` → `finishing-a-development-branch`
