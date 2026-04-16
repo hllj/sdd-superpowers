@@ -20,7 +20,8 @@ Key principles:
 | Skill | When to Use |
 |-------|-------------|
 | `sdd-workflow` | Start of any conversation — establishes mandatory skill invocation |
-| `sdd-specify` | New feature idea → structured PRD with acceptance criteria |
+| `sdd-brainstorm` | Idea is fuzzy/exploratory → dialogue + 2-3 approaches + design.md |
+| `sdd-specify` | Idea is clear, or design.md exists → structured PRD (spec.md) |
 | `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
@@ -30,11 +31,19 @@ Key principles:
 ## Workflow
 
 ```
-Idea
- │
- ▼
+Idea (fuzzy)                    Idea (clear)
+ │                               │
+ ▼                               │
+sdd-brainstorm ──────────────────┤
+ │  dialogue + 2-3 approaches    │
+ │  design.md + spec-review      │
+ │                               │
+ └───────────────────────────────┘
+                                 │
+                                 ▼
 sdd-specify ──────────────────► specs/NNN-feature/spec.md
- │                               + feature branch created
+ │  (fast-path if design.md       + feature branch created
+ │   already exists)
  │
  ├─(complex features)──────────►
  │                              sdd-research ──► specs/NNN-feature/research.md
@@ -100,18 +109,28 @@ specs/
     tasks.md         # Executable task list
     quickstart.md    # Smoke test scenarios
 skills/
-  sdd-workflow/      # Entry point — skill invocation rules
-  sdd-specify/       # Idea → PRD
-  sdd-research/      # Technical investigation
-  sdd-plan/          # Spec → implementation plan
-  sdd-tasks/         # Plan → executable task list
-  sdd-execute/       # Tasks → subagent-driven implementation
-  sdd-review/        # Spec/implementation alignment validation
+  sdd-workflow/           # Entry point — skill invocation rules + routing
+  sdd-brainstorm/         # Fuzzy idea → design.md (visual companion + spec-reviewer subagent)
+    scripts/              # Visual companion server (Node.js + shell)
+    visual-companion.md   # Guide for browser-based mockup sessions
+    spec-document-reviewer-prompt.md
+  sdd-specify/            # Clear idea or design.md → spec.md (fast-path if design.md exists)
+  sdd-research/           # Technical investigation
+  sdd-plan/               # Spec → implementation plan
+  sdd-tasks/              # Plan → executable task list
+  sdd-execute/            # Tasks → subagent-driven implementation
+  sdd-review/             # Spec/implementation alignment validation
 ```
 
 ## Quick Start
 
 ```
+# Fuzzy idea path:
+1. "Use sdd-brainstorm to explore: [your idea]"
+2. Answer questions, pick from 2-3 approaches, approve design
+3. sdd-brainstorm automatically invokes sdd-specify (fast-path)
+
+# Clear idea path:
 1. "Use sdd-specify to create a spec for: [your idea]"
 2. Answer clarifying questions, approve the spec
 3. "Use sdd-plan to plan this feature"

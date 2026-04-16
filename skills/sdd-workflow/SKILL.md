@@ -23,7 +23,8 @@ This is not optional. This is not negotiable.
 
 | Situation | Invoke |
 |-----------|--------|
-| Starting a new feature idea | `sdd-specify` |
+| Idea is fuzzy, exploratory, or has competing approaches | `sdd-brainstorm` |
+| Idea is clear and ready to formalize | `sdd-specify` |
 | Need to investigate tech options before committing | `sdd-research` |
 | Spec exists, need an implementation plan | `sdd-plan` |
 | Plan exists, need executable tasks | `sdd-tasks` |
@@ -38,19 +39,48 @@ This is not optional. This is not negotiable.
 
 **Process skills first, execution skills second:**
 
-1. `sdd-specify` / `sdd-research` — establish WHAT to build
-2. `sdd-plan` — establish HOW to build it
-3. `sdd-tasks` — establish the ORDER to build it
-4. `sdd-execute` — actually build it
-5. `sdd-review` + `superpowers:verification-before-completion` — confirm it was built correctly
+1. `sdd-brainstorm` (optional) → `sdd-specify` — establish WHAT to build
+2. `sdd-research` (optional) — investigate HOW before committing
+3. `sdd-plan` — establish the technical approach
+4. `sdd-tasks` — establish the ORDER to build it
+5. `sdd-execute` — actually build it
+6. `sdd-review` + `superpowers:verification-before-completion` — confirm it was built correctly
 
-Never skip steps. "Let's just code it" means `sdd-specify` first.
+Never skip steps. "Let's just code it" means `sdd-brainstorm` or `sdd-specify` first.
+
+## Routing: Brainstorm vs. Specify
+
+When the user describes a new idea, assess before routing:
+
+### Explicit triggers → invoke `sdd-brainstorm`
+User language: "brainstorm", "explore", "not sure what to build", "thinking about", "what if we", "some kind of", "a better way to"
+
+### Auto-detected fuzziness signals → suggest `sdd-brainstorm` (advisory)
+- No concrete user action or outcome stated ("I want to improve X" with no specifics)
+- Multiple competing directions mentioned in one message
+- Vague qualifiers: "something like", "some kind of", "not sure how"
+
+When fuzziness signals are detected, **ask before routing** (user can override):
+> "Your idea sounds exploratory — there may be a few different directions we could take. Would you like to brainstorm approaches first (`sdd-brainstorm`), or do you have a clear direction and want to go straight to spec (`sdd-specify`)?"
+
+### Multi-subsystem scope → block both paths (mandatory decomposition)
+If the idea spans 2+ independent subsystems:
+> "This spans multiple independent subsystems. Before we brainstorm or specify, let's decompose it — which piece should we tackle first?"
+
+This is blocking. Neither `sdd-brainstorm` nor `sdd-specify` until scope is agreed.
+
+### Clear idea → invoke `sdd-specify` directly
+When the idea contains a concrete user action, clear outcome, and no competing approaches.
 
 ## When Each Skill Is Mandatory
 
+**`sdd-brainstorm` is mandatory when:**
+- User explicitly asks to brainstorm or explore
+- (Advisory) Auto-detected fuzziness signals present and user chooses brainstorm path
+
 **`sdd-specify` is mandatory when:**
-- User describes a feature, idea, or problem without a spec existing
-- User says "build X", "add X", "I want X"
+- Idea is clear and concrete, OR
+- `sdd-brainstorm` has completed and `design.md` exists
 
 **`sdd-research` is mandatory when:**
 - Spec has `[NEEDS CLARIFICATION]` items requiring technical investigation

@@ -29,12 +29,19 @@ Example: `specs/003-user-authentication/spec.md`
 
 ## The Process
 
-### Step 1: Scan Existing Specs
+### Step 1: Scan Existing Specs and Detect Fast-Path
 
 Before anything else:
 1. Check the `specs/` directory for existing feature numbers
-2. Determine the next available number
+2. Determine the next available number (NNN)
 3. Check for related or overlapping specs that might affect scope
+4. **NEW — Fast-path detection:** Check if `specs/NNN-<feature-slug>/design.md` exists (produced by `sdd-brainstorm`)
+   - If YES → validate the design doc:
+     - Does it contain all required sections: **Problem**, **Chosen Approach**, **Trade-offs & Rationale**, **Key Design Decisions**, **Out of Scope**?
+     - Is each section non-empty?
+     - If **valid** → skip Steps 2 and 3 entirely. Read `design.md`, extract each section, formalize directly into `spec.md`. Jump to Step 4.
+     - If **invalid** → warn the user: *"Found design.md but it appears incomplete. Proceeding with normal spec dialogue."* Continue with Steps 2–3.
+   - If NO → normal path: proceed with Steps 2 and 3 as usual.
 
 ### Step 2: Understand the Idea
 
