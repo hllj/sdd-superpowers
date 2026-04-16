@@ -1,6 +1,6 @@
 ---
 name: sdd-plan
-description: "Use after sdd-specify (and optionally sdd-research) to create a detailed implementation plan. Translates requirements into technical architecture, data models, API contracts, and an ordered task breakdown."
+description: Use when a feature spec exists and needs to become a technical implementation plan — after sdd-specify and before sdd-tasks
 ---
 
 # SDD: Plan
@@ -240,7 +240,7 @@ After implementation, verify with these smoke tests:
 
 ### Step 5: Self-Review
 
-After writing all documents, check the plan against the spec:
+After writing all documents, check the plan against the spec. This is a checklist you run yourself — not a subagent dispatch.
 
 **Spec coverage:** For each functional requirement in the spec, can you point to a specific phase/task in the plan that implements it? List gaps.
 
@@ -254,14 +254,29 @@ After writing all documents, check the plan against the spec:
 
 Fix issues inline before presenting to user.
 
-### Step 6: Handoff
+### Step 6: Verification Gate
+
+Before claiming the plan is ready, confirm:
+- [ ] Every FR in spec has a corresponding plan phase
+- [ ] Every phase header lists the FR/story it implements
+- [ ] Zero placeholders remain
+- [ ] Pre-implementation gates documented
+- [ ] All code in steps is complete, not pseudocode
+
+**Do not say "plan complete" without passing this gate.**
+This is `superpowers:verification-before-completion` applied to plan artifacts.
+
+### Step 7: Handoff
 
 > "Implementation plan complete. Artifacts:
 > - `specs/NNN-feature/plan.md` — main plan
 > - `specs/NNN-feature/data-model.md` (if created)
 > - `specs/NNN-feature/contracts/` (if created)
 >
-> Run `sdd-tasks` to generate a flat, executable task list from this plan, ready for agentic execution."
+> **Next steps:**
+> 1. Run `sdd-review` (spec mode) to validate plan-spec alignment before execution
+> 2. Run `sdd-tasks` to generate a flat, executable task list
+> 3. Run `sdd-execute` to implement with subagent dispatch and two-stage review"
 
 ## Plan Quality Rules
 

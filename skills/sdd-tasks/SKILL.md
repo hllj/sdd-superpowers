@@ -1,6 +1,6 @@
 ---
 name: sdd-tasks
-description: "Use after sdd-plan to generate a flat, executable task list from the implementation plan. Produces tasks.md ready for agentic execution or manual tracking."
+description: Use when an implementation plan exists and needs to become an ordered, checkboxed task list — after sdd-plan and before sdd-execute
 ---
 
 # SDD: Tasks
@@ -169,9 +169,17 @@ Check before presenting:
 
 > "Task list generated: `specs/NNN-feature/tasks.md`
 >
-> **NNN total tasks** | **X parallelizable** | **Y sequential phases**
+> **NNN total tasks** | **X parallelizable across Y parallel groups** | **Z sequential phases**
 >
-> To execute: work through tasks in order, completing each checkbox before starting the next. For agentic execution, use `sdd-review` after all tasks complete to validate the implementation matches the spec."
+> **Execution options:**
+>
+> **Option A — Subagent-driven (recommended):**
+> Use `sdd-execute` — dispatches a fresh subagent per task with spec-compliance review and code-quality review after each task. Parallel groups dispatched concurrently.
+>
+> **Option B — Manual/inline:**
+> Work through tasks in order, completing each checkbox before starting the next. Use `superpowers:systematic-debugging` immediately when any task fails — don't skip ahead.
+>
+> After all tasks: use `sdd-review` (implementation mode) to validate the code matches the spec, then `superpowers:finishing-a-development-branch` to integrate."
 
 ## Task Quality Rules
 

@@ -1,6 +1,6 @@
 ---
 name: sdd-review
-description: "Use to validate that an implementation matches its specification. Run after sdd-tasks execution completes, or at any point to check spec-implementation alignment. Also use to review a spec for completeness before planning."
+description: Use when a spec needs a completeness check before planning, or when implementation claims to be complete and needs spec-alignment validation
 ---
 
 # SDD: Review
@@ -10,6 +10,28 @@ Validate that what was built matches what was specified. Catch drift between spe
 **Announce at start:** "I'm using the sdd-review skill to validate spec-implementation alignment."
 
 **Core principle:** In SDD, the spec is truth. If code and spec disagree, one of three things happened: the code is wrong, the spec needs updating, or requirements changed and both need to change together. This skill surfaces that disagreement so it can be resolved consciously.
+
+## The Iron Law
+
+```
+NO COMPLETION CLAIMS WITHOUT RUNNING VERIFICATION COMMANDS AND READING THEIR OUTPUT
+```
+
+"Tests pass" requires running the test command, reading the output, and counting failures.
+"Spec-aligned" requires a line-by-line coverage matrix, not a general impression.
+
+**Claiming complete without evidence = lying, not verifying.**
+
+This is `superpowers:verification-before-completion` applied to SDD artifacts.
+
+### Common Failures
+
+| Claim | Requires | Not Sufficient |
+|-------|----------|----------------|
+| "Spec is complete" | Section-by-section checklist with results | Skimming and feeling good |
+| "Implementation matches spec" | Coverage matrix with test file:line for each FR | Tests passing |
+| "Contracts are correct" | Running contract tests, reading output | Code looks right |
+| "All ACs covered" | Test for each AC confirmed passing | Assuming coverage from test count |
 
 ## Two Review Modes
 
@@ -212,13 +234,32 @@ For each NFR in the spec:
 - ✓ <requirement that is correctly implemented>
 ```
 
-### Step 7: Handoff
+### Step 7: Run Tests and Verify
+
+Before issuing any verdict, run the test suite and read the output:
+
+```bash
+# Run the full test suite — read every line of output
+<project test command>
+```
+
+Confirm:
+- [ ] Test command was run in this session (not from memory)
+- [ ] Exit code read (0 = pass, non-zero = failures)
+- [ ] Failure count: 0 failures required for SPEC-ALIGNED verdict
+- [ ] All contract tests passing (if contracts exist)
+
+**Do not issue a SPEC-ALIGNED verdict without running tests and reading output.**
+
+### Step 8: Handoff
 
 If SPEC-ALIGNED:
-> "Implementation review complete — all requirements covered and implementation matches spec. Feature is ready for merge/release."
+> "Implementation review complete — coverage matrix built, tests run (`<N> passing, 0 failing`), all requirements covered. Implementation matches spec.
+>
+> Ready to integrate. Use `superpowers:finishing-a-development-branch` to choose merge, PR, or cleanup."
 
 If DRIFT DETECTED or INCOMPLETE:
-> "Review found issues. Address the items above, then re-run `sdd-review` to confirm alignment before merging."
+> "Review found issues (see report above). Address them, then re-run `sdd-review` to confirm alignment before merging. Use `superpowers:systematic-debugging` if any failures have unclear root causes."
 
 ## Review Quality Standards
 

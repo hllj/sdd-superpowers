@@ -2,26 +2,30 @@
 
 A set of Claude skills implementing **Specification-Driven Development (SDD)** — a methodology where specifications are the source of truth and code is their generated expression.
 
+Built on the [superpowers](https://github.com/obra/superpowers) framework philosophy: skills enforce discipline through hard gates, iron laws, and verification requirements.
+
 ## What Is SDD?
 
 SDD inverts the traditional relationship between specs and code. Instead of writing code and hoping it matches intent, you write precise specifications first, then generate code from them. The spec is the authoritative artifact; code is its expression in a particular language and framework.
 
 Key principles:
-- **Specifications as lingua franca** — the PRD and implementation plan are the primary artifacts
+- **Specifications as lingua franca** — PRD and implementation plan are the primary artifacts
 - **Executable specifications** — specs are precise enough to generate working, testable code
 - **Test-first always** — no implementation code without a prior failing test
 - **Traceability** — every technical decision traces back to a specific requirement
-- **Bidirectional feedback** — production learnings flow back to update specs
+- **Evidence before assertions** — no completion claims without running verification commands
 
 ## Skills
 
 | Skill | When to Use |
 |-------|-------------|
-| `sdd-specify` | Starting any new feature — turns an idea into a structured PRD |
-| `sdd-research` | Before planning complex features — investigates tech options, constraints |
-| `sdd-plan` | After specify — translates requirements into architecture, contracts, tests |
-| `sdd-tasks` | After plan — generates flat executable task list with parallelization hints |
-| `sdd-review` | Before planning (spec review) or after implementation (alignment check) |
+| `sdd-workflow` | Start of any conversation — establishes mandatory skill invocation |
+| `sdd-specify` | New feature idea → structured PRD with acceptance criteria |
+| `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
+| `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
+| `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
+| `sdd-execute` | Tasks exist → subagent dispatch with spec-compliance + code-quality review |
+| `sdd-review` | Spec completeness check (pre-plan) or implementation alignment (post-execute) |
 
 ## Workflow
 
@@ -29,25 +33,57 @@ Key principles:
 Idea
  │
  ▼
-sdd-specify ──► specs/NNN-feature/spec.md
+sdd-specify ──────────────────► specs/NNN-feature/spec.md
+ │                               + feature branch created
  │
- ▼ (optional, for complex features)
-sdd-research ──► specs/NNN-feature/research.md
+ ├─(complex features)──────────►
+ │                              sdd-research ──► specs/NNN-feature/research.md
+ │ ◄────────────────────────────┘
  │
- ▼
-sdd-plan ──► specs/NNN-feature/plan.md
-             specs/NNN-feature/data-model.md
-             specs/NNN-feature/contracts/
- │
- ▼
-sdd-tasks ──► specs/NNN-feature/tasks.md
+ ├─(optional pre-plan check)───►
+ │                              sdd-review (spec mode)
+ │ ◄────────────────────────────┘
  │
  ▼
-Execute tasks (manually or with an agent)
+sdd-plan ─────────────────────► specs/NNN-feature/plan.md
+                                 specs/NNN-feature/data-model.md
+                                 specs/NNN-feature/contracts/
  │
  ▼
-sdd-review ──► Spec-implementation alignment report
+sdd-tasks ────────────────────► specs/NNN-feature/tasks.md
+ │
+ ▼
+sdd-execute ──────────────────► Implementation with per-task subagents
+ │                               Spec-compliance review after each task
+ │                               Code-quality review after each task
+ │
+ ▼
+sdd-review (impl mode) ───────► Coverage matrix + test verification
+ │
+ ▼
+superpowers:finishing-a-development-branch ──► merge / PR / keep / discard
 ```
+
+## The Four Hard Gates
+
+```
+NO PLAN without an approved spec
+NO TASKS without a plan
+NO CODE without a prior failing test
+NO COMPLETION CLAIM without fresh verification evidence
+```
+
+## Borrowed from Superpowers
+
+These superpowers skills are invoked at specific SDD workflow points:
+
+| Situation | Skill |
+|-----------|-------|
+| Setting up isolated feature workspace | `superpowers:using-git-worktrees` |
+| Any implementation task (every task) | `superpowers:test-driven-development` |
+| Task fails or behavior unexpected | `superpowers:systematic-debugging` |
+| About to claim anything is complete | `superpowers:verification-before-completion` |
+| All tasks done, tests passing | `superpowers:finishing-a-development-branch` |
 
 ## Directory Structure
 
@@ -64,29 +100,22 @@ specs/
     tasks.md         # Executable task list
     quickstart.md    # Smoke test scenarios
 skills/
-  sdd-specify/SKILL.md
-  sdd-research/SKILL.md
-  sdd-plan/SKILL.md
-  sdd-tasks/SKILL.md
-  sdd-review/SKILL.md
+  sdd-workflow/      # Entry point — skill invocation rules
+  sdd-specify/       # Idea → PRD
+  sdd-research/      # Technical investigation
+  sdd-plan/          # Spec → implementation plan
+  sdd-tasks/         # Plan → executable task list
+  sdd-execute/       # Tasks → subagent-driven implementation
+  sdd-review/        # Spec/implementation alignment validation
 ```
 
 ## Quick Start
 
-To start a new feature with SDD:
-
-1. Tell Claude: "Use sdd-specify to create a spec for: [your feature idea]"
-2. Answer clarifying questions about requirements
-3. Approve the spec
-4. Tell Claude: "Use sdd-plan to plan this feature"
-5. Tell Claude: "Use sdd-tasks to generate the task list"
-6. Execute the tasks
-7. Tell Claude: "Use sdd-review to validate the implementation"
-
-## SDD Commandments
-
-1. **No code before spec** — if there's no spec.md, write it first
-2. **No plan before spec is approved** — clarification markers must be resolved
-3. **No implementation before tests** — every task follows red-green-commit
-4. **No merge before review** — run sdd-review before declaring a feature complete
-5. **Specs evolve, they don't rot** — when requirements change, update the spec first, then the code
+```
+1. "Use sdd-specify to create a spec for: [your idea]"
+2. Answer clarifying questions, approve the spec
+3. "Use sdd-plan to plan this feature"
+4. "Use sdd-tasks to generate the task list"
+5. "Use sdd-execute to implement it"
+6. "Use sdd-review to validate the implementation"
+```

@@ -1,6 +1,6 @@
 ---
 name: sdd-specify
-description: "Use when starting any new feature or product idea. Transforms a vague idea into a structured, executable PRD through iterative dialogue. MUST be run before sdd-plan."
+description: Use when a user describes a new feature, idea, or problem without an existing spec — before any planning, research, or code
 ---
 
 # SDD: Specify
@@ -9,10 +9,12 @@ Turn ideas into precise, executable Product Requirements Documents (PRDs).
 
 **Announce at start:** "I'm using the sdd-specify skill to create a feature specification."
 
-**Core principle:** The specification is the source of truth. Code serves specifications — not the other way around. A spec written here will drive all downstream planning, research, and code generation.
+**Core principle:** The specification is the source of truth. Code serves specifications — not the other way around. A spec written here drives all downstream planning, research, and code generation.
 
 <HARD-GATE>
 Do NOT write any implementation code, scaffold any project, or make any architectural decisions until a spec is approved and written. This skill produces ONLY the specification. Implementation comes later.
+
+**Violating the letter of this gate is violating the spirit of SDD.**
 </HARD-GATE>
 
 ## Output Location
@@ -169,16 +171,31 @@ Present the spec to the user and ask for explicit approval:
 If changes requested: update the spec and re-review.
 If approved: proceed to handoff.
 
-### Step 7: Handoff
+### Step 7: Create Feature Branch
 
-After approval:
+After approval, create an isolated branch for this feature:
 
-> "Specification complete. Next steps in the SDD workflow:
+```bash
+# Determine next feature number (already done in Step 1)
+git checkout -b NNN-<feature-slug>
+```
+
+If the project uses git worktrees:
+> "Should I set up an isolated worktree for this feature? (Recommended — use `superpowers:using-git-worktrees`)"
+
+### Step 8: Handoff
+
+After branch creation:
+
+> "Specification complete and saved to `specs/NNN-feature-slug/spec.md` on branch `NNN-feature-slug`.
 >
 > **Option A — Research first (recommended for complex features):**
 > Use `sdd-research` to investigate technology options, performance implications, and constraints before planning.
 >
-> **Option B — Plan directly:**
+> **Option B — Review the spec first:**
+> Use `sdd-review` (spec mode) for an independent completeness check before planning.
+>
+> **Option C — Plan directly:**
 > Use `sdd-plan` to create the implementation plan from this spec.
 >
 > Which would you like?"

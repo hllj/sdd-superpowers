@@ -1,6 +1,6 @@
 ---
 name: sdd-research
-description: "Use after sdd-specify and before sdd-plan when a feature involves non-trivial technology choices, performance requirements, security concerns, or external integrations. Gathers context that informs the implementation plan."
+description: Use when a spec has unresolved technology choices, performance targets, security requirements, or external integrations that need investigation before planning
 ---
 
 # SDD: Research
@@ -153,7 +153,17 @@ If research resolves `[NEEDS CLARIFICATION]` items in the spec:
 2. Replace the clarification markers with concrete requirements
 3. Note in the spec: `*Updated based on research findings YYYY-MM-DD*`
 
-### Step 6: Handoff
+### Step 6: Verify Before Claiming Complete
+
+Before reporting research as done, confirm:
+- [ ] Every `[NEEDS CLARIFICATION]` from the spec is either resolved or escalated to `[DECISION NEEDED]`
+- [ ] Every research question from Step 2 has a documented answer with evidence
+- [ ] Recommendations cite specific sources, not just opinions
+
+**Do not say "research complete" without running this checklist.**
+This is the `superpowers:verification-before-completion` principle applied to research output.
+
+### Step 7: Handoff
 
 Present a summary of key findings and decisions made:
 
