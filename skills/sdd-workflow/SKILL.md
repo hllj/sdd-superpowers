@@ -18,7 +18,7 @@ This is not optional. This is not negotiable.
 Before evaluating any routing or skill invocation, check whether this project is initialised:
 
 1. Check if `CLAUDE.md` exists in the current working directory
-2. Check if `docs/specs/` directory exists
+2. Check if `docs/specs/` directory exists in the current working directory
 
 **If NEITHER exists** → this is an uninitialised project:
 - Announce: "I'm using sdd-init to set up the Constitutional Foundation for this new SDD project."

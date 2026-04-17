@@ -130,6 +130,21 @@ After constitution approval, create the project scaffold.
 **Must not:**
 - Overwrite an existing `CLAUDE.md` without first showing the user what will change and getting approval
 
+### FR-6: Project Context Exploration Before Article Review
+
+Before presenting any Articles, `sdd-init` must run a codebase exploration to produce a Project Profile that personalises Article defaults for the user's specific stack.
+
+**Must:**
+- Dispatch a codebase exploration subagent before Step 2 begins
+- The subagent reads: README.md, any package manifest (package.json, pyproject.toml, Cargo.toml, go.mod, requirements.txt, composer.json), and top-level directory structure
+- Produce a Project Profile capturing: primary language, main framework, project type (service/library/CLI/web app/monorepo), existing test setup, notable architectural patterns
+- Use the Project Profile to personalise the default text for each Article before presenting it (e.g. Article II CLI examples use language-appropriate tools; Article III test examples reference the detected framework)
+- If the project is empty (no detectable files): fall back to generic defaults
+
+**Must not:**
+- Block or delay the Article review if exploration produces no useful signal
+- Replace the user's ability to customise — exploration only personalises the starting default
+
 ### FR-5: Resume Normal Routing
 After scaffold creation, `sdd-workflow` must resume its normal routing for the user's original request.
 
@@ -145,7 +160,7 @@ After scaffold creation, `sdd-workflow` must resume its normal routing for the u
 
 ### Usability
 - Each Article interaction must fit in a single conversational turn (no walls of text)
-- The full init flow should complete within 10 conversational exchanges
+- The full init flow should complete within 12 conversational exchanges (1 orient + 1 explore + 9 articles + 1 approval)
 
 ## Error Scenarios
 
