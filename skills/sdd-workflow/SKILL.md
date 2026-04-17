@@ -13,6 +13,22 @@ If you think there is even a 1% chance an SDD skill applies to what you are doin
 This is not optional. This is not negotiable.
 </EXTREMELY-IMPORTANT>
 
+## New Project Detection (runs before all routing)
+
+Before evaluating any routing or skill invocation, check whether this project is initialised:
+
+1. Check if `CLAUDE.md` exists in the current working directory
+2. Check if `docs/specs/` directory exists
+
+**If NEITHER exists** → this is an uninitialised project:
+- Announce: "I'm using sdd-init to set up the Constitutional Foundation for this new SDD project."
+- Invoke `sdd-init` before taking any other action
+- After `sdd-init` completes, return here and re-evaluate the user's original request using the routing rules below
+
+**If EITHER exists** → project is already initialised:
+- Skip this block entirely
+- Proceed to routing below
+
 ## Instruction Priority
 
 1. **User's explicit instructions** (CLAUDE.md, direct requests) — highest priority
