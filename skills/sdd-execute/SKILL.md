@@ -11,17 +11,17 @@ Implement a feature by dispatching a fresh subagent per task, with two-stage rev
 
 **Core principle:** Fresh subagent per task + spec-compliance review + code-quality review = implementation that provably matches the spec. Subagents never inherit your session context — you construct exactly what they need.
 
-**REQUIRED BACKGROUND:** Understand `superpowers:subagent-driven-development` — this skill applies that pattern with SDD-specific review criteria.
+**REQUIRED BACKGROUND:** Understand `subagent-driven-development` — this skill applies that pattern with SDD-specific review criteria.
 
 ## Prerequisites
 
-- `specs/<NNN>-<feature-slug>/tasks.md` must exist and be approved
-- `specs/<NNN>-<feature-slug>/spec.md` must exist (used by spec-compliance reviewer)
+- `docs/specs/<NNN>-<feature-slug>/tasks.md` must exist and be approved
+- `docs/specs/<NNN>-<feature-slug>/spec.md` must exist (used by spec-compliance reviewer)
 - Working on a feature branch (not main/master)
 - Clean git baseline (tests passing before implementation starts)
 
 <HARD-GATE>
-Do NOT start implementation on main/master. Verify the git branch before dispatching any subagent. If no feature branch exists, stop and run `superpowers:using-git-worktrees` first.
+Do NOT start implementation on main/master. Verify the git branch before dispatching any subagent. If no feature branch exists, stop and run `using-git-worktrees` first.
 </HARD-GATE>
 
 ## The Process
@@ -48,7 +48,7 @@ If tests fail before implementation starts: Stop. Report failures. Do not procee
 
 ### Step 2: Read and Extract Tasks
 
-Read `specs/<NNN>-<feature-slug>/tasks.md` in full. Extract:
+Read `docs/specs/<NNN>-<feature-slug>/tasks.md` in full. Extract:
 - All tasks with their complete text and code blocks
 - Parallel groups (sections marked "can run in parallel")
 - Sequential phases and their prerequisites
@@ -67,8 +67,8 @@ For each sequential task, in order:
 Provide the subagent with:
 - The complete task text (copy verbatim from tasks.md)
 - The feature branch name
-- The spec file path: `specs/<NNN>-<feature-slug>/spec.md`
-- The scene: "You are implementing task TNNNN as part of feature NNN-<slug>. Complete this task, following TDD strictly. Report DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED."
+- The spec file path: `docs/specs/<NNN>-<feature-slug>/spec.md`
+- The scene: "You are implementing task TNNNN as part of feature NNN-<slug>. Complete this task using the `test-driven-development` skill (RED-GREEN-REFACTOR: write failing test → confirm it fails → write minimal implementation → confirm it passes → commit). Do NOT write implementation code before a failing test exists. Report DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED."
 
 Use model selection:
 - Task touches 1-2 files, complete spec provided → fast model
@@ -97,7 +97,7 @@ The reviewer must answer:
 2. Did the implementation add anything not in the spec (scope creep)?
 3. Are tests actually testing the spec requirements (not just testing the implementation)?
 
-If spec-compliance fails: dispatch the original implementer (same subagent model) to fix the gaps. Re-review until passing.
+If spec-compliance fails: invoke `receiving-code-review` with the reviewer's findings, then dispatch the original implementer (same subagent model) to fix the gaps. Re-review until passing.
 
 **3d. Code-quality review**
 
@@ -107,7 +107,7 @@ After spec-compliance passes, dispatch a code-quality reviewer. Provide:
 
 The reviewer checks: naming clarity, test coverage completeness, no magic numbers, no dead code, error handling correct per spec.
 
-If quality review fails: implementer fixes. Re-review until approved.
+If quality review fails: invoke `receiving-code-review` with the reviewer's findings, then send implementer to fix. Re-review until approved.
 
 **3e. Mark task complete**
 
@@ -118,16 +118,24 @@ git log --oneline -1
 
 Only mark the checkbox complete after tests pass and both reviews approve.
 
+**3f. Phase boundary review**
+
+When all tasks in a phase are marked complete, before starting the next phase:
+
+Invoke `requesting-code-review`. This is a blocking gate — critical issues found here must be resolved before proceeding to the next phase. Do not skip because "the per-task reviews already caught everything."
+
 #### Parallel Task Groups
 
 For groups marked "can run in parallel" in tasks.md:
+
+**REQUIRED:** Invoke `dispatching-parallel-agents` before dispatching this group. It ensures correct state isolation and conflict detection.
 
 1. Confirm tasks truly touch different files (re-verify independence)
 2. Dispatch all tasks in the group concurrently (one subagent each)
 3. Wait for ALL implementers to finish before running any reviews
 4. Run spec-compliance review for each (can be concurrent)
 5. Run code-quality review for each (can be concurrent)
-6. Fix any issues from reviews, then re-review
+6. Fix any issues from reviews using `receiving-code-review`, then re-review
 
 **Safety check before parallel dispatch:**
 - [ ] Tasks in this group touch different source files
@@ -194,9 +202,14 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 
 **Called after:** `sdd-tasks`
 
-**Subagents should use:**
-- `superpowers:test-driven-development` — for each implementation task (red-green-refactor)
+**Subagents must use:**
+- `test-driven-development` — **mandatory** for every implementation task (RED-GREEN-REFACTOR); wire this into every subagent dispatch prompt
 - `verification-before-completion` — before reporting DONE
+
+**During execution:**
+- `requesting-code-review` — at every phase boundary (blocking gate)
+- `receiving-code-review` — whenever review feedback requires fixes
+- `dispatching-parallel-agents` — before every parallel group dispatch
 
 **On failure:** `systematic-debugging`
 

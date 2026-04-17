@@ -25,13 +25,13 @@ Skip this skill for purely UI/UX features with no new dependencies or infrastruc
 
 ## Output Location
 
-Save research to: `specs/<NNN>-<feature-slug>/research.md`
+Save research to: `docs/specs/<NNN>-<feature-slug>/research.md`
 
 ## The Process
 
 ### Step 1: Load the Spec
 
-Read `specs/<NNN>-<feature-slug>/spec.md`. Identify:
+Read `docs/specs/<NNN>-<feature-slug>/spec.md`. Identify:
 - Open questions that require technical investigation
 - Non-functional requirements (performance, security, reliability) that need validation
 - Technology dependencies implied by the requirements
@@ -77,12 +77,12 @@ For each research question, investigate thoroughly:
 
 ### Step 4: Write Research Document
 
-Generate `specs/<NNN>-<feature-slug>/research.md`:
+Generate `docs/specs/<NNN>-<feature-slug>/research.md`:
 
 ```markdown
 # Research: <Feature Name>
 
-**Feature:** specs/<NNN>-<feature-slug>/spec.md
+**Feature:** docs/specs/<NNN>-<feature-slug>/spec.md
 **Date:** YYYY-MM-DD
 
 ---
@@ -149,7 +149,7 @@ Technical or organizational constraints that MUST be respected in the implementa
 ### Step 5: Update the Spec
 
 If research resolves `[NEEDS CLARIFICATION]` items in the spec:
-1. Open `specs/<NNN>-<feature-slug>/spec.md`
+1. Open `docs/specs/<NNN>-<feature-slug>/spec.md`
 2. Replace the clarification markers with concrete requirements
 3. Note in the spec: `*Updated based on research findings YYYY-MM-DD*`
 
@@ -167,7 +167,7 @@ This is the `verification-before-completion` principle applied to research outpu
 
 Present a summary of key findings and decisions made:
 
-> "Research complete — saved to `specs/NNN-feature-slug/research.md`.
+> "Research complete — saved to `docs/specs/NNN-feature-slug/research.md`.
 >
 > **Key decisions:** <3-4 bullet points of the most important choices>
 >

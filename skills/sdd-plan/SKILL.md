@@ -14,13 +14,13 @@ Transform a feature specification into a complete, executable implementation pla
 ## Prerequisites
 
 Before planning:
-1. `specs/<NNN>-<feature-slug>/spec.md` must exist and be approved
-2. `specs/<NNN>-<feature-slug>/research.md` should exist if research was done
+1. `docs/specs/<NNN>-<feature-slug>/spec.md` must exist and be approved
+2. `docs/specs/<NNN>-<feature-slug>/research.md` should exist if research was done
 3. No `[NEEDS CLARIFICATION]` markers should remain in the spec (if they do, resolve them first)
 
 ## Output Location
 
-Save all plan artifacts to `specs/<NNN>-<feature-slug>/`:
+Save all plan artifacts to `docs/specs/<NNN>-<feature-slug>/`:
 - `plan.md` — the main implementation plan (required)
 - `data-model.md` — entity definitions and relationships (if feature involves data storage)
 - `contracts/` — API/event contracts (one file per surface: `api.md`, `events.md`, etc.)
@@ -31,8 +31,8 @@ Save all plan artifacts to `specs/<NNN>-<feature-slug>/`:
 ### Step 1: Read All Inputs
 
 Read in order:
-1. `specs/<NNN>-<feature-slug>/spec.md`
-2. `specs/<NNN>-<feature-slug>/research.md` (if exists)
+1. `docs/specs/<NNN>-<feature-slug>/spec.md`
+2. `docs/specs/<NNN>-<feature-slug>/research.md` (if exists)
 3. Any existing project architecture docs or CLAUDE.md
 
 Map each functional requirement to a technical component. If a requirement has no obvious technical home, flag it before planning.
@@ -118,15 +118,15 @@ Write these BEFORE the main plan, since the plan references them.
 
 ### Step 4: Write the Main Plan
 
-Generate `specs/<NNN>-<feature-slug>/plan.md`:
+Generate `docs/specs/<NNN>-<feature-slug>/plan.md`:
 
 ```markdown
 # Implementation Plan: <Feature Name>
 
 > **For agentic workers:** Use sdd-tasks to generate an executable task list from this plan.
 
-**Spec:** specs/<NNN>-<feature-slug>/spec.md
-**Research:** specs/<NNN>-<feature-slug>/research.md (if applicable)
+**Spec:** docs/specs/<NNN>-<feature-slug>/spec.md
+**Research:** docs/specs/<NNN>-<feature-slug>/research.md (if applicable)
 **Created:** YYYY-MM-DD
 
 ---
@@ -269,9 +269,9 @@ This is `verification-before-completion` applied to plan artifacts.
 ### Step 7: Handoff
 
 > "Implementation plan complete. Artifacts:
-> - `specs/NNN-feature/plan.md` — main plan
-> - `specs/NNN-feature/data-model.md` (if created)
-> - `specs/NNN-feature/contracts/` (if created)
+> - `docs/specs/NNN-feature/plan.md` — main plan
+> - `docs/specs/NNN-feature/data-model.md` (if created)
+> - `docs/specs/NNN-feature/contracts/` (if created)
 >
 > **Next steps:**
 > 1. Run `sdd-review` (spec mode) to validate plan-spec alignment before execution

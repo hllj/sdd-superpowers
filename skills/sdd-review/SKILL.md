@@ -53,7 +53,7 @@ Use after `sdd-tasks` execution to validate the code matches the spec.
 
 ### Step 1: Read the Spec
 
-Read `specs/<NNN>-<feature-slug>/spec.md` in full.
+Read `docs/specs/<NNN>-<feature-slug>/spec.md` in full.
 
 ### Step 2: Completeness Check
 
@@ -149,9 +149,9 @@ Present findings as:
 ### Step 1: Load All Artifacts
 
 Read:
-1. `specs/<NNN>-<feature-slug>/spec.md`
-2. `specs/<NNN>-<feature-slug>/plan.md`
-3. `specs/<NNN>-<feature-slug>/tasks.md`
+1. `docs/specs/<NNN>-<feature-slug>/spec.md`
+2. `docs/specs/<NNN>-<feature-slug>/plan.md`
+3. `docs/specs/<NNN>-<feature-slug>/tasks.md`
 4. All source files referenced in the plan
 5. All test files referenced in the plan
 

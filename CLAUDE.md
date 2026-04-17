@@ -41,12 +41,12 @@ sdd-brainstorm ──────────────────┤
  └───────────────────────────────┘
                                  │
                                  ▼
-sdd-specify ──────────────────► specs/NNN-feature/spec.md
+sdd-specify ──────────────────► docs/specs/NNN-feature/spec.md
  │  (fast-path if design.md       + feature branch created
  │   already exists)
  │
  ├─(complex features)──────────►
- │                              sdd-research ──► specs/NNN-feature/research.md
+ │                              sdd-research ──► docs/specs/NNN-feature/research.md
  │ ◄────────────────────────────┘
  │
  ├─(optional pre-plan check)───►
@@ -54,12 +54,12 @@ sdd-specify ──────────────────► specs/NNN-
  │ ◄────────────────────────────┘
  │
  ▼
-sdd-plan ─────────────────────► specs/NNN-feature/plan.md
-                                 specs/NNN-feature/data-model.md
-                                 specs/NNN-feature/contracts/
+sdd-plan ─────────────────────► docs/specs/NNN-feature/plan.md
+                                 docs/specs/NNN-feature/data-model.md
+                                 docs/specs/NNN-feature/contracts/
  │
  ▼
-sdd-tasks ────────────────────► specs/NNN-feature/tasks.md
+sdd-tasks ────────────────────► docs/specs/NNN-feature/tasks.md
  │
  ▼
 sdd-execute ──────────────────► Implementation with per-task subagents
@@ -91,18 +91,17 @@ These skills are invoked at specific SDD workflow points and are included in thi
 | Task fails or behavior unexpected | `systematic-debugging` |
 | About to claim anything is complete | `verification-before-completion` |
 | All tasks done, tests passing | `finishing-a-development-branch` |
-
-The following superpowers skills are used by reference (not bundled):
-
-| Situation | Skill |
-|-----------|-------|
-| Setting up isolated feature workspace | `superpowers:using-git-worktrees` |
-| Any implementation task (every task) | `superpowers:test-driven-development` |
+| Setting up isolated feature workspace | `using-git-worktrees` |
+| Any implementation task (every task) | `test-driven-development` |
+| At a phase boundary during execution | `requesting-code-review` |
+| Implementing fixes after review feedback | `receiving-code-review` |
+| Dispatching 2+ independent tasks concurrently | `dispatching-parallel-agents` |
+| Executing tasks in current session with subagents | `subagent-driven-development` |
 
 ## Directory Structure
 
 ```
-specs/
+docs/specs/
   001-feature-name/
     spec.md          # PRD — the source of truth
     research.md      # Technical investigation (optional)

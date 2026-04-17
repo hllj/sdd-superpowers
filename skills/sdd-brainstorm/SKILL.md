@@ -25,13 +25,13 @@ Every project goes through this process. Even if the idea seems clear, brainstor
 
 Complete these in order:
 
-1. **Explore project context** — check `specs/`, docs, recent commits
+1. **Explore project context** — check `docs/specs/`, docs, recent commits
 2. **Offer visual companion** (if topic involves UI/layout questions) — its own message, not combined with a question
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections, get user approval after each section
-6. **Determine feature number** — scan `specs/` for next available NNN
-7. **Write design doc** — save to `specs/NNN-<feature-slug>/design.md` after user approves design
+6. **Determine feature number** — scan `docs/specs/` for next available NNN
+7. **Write design doc** — save to `docs/specs/NNN-<feature-slug>/design.md` after user approves design
 8. **Spec review loop** — dispatch spec-document-reviewer subagent; fix issues and re-dispatch until approved (max 3 iterations, then surface to human)
 9. **User reviews written design** — ask user to review before proceeding
 10. **Transition** — invoke `sdd-specify` with the design doc path
@@ -47,7 +47,7 @@ digraph sdd_brainstorm {
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
-    "Determine feature number\n(scan specs/)" [shape=box];
+    "Determine feature number\n(scan docs/specs/)" [shape=box];
     "Write design.md" [shape=box];
     "Spec review loop\n(dispatch subagent)" [shape=box];
     "Spec review passed?" [shape=diamond];
@@ -62,8 +62,8 @@ digraph sdd_brainstorm {
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?" ;
     "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Determine feature number\n(scan specs/)" [label="yes"];
-    "Determine feature number\n(scan specs/)" -> "Write design.md";
+    "User approves design?" -> "Determine feature number\n(scan docs/specs/)" [label="yes"];
+    "Determine feature number\n(scan docs/specs/)" -> "Write design.md";
     "Write design.md" -> "Spec review loop\n(dispatch subagent)";
     "Spec review loop\n(dispatch subagent)" -> "Spec review passed?";
     "Spec review passed?" -> "Spec review loop\n(dispatch subagent)" [label="issues found,\nfix and re-dispatch"];
@@ -79,7 +79,7 @@ digraph sdd_brainstorm {
 
 ### Understanding the idea
 
-- Check `specs/` first — are there existing features this relates to or overlaps with?
+- Check `docs/specs/` first — are there existing features this relates to or overlaps with?
 - Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with auth, billing, and notifications"), flag this immediately and help decompose before brainstorming any single piece.
 - If the project is too large, help decompose: what are the independent pieces, how do they relate, what order should they be built? Each piece gets its own `sdd-brainstorm` → `sdd-specify` cycle.
 - For appropriately scoped ideas, ask clarifying questions one at a time
@@ -112,9 +112,9 @@ digraph sdd_brainstorm {
 
 After user approves the design:
 
-1. Scan `specs/` for the next available feature number (NNN)
-2. Create directory: `specs/NNN-<feature-slug>/`
-3. Write `specs/NNN-<feature-slug>/design.md` with this exact structure:
+1. Scan `docs/specs/` for the next available feature number (NNN)
+2. Create directory: `docs/specs/NNN-<feature-slug>/`
+3. Write `docs/specs/NNN-<feature-slug>/design.md` with this exact structure:
 
 ```markdown
 # Design: <Feature Name>
@@ -159,7 +159,7 @@ See `spec-document-reviewer-prompt.md` in this directory for the dispatch templa
 
 After the spec review loop passes:
 
-> "Design written and saved to `specs/NNN-feature-slug/design.md`. Please review it — does this capture what you want to build? Any changes before we move to spec?"
+> "Design written and saved to `docs/specs/NNN-feature-slug/design.md`. Please review it — does this capture what you want to build? Any changes before we move to spec?"
 
 Wait for the user's response. If they request changes: update `design.md`, re-run the spec review loop. Only proceed once the user explicitly approves.
 
@@ -169,7 +169,7 @@ After user approval:
 
 > "Design approved. Invoking `sdd-specify` with this design as input — it will formalize `design.md` into a complete `spec.md` without re-asking the questions we've already answered."
 
-**REQUIRED NEXT SKILL:** Use `sdd-specify`. Pass the path `specs/NNN-<feature-slug>/design.md`.
+**REQUIRED NEXT SKILL:** Use `sdd-specify`. Pass the path `docs/specs/NNN-<feature-slug>/design.md`.
 
 ## Visual Companion
 

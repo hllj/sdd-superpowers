@@ -19,23 +19,23 @@ Do NOT write any implementation code, scaffold any project, or make any architec
 
 ## Output Location
 
-Save the completed spec to: `specs/<NNN>-<feature-slug>/spec.md`
+Save the completed spec to: `docs/specs/<NNN>-<feature-slug>/spec.md`
 
 Where:
-- `NNN` = next available feature number (scan `specs/` directory, pad to 3+ digits)
+- `NNN` = next available feature number (scan `docs/specs/` directory, pad to 3+ digits)
 - `feature-slug` = kebab-case name derived from the idea
 
-Example: `specs/003-user-authentication/spec.md`
+Example: `docs/specs/003-user-authentication/spec.md`
 
 ## The Process
 
 ### Step 1: Scan Existing Specs and Detect Fast-Path
 
 Before anything else:
-1. Check the `specs/` directory for existing feature numbers
+1. Check the `docs/specs/` directory for existing feature numbers
 2. Determine the next available number (NNN)
 3. Check for related or overlapping specs that might affect scope
-4. **NEW — Fast-path detection:** Check if `specs/NNN-<feature-slug>/design.md` exists (produced by `sdd-brainstorm`)
+4. **NEW — Fast-path detection:** Check if `docs/specs/NNN-<feature-slug>/design.md` exists (produced by `sdd-brainstorm`)
    - If YES → validate the design doc:
      - Does it contain all required sections: **Problem**, **Chosen Approach**, **Trade-offs & Rationale**, **Key Design Decisions**, **Out of Scope**?
      - Is each section non-empty?
@@ -68,7 +68,7 @@ Get user approval on the structure before writing the full document.
 
 ### Step 4: Write the Specification
 
-Generate `specs/<NNN>-<feature-slug>/spec.md` using this template:
+Generate `docs/specs/<NNN>-<feature-slug>/spec.md` using this template:
 
 ```markdown
 # Feature NNN: <Feature Name>
@@ -173,28 +173,29 @@ Fix issues inline. Do not move on until the spec passes this review.
 
 Present the spec to the user and ask for explicit approval:
 
-> "Spec saved to `specs/NNN-feature-slug/spec.md`. Please review — does this capture your intent correctly? Any requirements missing or misstated?"
+> "Spec saved to `docs/specs/NNN-feature-slug/spec.md`. Please review — does this capture your intent correctly? Any requirements missing or misstated?"
 
 If changes requested: update the spec and re-review.
 If approved: proceed to handoff.
 
-### Step 7: Create Feature Branch
+### Step 7: Create Isolated Workspace
 
-After approval, create an isolated branch for this feature:
+After approval, create an isolated branch and worktree for this feature:
 
+**REQUIRED:** Invoke `using-git-worktrees` to set up the workspace. Do NOT simply `git checkout -b` — a proper worktree isolates this feature from other in-progress work and gives you a clean test baseline.
+
+If the project is not yet a git repository, initialize it first:
 ```bash
-# Determine next feature number (already done in Step 1)
-git checkout -b NNN-<feature-slug>
+git init && git add -A && git commit -m "chore: initial commit"
 ```
 
-If the project uses git worktrees:
-> "Should I set up an isolated worktree for this feature? (Recommended — use `superpowers:using-git-worktrees`)"
+Then invoke `using-git-worktrees` — it will create the branch `NNN-<feature-slug>` and verify the baseline.
 
 ### Step 8: Handoff
 
 After branch creation:
 
-> "Specification complete and saved to `specs/NNN-feature-slug/spec.md` on branch `NNN-feature-slug`.
+> "Specification complete and saved to `docs/specs/NNN-feature-slug/spec.md` on branch `NNN-feature-slug`.
 >
 > **Option A — Research first (recommended for complex features):**
 > Use `sdd-research` to investigate technology options, performance implications, and constraints before planning.

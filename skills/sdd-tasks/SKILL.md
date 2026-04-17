@@ -13,14 +13,14 @@ Convert an implementation plan into a flat, ordered, executable task list with p
 
 ## Prerequisites
 
-- `specs/<NNN>-<feature-slug>/plan.md` must exist (required)
-- `specs/<NNN>-<feature-slug>/data-model.md` (used if present)
-- `specs/<NNN>-<feature-slug>/contracts/` (used if present)
-- `specs/<NNN>-<feature-slug>/research.md` (used if present)
+- `docs/specs/<NNN>-<feature-slug>/plan.md` must exist (required)
+- `docs/specs/<NNN>-<feature-slug>/data-model.md` (used if present)
+- `docs/specs/<NNN>-<feature-slug>/contracts/` (used if present)
+- `docs/specs/<NNN>-<feature-slug>/research.md` (used if present)
 
 ## Output Location
 
-Save to: `specs/<NNN>-<feature-slug>/tasks.md`
+Save to: `docs/specs/<NNN>-<feature-slug>/tasks.md`
 
 ## The Process
 
@@ -69,12 +69,12 @@ A task is NOT safe to parallelize when:
 
 ### Step 3: Write tasks.md
 
-Generate `specs/<NNN>-<feature-slug>/tasks.md`:
+Generate `docs/specs/<NNN>-<feature-slug>/tasks.md`:
 
 ```markdown
 # Tasks: <Feature Name>
 
-**Plan:** specs/<NNN>-<feature-slug>/plan.md
+**Plan:** docs/specs/<NNN>-<feature-slug>/plan.md
 **Generated:** YYYY-MM-DD
 
 > **For agentic workers:** Execute tasks in order. `[P]` tasks within the same parallel group can run concurrently. Never start an implementation task without the prior test task completed and confirmed red.
@@ -167,7 +167,7 @@ Check before presenting:
 
 ### Step 5: Handoff
 
-> "Task list generated: `specs/NNN-feature/tasks.md`
+> "Task list generated: `docs/specs/NNN-feature/tasks.md`
 >
 > **NNN total tasks** | **X parallelizable across Y parallel groups** | **Z sequential phases**
 >

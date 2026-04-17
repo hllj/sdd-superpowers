@@ -34,6 +34,9 @@ This is not optional. This is not negotiable.
 | A task fails or behavior is unexpected | `systematic-debugging` |
 | About to claim a feature is complete | `verification-before-completion` |
 | Implementation complete, deciding how to merge | `finishing-a-development-branch` |
+| At a phase boundary during execution, before starting the next phase | `requesting-code-review` |
+| Implementing fixes after a code review flagged issues | `receiving-code-review` |
+| Dispatching 2+ independent tasks concurrently | `dispatching-parallel-agents` |
 
 ## Skill Priority
 
@@ -101,6 +104,15 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 **`sdd-review` is mandatory when:**
 - Spec is about to be handed to planning (spec review mode)
 - Implementation claims to be complete (implementation review mode)
+
+**`requesting-code-review` is mandatory when:**
+- Completing a phase in `sdd-execute` before starting the next phase
+
+**`receiving-code-review` is mandatory when:**
+- A spec-compliance or code-quality review returns issues requiring fixes
+
+**`dispatching-parallel-agents` is mandatory when:**
+- Dispatching a parallel task group in `sdd-execute` (2+ independent tasks concurrently)
 
 ## The Hard Gates
 
