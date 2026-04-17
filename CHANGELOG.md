@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-04-17
+
+### Added
+
+- **Git convention setup in `sdd-init`** — new Step 5.4 walks through a 4-question Q&A (branch prefix strategy, ticket ID format, commit types, merge style) and writes `docs/git-convention.md`; Step 5.5 commits it as part of the initial scaffold
+- **Branch creation + doc-first commit in `sdd-tasks`** — new Step 5 loads the project's git convention, suggests branch names (slug / ticket-ID / custom), creates the feature branch, and makes the doc-first commit before handing off to `sdd-execute`
+- **Per-task commits in `sdd-execute`** — Step 3e adds commit staging, message proposal (convention-compliant), and user confirmation after each task; Step 1 now halts if running on main/master and loads the convention
+- **Merge commit validation in `finishing-a-development-branch`** — new Step 2.5 loads convention, suggests a compliant merge commit message, and validates it against `allowed_types` + `commit_format` before proceeding
+
+### Changed
+
+- **`sdd-specify`** — Step 7 (branch creation) removed; branch creation is now deferred to `sdd-tasks` to eliminate the `using-git-worktrees` dependency at spec time
+- **`sdd-tasks`** — now owns the full branch lifecycle (load convention → suggest name → create branch → doc-first commit)
+- **`sdd-execute`** — guards against accidental commits to main/master; per-task commit flow replaces ad-hoc git usage
+
+---
+
 ## [1.1.0] - 2026-04-17
 
 ### Added
@@ -63,4 +80,6 @@ docs/specs/NNN-feature/
 skills/          # All SDD and bundled Superpowers skills
 ```
 
+[1.2.0]: https://github.com/hllj/sdd-superpowers/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/hllj/sdd-superpowers/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/hllj/sdd-superpowers/releases/tag/v1.0.0
