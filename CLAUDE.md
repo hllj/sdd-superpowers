@@ -91,7 +91,7 @@ These skills are invoked at specific SDD workflow points and are included in thi
 | Task fails or behavior unexpected | `systematic-debugging` |
 | About to claim anything is complete | `verification-before-completion` |
 | All tasks done, tests passing | `finishing-a-development-branch` |
-| Setting up isolated feature workspace | `using-git-worktrees` |
+| Any git operation in an SDD project (branches, commits, convention) | `using-git` |
 | Any implementation task (every task) | `test-driven-development` |
 | At a phase boundary during execution | `requesting-code-review` |
 | Implementing fixes after review feedback | `receiving-code-review` |

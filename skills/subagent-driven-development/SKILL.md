@@ -265,7 +265,7 @@ Done!
 ## Integration
 
 **Required workflow skills:**
-- **using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
+- **using-git** - For any git operation (branch creation, commits, convention validation); advanced worktrees guidance available within `using-git`
 - **superpowers:writing-plans** - Creates the plan this skill executes (SDD equivalent: `sdd-plan`)
 - **requesting-code-review** - Code review template for reviewer subagents
 - **finishing-a-development-branch** - Complete development after all tasks

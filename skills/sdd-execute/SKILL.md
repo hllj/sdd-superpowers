@@ -21,7 +21,7 @@ Implement a feature by dispatching a fresh subagent per task, with two-stage rev
 - Clean git baseline (tests passing before implementation starts)
 
 <HARD-GATE>
-Do NOT start implementation on main/master. Verify the git branch before dispatching any subagent. If no feature branch exists, stop and run `using-git-worktrees` first.
+Do NOT start implementation on main/master. Verify the git branch before dispatching any subagent. If no feature branch exists, stop and route the user back to `sdd-tasks` — branch creation happens there.
 </HARD-GATE>
 
 ## The Process
@@ -118,42 +118,15 @@ If quality review fails: invoke `receiving-code-review` with the reviewer's find
 
 **3e. Commit completed task**
 
-Before committing, check for conflicts:
-```bash
-git status
-```
-If output contains `<<<<<<`, `=======`, or `>>>>>>>`:
-> "Merge conflicts detected in: `<file list>`. Resolve conflicts, then re-run this step."
-Do NOT proceed until conflicts are cleared.
+Invoke `using-git` — **Per-Task Commit**
 
-Record the SHA of the last commit before this task began:
-```bash
-git rev-parse HEAD
-```
+Pass to `using-git`:
+- Prior commit SHA: `git rev-parse HEAD` (recorded before this task was dispatched)
+- Task description: the task title from tasks.md (e.g. "implement FR-2 branch name suggestions")
 
-Stage all files modified or added since that SHA:
-```bash
-git add $(git diff --name-only HEAD)
-git add $(git ls-files --others --exclude-standard)
-```
+`using-git` will handle: conflict detection, file staging, commit message proposal, validation, confirmation, and commit execution.
 
-Propose a commit message using `commit_format` and `allowed_types` from `docs/git-convention.md`:
-> "Proposed commit: `feat(<NNN>-<slug>): <task description>`
-> Confirm this message, or type an alternative:"
-
-Validate the confirmed message (type must be in `allowed_types`, format must match `commit_format`). If invalid, warn and re-prompt.
-
-Execute commit:
-```bash
-git commit -m "<confirmed message>"
-```
-
-Verify the commit landed:
-```bash
-git log --oneline -1
-```
-
-Only mark the task checkbox complete after: tests pass + spec-compliance review approves + code-quality review approves + commit created.
+Mark the task checkbox complete only after `using-git` reports the new commit SHA.
 
 **3f. Phase boundary review**
 
