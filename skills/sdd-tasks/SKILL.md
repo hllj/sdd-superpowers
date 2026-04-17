@@ -167,68 +167,17 @@ Check before presenting:
 
 ### Step 5: Branch Creation and Doc-First Commit
 
-#### 5.1 Load convention
+Invoke `using-git` — **Branch Creation and Doc-First Commit**
 
-Read `docs/git-convention.md`.
+Pass to `using-git`:
+- Spec folder path: `docs/specs/<NNN>-<feature-slug>/`
+- Optional ticket ID: ask the user now if not already known — "Do you have an external ticket ID? (e.g. PROJ-123) Press Enter to skip."
 
-If missing:
-- Check if this is a new project (no `CLAUDE.md` exists) → halt: "Run `sdd-init` first to create the git convention."
-- If existing project → offer one-time convention creation:
-  > "I need to set up your git convention before creating a branch. I'll ask 4 quick questions."
-  Ask the same 4 questions as sdd-init Step 5.4. Write `docs/git-convention.md` before continuing.
+`using-git` will handle: convention loading, branch name suggestions, branch creation, doc staging, commit message confirmation, and commit execution.
 
-#### 5.2 Suggest branch names
-
-Prompt:
-> "Do you have an external ticket ID? (e.g. PROJ-123) Press Enter to skip."
-
-Generate suggestions based on `branch_pattern` from `docs/git-convention.md`:
-- **A:** `NNN-<feature-slug>` (derived from the spec folder name, e.g. `002-git-flow-integration`)
-- **B:** ticket-ID-based (only if ticket ID was provided, e.g. `feat/PROJ-123-git-flow-integration`)
-- **C:** Type a custom name
-
-Present:
-> "Choose a branch name:
-> A) `<suggestion A>`
-> B) `<suggestion B>` (if ticket ID provided)
-> C) Type a custom name
->
-> Enter A, B, or your custom branch name:"
-
-#### 5.3 Validate and create branch
-
-Validate the chosen name against `branch_pattern` regex from `docs/git-convention.md`:
-- If it matches → create branch: `git checkout -b <name>`
-- If it doesn't match → warn: "Branch name `<name>` doesn't match the convention pattern `<pattern>`. Proceed anyway? (yes/no)" Require explicit yes to override.
-
-If the branch already exists:
-> "Branch `<name>` already exists. Options:
-> 1. Switch to the existing branch
-> 2. Choose a different name
-> 3. Abort"
-Wait for selection.
-
-#### 5.4 Doc-first commit
-
-Stage all files under `docs/specs/<NNN>-<feature-slug>/`:
-```bash
-git add docs/specs/<NNN>-<feature-slug>/
-```
-
-Propose a commit message using `commit_format` and `allowed_types` from `docs/git-convention.md`:
-> "Proposed commit: `docs(<NNN>-<feature-slug>): add spec, plan, and tasks`
-> Confirm this message, or type an alternative:"
-
-Validate the confirmed message against `commit_format` and `allowed_types`. If invalid, warn and re-prompt.
-
-Execute commit:
-```bash
-git commit -m "<confirmed message>"
-```
-
-If the commit fails (nothing staged, git error):
-> "Commit failed: `<exact git error output>`. Resolve the issue and re-run this step."
-Do not proceed to handoff until commit succeeds.
+Proceed to Step 6 (Handoff) only after `using-git` reports:
+- Branch `<name>` created
+- Doc-first commit made: `<commit-sha>`
 
 ### Step 6: Handoff
 

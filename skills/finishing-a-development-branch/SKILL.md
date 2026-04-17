@@ -46,30 +46,20 @@ git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
 
 Or ask: "This branch split from main - is that correct?"
 
-### Step 2.5: Load Convention and Prepare Merge Commit Message
+### Step 2.5: Prepare Merge Commit Message
 
-Read `docs/git-convention.md`.
-- If missing on an existing project: offer one-time creation dialogue (same 4 questions as `sdd-init` Step 5.4) before continuing.
-- If missing on a new project: halt — "Run `sdd-init` first to establish a git convention."
+Invoke `using-git` — **Merge Commit Message**
 
-Extract `commit_format` and `allowed_types` from the YAML frontmatter.
+Pass to `using-git`:
+- Current branch name: `git branch --show-current`
 
-Derive the feature scope from the current branch name (e.g. branch `002-git-flow-integration` → scope `002-git-flow-integration`).
+`using-git` will handle: convention loading, scope derivation, message suggestion, validation, re-prompting on violation.
 
-Suggest a compliant merge commit message:
-> "Proposed merge commit: `feat(<scope>): merge <feature-description>`
-> Confirm this message, or type an alternative:"
+Store the confirmed message returned by `using-git` as `<merge-commit-message>`.
 
-Validate the confirmed message:
-- Type must be in `allowed_types`
-- Format must match `commit_format` structure
-
-If validation fails:
-> "Message `<message>` violates the convention: `<reason>`. Expected format: `<commit_format>`.
-> Suggested: `<corrected message>`
-> Type a valid message:"
-
-Re-prompt until valid. Store the confirmed message as `<merge-commit-message>`.
+Use `<merge-commit-message>` in:
+- Option 1 (Merge Locally): `git merge --no-ff <feature-branch> -m "<merge-commit-message>"`
+- Option 2 (Push and Create PR): pre-fill `gh pr create --title "<merge-commit-message>"`
 
 ### Step 3: Present Options
 
@@ -158,9 +148,11 @@ git branch -D <feature-branch>
 
 Then: Cleanup worktree (Step 5)
 
-### Step 5: Cleanup Worktree
+### Step 5: Cleanup Worktree (if applicable)
 
-**For Options 1, 2, 4:**
+This step applies only if the branch was created inside a git worktree (via `using-git` Advanced worktrees). In the standard SDD git flow, branches are created directly in the main checkout and no worktree cleanup is needed — skip this step.
+
+**For Options 1, 2, 4 (only if a worktree was used):**
 
 Check if in worktree:
 ```bash
@@ -195,7 +187,7 @@ git worktree remove <worktree-path>
 
 **Automatic worktree cleanup**
 - **Problem:** Remove worktree when might need it (Option 2, 3)
-- **Fix:** Only cleanup for Options 1 and 4
+- **Fix:** Only cleanup for Options 1 and 4, and only if a worktree was used
 
 **No confirmation for discard**
 - **Problem:** Accidentally delete work
@@ -213,7 +205,7 @@ git worktree remove <worktree-path>
 - Verify tests before offering options
 - Present exactly 4 options
 - Get typed confirmation for Option 4
-- Clean up worktree for Options 1 & 4 only
+- Clean up worktree for Options 1 & 4 only (skip if no worktree was used)
 
 ## Integration
 
@@ -222,4 +214,4 @@ git worktree remove <worktree-path>
 - **executing-plans** (Step 5) - After all batches complete
 
 **Pairs with:**
-- **using-git-worktrees** - Cleans up worktree created by that skill
+- **using-git** - Cleans up worktree created via Advanced worktrees (only when worktrees are in use)
