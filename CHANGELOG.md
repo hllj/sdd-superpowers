@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-04-17
+
+### Added
+
+- **`using-git` skill** — single source of truth for all SDD git operations; replaces `using-git-worktrees` as the canonical git skill
+  - **Operation A — Branch Creation**: loads `docs/git-convention.md`, suggests branch names (slug / ticket-ID / custom), validates against `branch_pattern` regex, creates branch
+  - **Operation B — Doc-First Commit**: stages only `docs/specs/NNN-slug/`, proposes convention-compliant message, confirms, commits
+  - **Operation C — Per-Task Commit** (delegation-only, called by `sdd-execute`): conflict detection, SHA-bounded staging, message validation, returns new commit SHA
+  - **Operation D — Merge Commit Message**: derives scope from branch name, suggests and validates merge commit message, returns confirmed message to caller
+  - **Direct Invocation Menu**: users can invoke `using-git` directly to create a branch, ad-hoc commit, prepare a merge message, or display the active convention
+  - **Advanced: Parallel Workstreams with Worktrees** — opt-in documentation for manual worktree usage; not part of the standard workflow
+- **`docs/git-convention.md`** — project-level git convention file (YAML frontmatter + Markdown body) established during `sdd-init` and read by `using-git` before every operation
+
+### Changed
+
+- **`sdd-tasks` Step 5** — now a single delegation block: "Invoke `using-git` — Branch Creation and Doc-First Commit"; all inline branch/commit logic moved to `using-git`
+- **`sdd-execute` Step 3e** — now a single delegation block: "Invoke `using-git` — Per-Task Commit"; all inline conflict checking, staging, and commit logic moved to `using-git`
+- **`finishing-a-development-branch` Step 2.5** — now a single delegation block: "Invoke `using-git` — Merge Commit Message"; all inline convention loading and validation moved to `using-git`
+- **`subagent-driven-development`** — Integration section updated to reference `using-git` instead of `using-git-worktrees`
+- **`CLAUDE.md` bundled skills table** — entry updated from `using-git-worktrees` to `using-git`
+
+### Removed
+
+- **`using-git-worktrees` skill** — removed entirely; worktree guidance preserved as an Advanced opt-in section inside `using-git`
+
+---
+
 ## [1.2.0] - 2026-04-17
 
 ### Added
@@ -80,6 +107,7 @@ docs/specs/NNN-feature/
 skills/          # All SDD and bundled Superpowers skills
 ```
 
+[2.0.0]: https://github.com/hllj/sdd-superpowers/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/hllj/sdd-superpowers/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/hllj/sdd-superpowers/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/hllj/sdd-superpowers/releases/tag/v1.0.0
