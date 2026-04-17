@@ -37,13 +37,20 @@ After all tasks → sdd-review (full) → finishing-a-development-branch
 ### Step 1: Verify Starting Baseline
 
 ```bash
-# Confirm on feature branch
+# Confirm on feature branch (not main/master)
 git branch --show-current
+```
+If output is `main` or `master`: **STOP**. Route user back to `sdd-tasks` to create a feature branch first.
 
+**Load git convention:**
+Read `docs/git-convention.md`.
+- If missing on a new project (no `CLAUDE.md`): halt with "Run `sdd-init` first to establish a git convention."
+- If missing on an existing project: offer one-time creation dialogue — ask the same 4 questions as `sdd-init` Step 5.4, write `docs/git-convention.md`, then continue.
+
+```bash
 # Confirm baseline tests pass
 <project test command>
 ```
-
 If tests fail before implementation starts: Stop. Report failures. Do not proceed until baseline is clean.
 
 ### Step 2: Read and Extract Tasks
@@ -109,14 +116,44 @@ The reviewer checks: naming clarity, test coverage completeness, no magic number
 
 If quality review fails: invoke `receiving-code-review` with the reviewer's findings, then send implementer to fix. Re-review until approved.
 
-**3e. Mark task complete**
+**3e. Commit completed task**
 
+Before committing, check for conflicts:
 ```bash
-# Confirm task committed
+git status
+```
+If output contains `<<<<<<`, `=======`, or `>>>>>>>`:
+> "Merge conflicts detected in: `<file list>`. Resolve conflicts, then re-run this step."
+Do NOT proceed until conflicts are cleared.
+
+Record the SHA of the last commit before this task began:
+```bash
+git rev-parse HEAD
+```
+
+Stage all files modified or added since that SHA:
+```bash
+git add $(git diff --name-only HEAD)
+git add $(git ls-files --others --exclude-standard)
+```
+
+Propose a commit message using `commit_format` and `allowed_types` from `docs/git-convention.md`:
+> "Proposed commit: `feat(<NNN>-<slug>): <task description>`
+> Confirm this message, or type an alternative:"
+
+Validate the confirmed message (type must be in `allowed_types`, format must match `commit_format`). If invalid, warn and re-prompt.
+
+Execute commit:
+```bash
+git commit -m "<confirmed message>"
+```
+
+Verify the commit landed:
+```bash
 git log --oneline -1
 ```
 
-Only mark the checkbox complete after tests pass and both reviews approve.
+Only mark the task checkbox complete after: tests pass + spec-compliance review approves + code-quality review approves + commit created.
 
 **3f. Phase boundary review**
 
