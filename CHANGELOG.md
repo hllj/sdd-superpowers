@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-04-17
+
+### Added
+
+- **SDD Init skill** (`sdd-init`) — Constitutional Foundation setup for new projects: codebase exploration to build a Project Profile, interactive Nine Articles review (one per turn, with governance sentences and stack-personalised defaults), atomic scaffold creation (`memory/constitution.md`, `docs/specs/`, `CLAUDE.md`), and handoff back to `sdd-workflow`
+- **New Project Detection in `sdd-workflow`** — automatically triggers `sdd-init` when neither `CLAUDE.md` nor `docs/specs/` exist in the current working directory; resumes normal routing after init completes
+
+### Changed
+
+- `sdd-workflow` now checks for project initialisation before any routing logic (non-breaking — only activates in uninitialised projects)
+
+---
+
 ## [1.0.0] - 2026-04-17
 
 ### Added
