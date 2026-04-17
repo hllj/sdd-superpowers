@@ -178,18 +178,15 @@ Present the spec to the user and ask for explicit approval:
 If changes requested: update the spec and re-review.
 If approved: proceed to handoff.
 
-### Step 7: Create Isolated Workspace
+### Step 7: Note on Branch Creation
 
-After approval, create an isolated branch and worktree for this feature:
+Branch creation happens **after all documentation is complete** — at the end of `sdd-tasks`, not here. When `sdd-tasks` finishes generating the task list, it will:
+1. Read `docs/git-convention.md` for the naming convention
+2. Suggest branch names based on this spec's NNN and slug
+3. Create the branch with your chosen name
+4. Make the doc-first commit containing all spec documents
 
-**REQUIRED:** Invoke `using-git-worktrees` to set up the workspace. Do NOT simply `git checkout -b` — a proper worktree isolates this feature from other in-progress work and gives you a clean test baseline.
-
-If the project is not yet a git repository, initialize it first:
-```bash
-git init && git add -A && git commit -m "chore: initial commit"
-```
-
-Then invoke `using-git-worktrees` — it will create the branch `NNN-<feature-slug>` and verify the baseline.
+No git action is needed here.
 
 ### Step 8: Handoff
 

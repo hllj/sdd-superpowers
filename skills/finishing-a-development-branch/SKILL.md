@@ -46,6 +46,31 @@ git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
 
 Or ask: "This branch split from main - is that correct?"
 
+### Step 2.5: Load Convention and Prepare Merge Commit Message
+
+Read `docs/git-convention.md`.
+- If missing on an existing project: offer one-time creation dialogue (same 4 questions as `sdd-init` Step 5.4) before continuing.
+- If missing on a new project: halt — "Run `sdd-init` first to establish a git convention."
+
+Extract `commit_format` and `allowed_types` from the YAML frontmatter.
+
+Derive the feature scope from the current branch name (e.g. branch `002-git-flow-integration` → scope `002-git-flow-integration`).
+
+Suggest a compliant merge commit message:
+> "Proposed merge commit: `feat(<scope>): merge <feature-description>`
+> Confirm this message, or type an alternative:"
+
+Validate the confirmed message:
+- Type must be in `allowed_types`
+- Format must match `commit_format` structure
+
+If validation fails:
+> "Message `<message>` violates the convention: `<reason>`. Expected format: `<commit_format>`.
+> Suggested: `<corrected message>`
+> Type a valid message:"
+
+Re-prompt until valid. Store the confirmed message as `<merge-commit-message>`.
+
 ### Step 3: Present Options
 
 Present exactly these 4 options:
@@ -75,7 +100,7 @@ git checkout <base-branch>
 git pull
 
 # Merge feature branch
-git merge <feature-branch>
+git merge --no-ff <feature-branch> -m "<merge-commit-message>"
 
 # Verify tests on merged result
 <test command>
@@ -93,7 +118,7 @@ Then: Cleanup worktree (Step 5)
 git push -u origin <feature-branch>
 
 # Create PR
-gh pr create --title "<title>" --body "$(cat <<'EOF'
+gh pr create --title "<merge-commit-message>" --body "$(cat <<'EOF'
 ## Summary
 <2-3 bullets of what changed>
 

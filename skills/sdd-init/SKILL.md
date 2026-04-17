@@ -295,6 +295,74 @@ Skip — do not append duplicate content.
 Announce: "I'd like to append SDD workflow instructions to your existing `CLAUDE.md`. Here is what I will add:" — show the exact text to be appended.
 Get explicit approval before appending.
 
+### Step 5.4 Create docs/git-convention.md
+
+Announce: "Setting up your git convention. I'll ask four quick questions."
+
+Ask the following questions **one at a time**, waiting for each answer:
+
+**Q1 — Branch naming pattern:**
+> "What branch naming pattern would you like? Examples:
+> - `NNN-slug` (e.g. `002-git-flow-integration`)
+> - `feat/NNN-slug` (e.g. `feat/002-git-flow-integration`)
+> - `feat/TICKET-slug` (e.g. `feat/PROJ-123-git-flow`)
+> Type a pattern or pick A/B/C:"
+
+**Q2 — Ticket ID prefix (optional):**
+> "Do you use an external issue tracker (JIRA, GitHub Issues, Linear)? If yes, what is the ticket prefix? (e.g. `PROJ-`, `GH-`, or press Enter to skip)"
+
+**Q3 — Commit message format:**
+> "Commit message format? Default is Conventional Commits: `<type>(<scope>): <message>`. Press Enter to accept, or type your format:"
+
+**Q4 — Allowed commit types:**
+> "Allowed commit types? Default: feat, fix, docs, chore, refactor, test. Press Enter to accept, or list yours comma-separated:"
+
+After collecting answers, derive the POSIX regex for the chosen branch pattern:
+- `NNN-slug` → `"^[0-9]+-[a-z0-9-]+$"`
+- `feat/NNN-slug` → `"^(feat|fix|docs|chore|refactor|test)/[0-9]+-[a-z0-9-]+$"`
+- `feat/TICKET-slug` → `"^(feat|fix|docs|chore|refactor|test)/[A-Z]+-[0-9]+-[a-z0-9-]+$"`
+- Custom → generate best-effort regex and show it to the user for confirmation
+
+Write `docs/git-convention.md` with YAML frontmatter:
+
+```yaml
+---
+branch_pattern: "<derived regex>"
+ticket_prefix: "<answer or empty string>"
+commit_format: "<answer or default>"
+allowed_types:
+  - <type1>
+  - <type2>
+  ...
+---
+
+# Git Convention
+
+This file is read by SDD skills to enforce branch naming and commit message standards.
+To change these settings, edit this file directly.
+
+## Examples
+
+### Branch names
+- `<example using pattern A>`
+- `<example using pattern B>`
+
+### Commit messages
+- `<example using commit_format with allowed_types[0]>`
+- `<example using commit_format with allowed_types[1]>`
+```
+
+**Must not:** proceed to Step 6 without this file written.
+
+### Step 5.5 Initial Commit
+
+After all scaffold files are written, stage and commit the foundation:
+
+```bash
+git add memory/constitution.md docs/specs/.gitkeep CLAUDE.md docs/git-convention.md
+git commit -m "chore: initial SDD scaffold with constitutional foundation and git convention"
+```
+
 ## Step 6: Handoff
 
 After all scaffold files are created, report using "Created" for new files, "Updated" for files that were appended to, and "Skipped" for files that already had SDD content:
@@ -323,3 +391,4 @@ If the user exits the flow at any point before Step 5 begins:
 | User aborts during Article review | No files written; show abort message |
 | `memory/constitution.md` exists but `docs/specs/` does not | Skip Step 5.1 only; continue with Steps 5.2 and 5.3 as normal; warn: "constitution already exists — creating docs/specs/ and configuring CLAUDE.md only" |
 | `CLAUDE.md` exists but has no SDD content | Append SDD section after showing diff and getting approval |
+| User skips git convention Q&A (presses Ctrl-C during Step 5.4) | Write no files for Step 5.4; warn: "git-convention.md not created — git-touching skills will prompt you to create it on first use." Proceed with the rest of the scaffold. |
