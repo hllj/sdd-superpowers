@@ -13,7 +13,7 @@ Extend `sdd-workflow` to detect new (uninitialised) projects and trigger an inte
 
 ## Architecture
 
-Two skill files are the entire implementation surface. `sdd-workflow/SKILL.md` gains a "New Project Detection" block at its very top — before any routing logic — that checks for `CLAUDE.md` and `docs/specs/` and delegates to `sdd-init` if neither exists (FR-1). `sdd-init/SKILL.md` is a new skill that owns the full init ceremony: Nine Articles interactive review (FR-2, FR-3), scaffold file creation (FR-4), and an explicit handoff back to the caller's original intent (FR-5). The constitution template is embedded inline in `sdd-init/SKILL.md` so it is always co-located with the logic that writes it.
+Two skill files are the entire implementation surface. `sdd-workflow/SKILL.md` gains a "New Project Detection" block at its very top — before any routing logic — that checks for `CLAUDE.md` and `docs/specs/` and delegates to `sdd-init` if neither exists (FR-1). `sdd-init/SKILL.md` is a new skill that owns the full init ceremony: codebase exploration to build a Project Profile (FR-6), Nine Articles interactive review with personalised defaults (FR-2, FR-3), scaffold file creation (FR-4), and an explicit handoff back to the caller's original intent (FR-5). The constitution template is embedded inline in `sdd-init/SKILL.md` so it is always co-located with the logic that writes it.
 
 ## Tech Stack
 
@@ -26,7 +26,7 @@ Two skill files are the entire implementation surface. `sdd-workflow/SKILL.md` g
 ## File Structure
 
 - `skills/sdd-workflow/SKILL.md` — add New Project Detection block before routing (FR-1, FR-5)
-- `skills/sdd-init/SKILL.md` — new skill: Nine Articles review, scaffold creation, resume routing (FR-2, FR-3, FR-4, FR-5)
+- `skills/sdd-init/SKILL.md` — new skill: project context exploration, Nine Articles review, scaffold creation, resume routing (FR-2, FR-3, FR-4, FR-5, FR-6)
 - `docs/specs/001-constitutional-init/quickstart.md` — smoke-test scenarios
 
 ## Complexity Tracking
@@ -100,18 +100,23 @@ Two skill files are the entire implementation surface. `sdd-workflow/SKILL.md` g
 
 ---
 
-## Phase 2: sdd-init Skill — Nine Articles Review
+## Phase 2: sdd-init Skill — Project Exploration + Nine Articles Review
 
-**Implements:** FR-2, FR-3
+**Implements:** FR-2, FR-3, FR-6
 **Files:** `skills/sdd-init/SKILL.md`
 
 ### 2.1 Write behavioural contract (failing check)
 
 - [ ] Write verification checklist:
   ```
-  VERIFICATION CHECKLIST — sdd-init Nine Articles review
+  VERIFICATION CHECKLIST — sdd-init Nine Articles review + exploration
   [ ] sdd-init announces itself before doing anything
-  [ ] sdd-init presents Articles I–IX one at a time
+  [ ] sdd-init dispatches exploration subagent before Article review (Step 1.5)
+  [ ] exploration produces Project Profile (language, framework, type, tests, patterns)
+  [ ] defaults are personalised from Project Profile per personalisation table
+  [ ] IV–VI stubs remain [NEEDS CLARIFICATION] regardless of project context
+  [ ] sdd-init presents Articles I–IX one at a time (one per conversational turn)
+  [ ] each Article includes a one-sentence governance statement
   [ ] Articles I, II, III, VII, VIII, IX have pre-filled default content
   [ ] Articles IV, V, VI have [NEEDS CLARIFICATION] stubs with guidance
   [ ] Each Article offers: accept default / provide custom / mark not applicable

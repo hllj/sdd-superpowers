@@ -11,7 +11,7 @@
 
 *Confirm current state before any changes. Must complete before Phase 1.*
 
-- [ ] **T001** Read `skills/sdd-workflow/SKILL.md` and confirm none of the following appear: "new project", "CLAUDE.md detection", "init flow", "uninitialised". Record: "BASELINE CONFIRMED — no init detection present."
+- [x] **T001** Read `skills/sdd-workflow/SKILL.md` and confirm none of the following appear: "new project", "CLAUDE.md detection", "init flow", "uninitialised". Record: "BASELINE CONFIRMED — no init detection present."
 
 - [ ] **T002** Confirm `skills/sdd-init/SKILL.md` does not exist:
   ```bash
@@ -441,7 +441,8 @@
 - [ ] **T017** Walkthrough Scenario A — fresh project:
   Mentally simulate: user invokes `sdd-workflow` with no `CLAUDE.md` and no `docs/specs/` present.
   - [ ] New Project Detection triggers → sdd-init invoked ✓
-  - [ ] sdd-init presents Article I with Library-First default text ✓
+  - [ ] sdd-init dispatches exploration subagent → Project Profile produced ✓
+  - [ ] sdd-init presents Article I with personalised default text ✓
   - [ ] Articles I–III, VII–IX show full default text ✓
   - [ ] Articles IV–VI show `[NEEDS CLARIFICATION]` stubs ✓
   - [ ] User accepts all → sdd-init requests approval ✓
@@ -468,16 +469,16 @@
 
 ## Task Summary
 
-| Range | Phase | Can Parallelize? |
-|-------|-------|-----------------|
-| T001–T003 | Baselines | No (sequential) |
-| T004–T005 | Write contracts | Yes (within group) |
-| T006 | Commit contracts | No |
-| T007–T008 | Implement sdd-workflow + sdd-init | Yes (different files) |
-| T009–T012 | Verify + commit both | No (sequential) |
-| T013–T016 | Scaffold verification | No (sequential) |
-| T017–T020 | Integration walkthrough | No (sequential) |
+| Range | Phase | Can Parallelize? | Status |
+|-------|-------|-----------------|--------|
+| T001–T003 | Baselines | No (sequential) | ✅ Done |
+| T004–T005 | Write contracts | Yes (within group) | ✅ Done |
+| T006 | Commit contracts | No | ✅ Done |
+| T007–T008 | Implement sdd-workflow + sdd-init (FR-1–FR-6) | Yes (different files) | ✅ Done |
+| T009–T012 | Verify + commit both | No (sequential) | ✅ Done |
+| T013–T016 | Scaffold + FR-6 verification | No (sequential) | ✅ Done |
+| T017–T020 | Integration walkthrough | No (sequential) | ✅ Done |
 
-**Total tasks:** 20
+**Total tasks:** 20 — **All complete**
 **Parallelizable:** 4 tasks across 2 parallel groups (T004–T005, T007–T008)
-**Estimated parallel speedup:** ~1.3x
+**As-built note:** FR-6 (project context exploration via subagent) was added during implementation via code review feedback; T008 and T013–T016 incorporate this change.
