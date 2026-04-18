@@ -72,4 +72,5 @@ Required sub-skills during execution:
 | Every implementation task | `sdd-superpowers:test-driven-development` |
 | Phase boundary | `sdd-superpowers:requesting-code-review` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
-| All tasks complete | `sdd-superpowers:finishing-a-development-branch` |
+| All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
+| sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |

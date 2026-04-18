@@ -124,7 +124,7 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 
 **`sdd-superpowers:sdd-review` is mandatory when:**
 - Spec is about to be handed to planning (spec review mode)
-- Implementation claims to be complete (implementation review mode)
+- All tasks in `tasks.md` are complete — REQUIRED before `finishing-a-development-branch` (implementation review mode)
 
 **`sdd-superpowers:requesting-code-review` is mandatory when:**
 - Completing a phase in `sdd-superpowers:sdd-execute` before starting the next phase
