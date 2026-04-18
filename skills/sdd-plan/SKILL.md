@@ -11,9 +11,19 @@ description: Use when a feature spec exists and needs to become a technical impl
 
 Transform a feature specification into a complete, executable implementation plan. Every architecture choice, data model, and API contract must be justified by a requirement in `spec.md` — if a decision has no spec backing, question whether it belongs.
 
+<HARD-GATE>
+Do NOT start planning until ALL of the following are true:
+1. `spec.md` exists at `docs/specs/NNN-slug/spec.md`
+2. The user has explicitly approved the spec in this session
+3. Zero `[NEEDS CLARIFICATION]` items remain in the spec
+
+If any condition fails: stop. If unsure whether the spec is ready, run `sdd-superpowers:sdd-review` (Mode A) first.
+</HARD-GATE>
+
 ## When to Use
 
-- A `spec.md` exists and has been approved (no `[NEEDS CLARIFICATION]` remaining)
+- `spec.md` exists and the user has explicitly approved it
+- No `[NEEDS CLARIFICATION]` items remain in the spec
 - Optionally: `research.md` exists with tech investigation results
 - NOT before a spec exists — run `sdd-superpowers:sdd-specify` first
 - NOT when spec has unresolved open questions — resolve them first

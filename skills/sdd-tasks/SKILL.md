@@ -11,9 +11,17 @@ description: Use when an implementation plan exists and needs to become an order
 
 Convert an implementation plan into a flat, ordered, executable task list with parallelization hints. Tasks are the atomic unit of SDD execution — each has unambiguous done criteria, complete code, and an exact verification command.
 
+<HARD-GATE>
+Do NOT generate tasks until ALL of the following are true:
+1. `plan.md` exists at `docs/specs/NNN-slug/plan.md`
+2. The user has explicitly approved the plan in this session
+
+If the plan exists but hasn't been approved: present it and wait for explicit confirmation before generating any tasks.
+</HARD-GATE>
+
 ## When to Use
 
-- A `plan.md` exists and execution is imminent
+- `plan.md` exists and the user has explicitly approved it
 - You want to track progress or dispatch agents
 - NOT before a plan exists — run `sdd-superpowers:sdd-plan` first
 
