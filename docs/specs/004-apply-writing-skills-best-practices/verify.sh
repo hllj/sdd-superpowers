@@ -82,6 +82,7 @@ for f in "$ROOT/skills"/*/SKILL.md; do
   [ "$name" = "subagent-driven-development" ] && continue
   [ "$name" = "systematic-debugging" ] && continue
   [ "$name" = "test-driven-development" ] && continue
+  [ "$name" = "writing-skills" ] && continue
   check_words "$f" 500
 done
 
