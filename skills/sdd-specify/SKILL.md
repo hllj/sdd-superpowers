@@ -47,4 +47,10 @@ After writing the spec, check inline — no subagent needed:
 3. **Goals vs Non-Goals** — each item is in the right section
 4. **Open Questions** — all unknowns explicitly captured
 
-Fix issues before presenting the spec to the user. After the user explicitly approves the spec, update `Status: Draft` → `Status: Approved` in spec.md before handing off to sdd-plan.
+Fix issues before presenting the spec to the user.
+
+## Execution Handoff
+
+After the user explicitly approves the spec:
+1. Update `Status: Draft` → `Status: Approved` in `spec.md`.
+2. Offer: "Spec complete and approved. Next: run `sdd-superpowers:sdd-plan` to create the implementation plan."
