@@ -30,11 +30,6 @@ Spec sections: Problem Statement → Goals → Non-Goals → Users and Context �
 
 **Fast-path:** if `design.md` exists from `sdd-superpowers:sdd-brainstorm`, Steps 2–3 are skipped — the design is formalized directly.
 
-Key rules:
-- Requirements describe WHAT, never HOW (no technology mentions)
-- Every acceptance criterion must be testable (convertible to a passing/failing test)
-- Never leave vague placeholders — use `[NEEDS CLARIFICATION]` instead
-
 See [reference.md](reference.md) for the full process (Steps 1–8), spec.md template, self-review checklist, placeholder anti-patterns, and handoff options.
 
 ## Remember
