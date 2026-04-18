@@ -44,3 +44,33 @@ Implementer status handling:
 | BLOCKED | Assess: context / model upgrade / split task / escalate |
 
 See [reference.md](reference.md) for the full dispatch procedure, parallel group safety checks, model selection guide, and repeated-failure escalation paths.
+
+## When to Stop and Ask
+
+**STOP executing immediately when:**
+- A dependency is missing or broken
+- A test fails repeatedly with no clear fix path
+- An instruction in the plan is unclear or contradictory
+- A plan gap prevents you from starting a task
+
+Ask for clarification rather than guessing. Don't force through blockers.
+
+## Remember
+
+- Follow plan steps exactly — don't improvise or optimize away steps
+- Don't skip verifications
+- Reference sub-skills when the plan says to
+- Stop when blocked — never guess past a blocker
+- Never start implementation on main/master without explicit user consent
+
+## Integration
+
+Required sub-skills during execution:
+
+| When | Sub-skill |
+|------|-----------|
+| Every implementation task | `sdd-superpowers:test-driven-development` |
+| Phase boundary | `sdd-superpowers:requesting-code-review` |
+| About to claim done | `sdd-superpowers:verification-before-completion` |
+| All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
+| sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |

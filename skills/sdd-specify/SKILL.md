@@ -30,9 +30,27 @@ Spec sections: Problem Statement → Goals → Non-Goals → Users and Context �
 
 **Fast-path:** if `design.md` exists from `sdd-superpowers:sdd-brainstorm`, Steps 2–3 are skipped — the design is formalized directly.
 
-Key rules:
-- Requirements describe WHAT, never HOW (no technology mentions)
-- Every acceptance criterion must be testable (convertible to a passing/failing test)
-- Never leave vague placeholders — use `[NEEDS CLARIFICATION]` instead
-
 See [reference.md](reference.md) for the full process (Steps 1–8), spec.md template, self-review checklist, placeholder anti-patterns, and handoff options.
+
+## Remember
+
+- Requirements describe WHAT, never HOW — no technology mentions in the spec
+- Every acceptance criterion must be testable (convertible to a passing/failing test)
+- Use `[NEEDS CLARIFICATION]` over vague text — never leave ambiguity unmarked
+
+## Self-Review
+
+After writing the spec, check inline — no subagent needed:
+
+1. **Testability** — every acceptance criterion can become a passing/failing test
+2. **No placeholders** — no vague text; `[NEEDS CLARIFICATION]` used where needed
+3. **Goals vs Non-Goals** — each item is in the right section
+4. **Open Questions** — all unknowns explicitly captured
+
+Fix issues before presenting the spec to the user.
+
+## Execution Handoff
+
+After the user explicitly approves the spec:
+1. Update `Status: Draft` → `Status: Approved` in `spec.md`.
+2. Offer: "Spec complete and approved. Next: run `sdd-superpowers:sdd-plan` to create the implementation plan."
