@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-04-18
+
+### Added
+
+- **`memory/constitution.md`** — Nine Articles constitutional foundation establishing immutable architectural principles for the sdd-superpowers project itself
+- **`sdd-plan`: Scope Check section** — prompts splitting multi-subsystem specs into sub-specs before planning begins
+- **`sdd-plan`: File Structure section** — requires mapping all files and responsibilities before defining phases
+- **`sdd-plan`: No Placeholders section** — lists forbidden plan patterns (TBD, "Similar to Phase N", steps without code)
+- **`sdd-plan`: Self-Review section** — inline checklist: spec coverage, placeholder scan, type/signature consistency
+- **`sdd-plan`: Execution Handoff section** — offers `sdd-tasks` as next step after plan is saved
+- **`sdd-tasks`: Bite-Sized Task Granularity section** — defines one-action-per-step rule with write/verify/implement/verify/commit examples
+- **`sdd-tasks`: No Placeholders section** — lists forbidden task patterns
+- **`sdd-tasks`: Remember section** — key rules: exact paths, complete code, exact commands with expected output
+- **`sdd-tasks`: Execution Handoff section** — offers `sdd-execute` as next step after tasks.md is saved
+- **`sdd-execute`: When to Stop and Ask section** — explicit stop conditions: missing dependency, repeated failure, unclear instruction, plan gap
+- **`sdd-execute`: Remember section** — follow plan exactly, don't skip verifications, stop when blocked
+- **`sdd-execute`: Integration section** — required sub-skills table: test-driven-development, requesting-code-review, verification-before-completion, sdd-review, finishing-a-development-branch
+- **`sdd-specify`: Remember section** — WHAT not HOW, testable acceptance criteria, `[NEEDS CLARIFICATION]` usage
+- **`sdd-specify`: Self-Review section** — inline checklist: testability, no placeholders, goals/non-goals, open questions
+- **`sdd-specify`: Execution Handoff section** — status update Draft→Approved + offer `sdd-plan` as next step
+
+### Changed
+
+- **`sdd-plan` and `sdd-tasks` HARD-GATEs** — now require `spec.md` status to be `Approved` (not `Draft`) before planning or task generation begins
+- **`sdd-workflow` routing table** — `sdd-review` (post-implementation) is now an explicit required step after `sdd-execute`, before `finishing-a-development-branch`
+- **`sdd-workflow` Common Mistakes** — added: "Skipping `sdd-review` after implementation"
+- **`sdd-workflow` routing.md** — `sdd-review` mandatory condition now states "REQUIRED before `finishing-a-development-branch`"
+- **`sdd-specify` Quick Reference** — removed duplicate "Key rules" list (now canonical in Remember section)
+
+---
+
 ## [2.1.0] - 2026-04-18
 
 ### Added
