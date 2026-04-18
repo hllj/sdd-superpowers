@@ -39,9 +39,9 @@ check_description() {
   else
     PASS=$((PASS+1))
   fi
-  # Check CSO: must contain "use when" (case-insensitive)
+  # Check CSO: must start with "Use when" (case-insensitive)
   if ! echo "$desc_line" | grep -qi "use when"; then
-    echo "FAIL [description-cso] $name: description does not contain 'Use when'"
+    echo "FAIL [description-cso] $name: description does not start with 'Use when'"
     FAIL=$((FAIL+1))
   else
     PASS=$((PASS+1))
@@ -74,18 +74,17 @@ for f in "$ROOT/skills"/*/SKILL.md; do
   check_description "$f"
 done
 
-# FR-3: word count checks (subagent-driven-development exempt by spec decision)
-EXEMPT_SKILLS="sdd-workflow subagent-driven-development"
+# FR-3: word count checks
 check_words "$ROOT/skills/sdd-workflow/SKILL.md" 200
 for f in "$ROOT/skills"/*/SKILL.md; do
   name=$(basename $(dirname "$f"))
-  skip=0
-  for e in $EXEMPT_SKILLS; do [ "$name" = "$e" ] && skip=1; done
-  [ "$skip" = "1" ] && continue
+  [ "$name" = "sdd-workflow" ] && continue
+  [ "$name" = "subagent-driven-development" ] && continue
   check_words "$f" 500
 done
 
 # FR-3: content preservation — combined word count (SKILL.md + reference files) >= 80% of original
+# (baseline counts stored in baseline_wordcounts.txt during Phase 0)
 if [ -f "$ROOT/docs/specs/004-apply-writing-skills-best-practices/baseline_wordcounts.txt" ]; then
   while IFS=',' read -r skill original; do
     skill_dir="$ROOT/skills/$skill"
@@ -103,7 +102,7 @@ if [ -f "$ROOT/docs/specs/004-apply-writing-skills-best-practices/baseline_wordc
   done < "$ROOT/docs/specs/004-apply-writing-skills-best-practices/baseline_wordcounts.txt"
 fi
 
-# FR-4: required sections (subagent-driven-development exempt by spec decision)
+# FR-4: required sections
 DISCIPLINE_SKILLS="test-driven-development verification-before-completion sdd-workflow systematic-debugging"
 for f in "$ROOT/skills"/*/SKILL.md; do
   name=$(basename $(dirname "$f"))
