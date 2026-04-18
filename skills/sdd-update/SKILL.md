@@ -83,6 +83,14 @@ Stop when the new requirement could be written as a testable acceptance criterio
 - Updating tasks but not the spec — spec is always updated first
 - Forgetting to flag in-progress code during a MAJOR bump
 
+## Integration
+
+Required sub-skills:
+
+| When | Sub-skill |
+|------|-----------|
+| Committing versioned spec, plan, and tasks after propagation | `sdd-superpowers:using-git` |
+
 ## Execution Handoff
 
 After propagating changes:

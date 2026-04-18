@@ -1,7 +1,8 @@
 # Feature 006: SDD Update Skill
 
 **Status:** Approved
-**Version:** 1.0.0
+**Version:** 1.1.0
+**Last Updated:** 2026-04-19
 **Created:** 2026-04-19
 **Branch:** `006-sdd-update-skill`
 
@@ -141,6 +142,17 @@ The `sdd-update` skill must be registered in `sdd-workflow` as a mandatory routi
 - Appear in the Common Mistakes section of `sdd-workflow/SKILL.md`
 - Appear in the skills table and workflow diagram in `CLAUDE.md`
 
+### FR-7: Sub-skill Integration Registration
+The `sdd-update` SKILL.md must explicitly list the bundled support skills it invokes and the conditions under which each is triggered.
+
+**Must:**
+- Include an Integration section in `skills/sdd-update/SKILL.md`
+- Register `sdd-superpowers:using-git` as the required sub-skill for committing versioned spec, plan, and tasks after propagation
+- Use the standard Integration table format (When | Sub-skill columns) consistent with other SDD skills
+
+**Must not:**
+- Leave sub-skill invocations implicit or undocumented in the skill body
+
 ## Non-Functional Requirements
 
 ### Traceability
@@ -174,3 +186,10 @@ None.
 - Visual diff between spec versions
 - Automated detection of spec-code divergence (would require static analysis)
 - Multi-spec change coordination (a change that affects two features simultaneously)
+
+## Changelog
+
+| Version | Date | Change |
+|---------|------|--------|
+| 1.0.0 | 2026-04-19 | Initial approved spec |
+| 1.1.0 | 2026-04-19 | Added FR-7: Sub-skill Integration Registration — explicit Integration section in SKILL.md listing required sub-skills |

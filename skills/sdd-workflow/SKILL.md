@@ -31,6 +31,12 @@ Entry point for SDD. When a skill might apply, invoke it before acting — non-n
 | Task fails | `sdd-superpowers:systematic-debugging` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | Merge decision | `sdd-superpowers:finishing-a-development-branch` |
+| Any git operation (branch, commit, convention) | `sdd-superpowers:using-git` |
+| Any implementation task | `sdd-superpowers:test-driven-development` |
+| Phase boundary during execution | `sdd-superpowers:requesting-code-review` |
+| Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
+| Dispatching 2+ independent tasks | `sdd-superpowers:dispatching-parallel-agents` |
+| Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
 
 ```
 NO PLAN without an approved spec

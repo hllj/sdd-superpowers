@@ -70,7 +70,12 @@ Required sub-skills during execution:
 | When | Sub-skill |
 |------|-----------|
 | Every implementation task | `sdd-superpowers:test-driven-development` |
+| Dispatching a parallel task group (2+ tasks) | `sdd-superpowers:dispatching-parallel-agents` |
+| Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
+| Per-task commits | `sdd-superpowers:using-git` |
 | Phase boundary | `sdd-superpowers:requesting-code-review` |
+| Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
+| Task fails or behavior unexpected | `sdd-superpowers:systematic-debugging` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
 | sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |

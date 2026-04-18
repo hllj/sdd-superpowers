@@ -33,3 +33,11 @@ NO COMPLETION CLAIMS WITHOUT RUNNING VERIFICATION COMMANDS AND READING THEIR OUT
 "Tests pass" requires running the command and reading output. "Spec-aligned" requires a line-by-line coverage matrix — not a general impression.
 
 See [reference.md](reference.md) for Mode A checklist (completeness, ambiguity scan, feasibility check), Mode B procedure (coverage matrix, drift detection, contract validation, test run), and full report templates.
+
+## Integration
+
+Required sub-skills:
+
+| When | Sub-skill |
+|------|-----------|
+| Before claiming review complete (Mode B) | `sdd-superpowers:verification-before-completion` |

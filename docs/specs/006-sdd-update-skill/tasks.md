@@ -252,6 +252,39 @@
 
 ---
 
+## [NEW v1.1.0] Task Group 9: Sub-skill Integration Registration (FR-7)
+
+### 9.1 — Verify Integration section absent from sdd-update/SKILL.md
+- [x] Run: `grep "## Integration" /Users/hllj/Projects/sdd-superpowers/skills/sdd-update/SKILL.md`
+- Expected: no output — confirmed before edit
+
+### 9.2 — Add Integration section to sdd-update/SKILL.md
+- [x] Edit `skills/sdd-update/SKILL.md`: insert before `## Execution Handoff`:
+  ```markdown
+  ## Integration
+
+  Required sub-skills:
+
+  | When | Sub-skill |
+  |------|-----------|
+  | Committing versioned spec, plan, and tasks after propagation | `sdd-superpowers:using-git` |
+  ```
+
+### 9.3 — Verify Integration section present
+- [x] Run: `grep -c "## Integration\|using-git" /Users/hllj/Projects/sdd-superpowers/skills/sdd-update/SKILL.md`
+- Expected: `2`
+
+### 9.4 — Update spec 006 to v1.1.0
+- [x] Edit `docs/specs/006-sdd-update-skill/spec.md`: bump Version to `1.1.0`, add Last Updated, add FR-7, add Changelog section
+
+### 9.5 — Update plan 006 to v1.1.0
+- [x] Edit `docs/specs/006-sdd-update-skill/plan.md`: add Phase 8, update File Structure table, update Self-Review, add Plan Changelog
+
+### 9.6 — Update tasks 006 with this task group
+- [x] Edit `docs/specs/006-sdd-update-skill/tasks.md`: add Task Group 9, update Completion Checklist
+
+---
+
 ## Completion Checklist
 
 - [x] FR-1: Clarification dialogue enforced before classification
@@ -260,3 +293,4 @@
 - [x] FR-4: Propagation order enforced (spec → plan → tasks → flag code)
 - [x] FR-5: Resume rules defined for all three bump levels
 - [x] FR-6: sdd-update registered in sdd-workflow routing, routing.md, and CLAUDE.md
+- [x] FR-7: Integration section in SKILL.md listing using-git as required sub-skill

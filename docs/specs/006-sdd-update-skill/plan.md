@@ -2,6 +2,7 @@
 
 **Spec:** `docs/specs/006-sdd-update-skill/spec.md`
 **Status:** Draft
+**Plan Version:** 1.1.0 (added v1.1.0)
 
 ---
 
@@ -52,6 +53,7 @@ Phase 7: Verification — FR coverage check
 | `skills/sdd-workflow/SKILL.md` | Add `sdd-update` row to routing table; add to Common Mistakes | 4 |
 | `skills/sdd-workflow/routing.md` | Add `sdd-update` to skill map, priority ordering, mandatory conditions, red flags | 5 |
 | `CLAUDE.md` | Add `sdd-update` to skills table, workflow diagram, directory structure | 6 |
+| `skills/sdd-update/SKILL.md` | Add Integration section listing `using-git` as required sub-skill (added v1.1.0) | 8 |
 
 ---
 
@@ -352,6 +354,27 @@ After all files are written or updated, verify FR coverage inline:
 | FR-4: Propagation | SKILL.md §flowchart, reference.md Steps 4–6 | All 3 bump paths cover spec→plan→tasks→code order |
 | FR-5: Resume Rules | reference.md Step 7 | All 3 bump resume conditions defined |
 | FR-6: Workflow Integration | sdd-workflow/SKILL.md, routing.md, CLAUDE.md | All 4 routing.md sections updated; CLAUDE.md table, diagram, structure updated |
+| FR-7: Sub-skill Integration Registration | skills/sdd-update/SKILL.md §Integration | Integration table present; using-git listed with correct trigger condition |
+
+---
+
+## Phase 8: Sub-skill Integration Registration (added v1.1.0)
+
+Add an Integration section to `skills/sdd-update/SKILL.md` that explicitly lists which bundled support skills sdd-update invokes and when (FR-7).
+
+**Integration section to append before Execution Handoff:**
+
+```markdown
+## Integration
+
+Required sub-skills:
+
+| When | Sub-skill |
+|------|-----------|
+| Committing versioned spec, plan, and tasks after propagation | `sdd-superpowers:using-git` |
+```
+
+Position: after Common Mistakes, before Execution Handoff.
 
 ---
 
@@ -364,7 +387,15 @@ After all files are written or updated, verify FR coverage inline:
 - FR-4 → Phase 2 (flowchart) + Phase 3 (Steps 4–6) ✅
 - FR-5 → Phase 3 (Step 7) ✅
 - FR-6 → Phases 4, 5, 6 ✅
+- FR-7 → Phase 8 (added v1.1.0) ✅
 
 **Placeholder scan:** None found. ✅
 
 **Consistency:** All file paths, skill names (`sdd-superpowers:sdd-update`), and bump labels (PATCH/MINOR/MAJOR) are consistent across all phases. ✅
+
+## Plan Changelog
+
+| Version | Date | Change |
+|---------|------|--------|
+| 1.0.0 | 2026-04-19 | Initial plan |
+| 1.1.0 | 2026-04-19 | Added Phase 8: Sub-skill Integration Registration (FR-7) |
