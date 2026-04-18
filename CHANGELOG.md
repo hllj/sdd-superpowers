@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-04-18
+
+### Added
+
+- **`reference.md` overflow files** — each rewritten skill now has a companion `reference.md` containing full process steps, templates, and examples; `SKILL.md` links to it for progressive disclosure
+- **`skills/writing-skills/`** — writing-skills moved from repo root into `skills/` so it is discoverable alongside all other skills
+- **HARD-GATE blocks in `sdd-plan` and `sdd-tasks`** — enforces the Four Hard Gates at the skill level:
+  - `sdd-plan` blocks until `spec.md` is user-approved and all `[NEEDS CLARIFICATION]` items are resolved
+  - `sdd-tasks` blocks until `plan.md` is explicitly approved by the user
+- **`verify.sh`** — automated compliance script checking CSO descriptions, word budgets, section structure, and content preservation across all skills
+
+### Changed
+
+- **All `SKILL.md` descriptions** rewritten to CSO format: start with "Use when", state triggering condition only, no workflow summaries
+- **Word budgets enforced**: `sdd-workflow` ≤200 words; all other skills ≤500 words; overflow moved to `reference.md`
+- **Standard section structure** applied to all rewritten skills: `## Overview`, `## When to Use`, `## Quick Reference`, `## Common Mistakes` (discipline skills)
+- **`sdd-workflow`** — routing rules, red flags, and new-project detection moved to `routing.md`; SKILL.md trimmed to 199 words
+- **All cross-skill references** updated from bare names (e.g. `` `sdd-plan` ``) to fully-qualified `sdd-superpowers:` namespace (e.g. `` `sdd-superpowers:sdd-plan` ``) to match the `Skill` tool invocation format
+
+### Exempt (intentionally unchanged)
+
+- `subagent-driven-development`, `systematic-debugging`, `test-driven-development` — exempt from word-count reduction and section standardization; verbose content is intentional
+
+---
+
 ## [2.0.0] - 2026-04-17
 
 ### Added
@@ -107,6 +132,7 @@ docs/specs/NNN-feature/
 skills/          # All SDD and bundled Superpowers skills
 ```
 
+[2.1.0]: https://github.com/hllj/sdd-superpowers/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/hllj/sdd-superpowers/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/hllj/sdd-superpowers/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/hllj/sdd-superpowers/compare/v1.0.0...v1.1.0
