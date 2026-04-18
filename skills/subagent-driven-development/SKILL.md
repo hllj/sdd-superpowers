@@ -265,8 +265,8 @@ Done!
 ## Integration
 
 **Required workflow skills:**
-- **using-git** - For any git operation (branch creation, commits, convention validation); advanced worktrees guidance available within `using-git`
-- **superpowers:writing-plans** - Creates the plan this skill executes (SDD equivalent: `sdd-plan`)
+- **using-git** - For any git operation (branch creation, commits, convention validation); advanced worktrees guidance available within `sdd-superpowers:using-git`
+- **superpowers:writing-plans** - Creates the plan this skill executes (SDD equivalent: `sdd-superpowers:sdd-plan`)
 - **requesting-code-review** - Code review template for reviewer subagents
 - **finishing-a-development-branch** - Complete development after all tasks
 
@@ -274,4 +274,4 @@ Done!
 - **test-driven-development** - Subagents follow TDD for each task
 
 **Alternative workflow:**
-- **superpowers:executing-plans** - Use for parallel session instead of same-session execution (SDD equivalent: `sdd-execute`)
+- **superpowers:executing-plans** - Use for parallel session instead of same-session execution (SDD equivalent: `sdd-superpowers:sdd-execute`)
