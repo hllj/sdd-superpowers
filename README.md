@@ -45,6 +45,7 @@ NO COMPLETION CLAIM without fresh verification evidence
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
 | `sdd-execute` | Tasks exist → subagent dispatch with spec-compliance + code-quality review |
+| `sdd-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
 | `sdd-review` | Spec completeness check (pre-plan) or implementation alignment (post-execute) |
 
 ## Workflow
@@ -73,8 +74,11 @@ sdd-tasks ────────────────────► docs/s
  │
  ▼
 sdd-execute ──────────────────► Implementation with per-task subagents
-                                 Spec-compliance review after each task
-                                 Code-quality review after each task
+ │    ▲                          Spec-compliance review after each task
+ │    │ (mid-flight change)      Code-quality review after each task
+ │  sdd-update ────────────────► classify PATCH/MINOR/MAJOR
+ │    │                          version spec, propagate downstream
+ │    └── resume execution
  │
  ▼
 sdd-review ───────────────────► Coverage matrix + test verification
@@ -96,6 +100,7 @@ finishing-a-development-branch ──► merge / PR / keep / discard
 # 2. Use sdd-plan to plan the feature
 # 3. Use sdd-tasks to generate the task list
 # 4. Use sdd-execute to implement it
+#    (if requirements change mid-flight: use sdd-update first)
 # 5. Use sdd-review to validate the implementation
 ```
 
@@ -108,7 +113,7 @@ These skills are invoked at specific SDD workflow points:
 | Task fails or behavior unexpected | `systematic-debugging` |
 | About to claim anything is complete | `verification-before-completion` |
 | All tasks done, tests passing | `finishing-a-development-branch` |
-| Setting up isolated feature workspace | `using-git-worktrees` |
+| Any git operation — branches, commits, convention | `using-git` |
 | Any implementation task (every task) | `test-driven-development` |
 | At a phase boundary during execution | `requesting-code-review` |
 | Implementing fixes after review feedback | `receiving-code-review` |

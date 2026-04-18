@@ -69,6 +69,14 @@ These are task failures — never write them:
 - Exact commands with expected output — e.g. `pytest tests/foo.py::test_bar -v` / Expected: PASS
 - Every implementation step must have a prior failing test step
 
+## Integration
+
+Required sub-skills:
+
+| When | Sub-skill |
+|------|-----------|
+| Branch creation + doc-first commit after `tasks.md` is written | `sdd-superpowers:using-git` |
+
 ## Execution Handoff
 
 After saving `tasks.md`, offer:
