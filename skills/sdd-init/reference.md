@@ -255,6 +255,17 @@ Write `CLAUDE.md` with:
 ```markdown
 # <Project Name>
 
+## Project Context
+
+Read these sources at the start of every conversation to understand the current state of the project:
+
+| Source | What it contains |
+|--------|-----------------|
+| `memory/constitution.md` | Nine Articles — immutable architectural principles |
+| `memory/MEMORY.md` | Index of all persistent memory files (user preferences, decisions, feedback) |
+| `docs/git-convention.md` | Branch naming regex, commit format, allowed types |
+| `docs/specs/` | All feature specs, plans, and task lists — check here before starting any new feature |
+
 ## Architecture
 
 Governed by [Project Constitution](memory/constitution.md). All implementation plans must pass gates derived from the Nine Articles. Constitution amendments require explicit approval per Section 4.2.
