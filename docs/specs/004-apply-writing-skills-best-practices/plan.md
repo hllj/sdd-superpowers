@@ -58,6 +58,7 @@ All Pre-Implementation Gates passed.
 
 - **sdd-init:** At 2282 words, aggressive trimming is required. All gate language and rules must be relocated to `skills/sdd-init/reference.md` — none may be deleted. The 500-word target is hard; no exception.
 - **sdd-workflow:** Target is ≤200 words (stricter). Routing table and gate text move to `skills/sdd-workflow/routing.md`. Writing-skills is discoverable-only — not added to the routing table.
+- **subagent-driven-development:** Exempt from FR-3 and FR-4. Its process flowchart, worked example, and status-handling detail are intentional depth — not bloat. verify.sh skips word-count and section checks for this skill. T015 is removed from execution.
 
 ---
 

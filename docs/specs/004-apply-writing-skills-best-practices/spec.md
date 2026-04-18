@@ -147,6 +147,7 @@ Each SKILL.md must include standard sections.
 
 - **sdd-init word target:** Applies the same ≤500-word target. No exception.
 - **writing-skills in routing table:** Remains discoverable-only. Not added to sdd-workflow routing table.
+- **subagent-driven-development:** Exempt from FR-3 word-count reduction and FR-4 structure standardization. Its current content (process flowchart, worked example, status-handling detail) is intentional and should not be trimmed. verify.sh excludes this skill from word-count and section checks.
 
 ## Out of Scope (Future Considerations)
 
