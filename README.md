@@ -115,6 +115,19 @@ These skills are invoked at specific SDD workflow points:
 | Dispatching 2+ independent tasks | `dispatching-parallel-agents` |
 | Executing tasks in current session | `subagent-driven-development` |
 
+## Project Context (CLAUDE.md)
+
+When sdd-init creates `CLAUDE.md` for a new project, it includes pointers to context sources that Claude should read at the start of each conversation:
+
+| Source | What it contains |
+|--------|-----------------|
+| `memory/constitution.md` | Nine Articles — immutable architectural principles |
+| `memory/MEMORY.md` | Index of all persistent memory files |
+| `docs/git-convention.md` | Branch naming regex, commit format, allowed types |
+| `docs/specs/` | All feature specs, plans, and task lists |
+
+This ensures Claude always starts with full project context rather than re-deriving conventions from scratch.
+
 ## Requirements
 
 - [superpowers](https://github.com/obra/superpowers) plugin installed (`/plugin install superpowers@superpowers-marketplace`)

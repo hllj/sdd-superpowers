@@ -4,6 +4,19 @@ A set of Claude skills implementing **Specification-Driven Development (SDD)** �
 
 Built on the [superpowers](https://github.com/obra/superpowers) framework philosophy: skills enforce discipline through hard gates, iron laws, and verification requirements.
 
+## Project Context
+
+Before starting any work, read these sources to understand the current state of the project:
+
+| Source | What it contains |
+|--------|-----------------|
+| `memory/constitution.md` | Nine Articles — immutable architectural principles governing all implementation |
+| `memory/MEMORY.md` | Index of all persistent memory files — user preferences, project decisions, feedback |
+| `docs/git-convention.md` | Branch naming regex, commit format, allowed types |
+| `docs/specs/` | All feature specs, plans, and task lists from past and ongoing work |
+
+Always check `docs/specs/` for existing specs before starting a new feature — a spec may already exist for what you're about to build.
+
 ## What Is SDD?
 
 SDD inverts the traditional relationship between specs and code. Instead of writing code and hoping it matches intent, you write precise specifications first, then generate code from them. The spec is the authoritative artifact; code is its expression in a particular language and framework.
@@ -101,17 +114,23 @@ These skills are invoked at specific SDD workflow points and are included in thi
 ## Directory Structure
 
 ```
-docs/specs/
-  001-feature-name/
-    spec.md          # PRD — the source of truth
-    research.md      # Technical investigation (optional)
-    plan.md          # Implementation plan
-    data-model.md    # Entity definitions (optional)
-    contracts/       # API/event contracts (optional)
-      api.md
-      events.md
-    tasks.md         # Executable task list
-    quickstart.md    # Smoke test scenarios
+memory/
+  constitution.md   # Nine Articles — immutable architectural principles
+  MEMORY.md         # Index of all persistent memory files
+  *.md              # Individual memory files (user, feedback, project, reference)
+docs/
+  git-convention.md # Branch naming regex, commit format, allowed types
+  specs/
+    001-feature-name/
+      spec.md          # PRD — the source of truth
+      research.md      # Technical investigation (optional)
+      plan.md          # Implementation plan
+      data-model.md    # Entity definitions (optional)
+      contracts/       # API/event contracts (optional)
+        api.md
+        events.md
+      tasks.md         # Executable task list
+      quickstart.md    # Smoke test scenarios
 skills/
   sdd-workflow/           # Entry point — skill invocation rules + routing
   sdd-brainstorm/         # Fuzzy idea → design.md (visual companion + spec-reviewer subagent)
