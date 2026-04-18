@@ -1,6 +1,6 @@
 # SDD Init: Full Initialisation Procedure
 
-> This file contains the complete step-by-step procedure for `sdd-init`. See [SKILL.md](SKILL.md) for the summary.
+> This file contains the complete step-by-step procedure for `sdd-superpowers:sdd-init`. See [SKILL.md](SKILL.md) for the summary.
 
 **Announce at start:** "I'm using sdd-init to set up the Constitutional Foundation for this new SDD project."
 
@@ -263,13 +263,13 @@ Governed by [Project Constitution](memory/constitution.md). All implementation p
 
 | Situation | Skill |
 |-----------|-------|
-| Fuzzy idea | `sdd-brainstorm` |
-| Clear idea | `sdd-specify` |
-| Tech investigation needed | `sdd-research` |
-| Spec approved | `sdd-plan` |
-| Plan approved | `sdd-tasks` |
-| Tasks ready | `sdd-execute` |
-| Verify spec alignment | `sdd-review` |
+| Fuzzy idea | `sdd-superpowers:sdd-brainstorm` |
+| Clear idea | `sdd-superpowers:sdd-specify` |
+| Tech investigation needed | `sdd-superpowers:sdd-research` |
+| Spec approved | `sdd-superpowers:sdd-plan` |
+| Plan approved | `sdd-superpowers:sdd-tasks` |
+| Tasks ready | `sdd-superpowers:sdd-execute` |
+| Verify spec alignment | `sdd-superpowers:sdd-review` |
 
 **Hard Gates:**
 - NO PLAN without an approved spec
@@ -365,13 +365,13 @@ After all scaffold files are created, report using "Created" for new files, "Upd
 >
 > Returning to your original request now."
 
-Then return control to `sdd-workflow` to route the user's original request.
+Then return control to `sdd-superpowers:sdd-workflow` to route the user's original request.
 
 ## Abort Handling
 
 If the user exits the flow at any point before Step 5 begins:
 - Write NO files
-- Say: "Init aborted. No files were created. Run `sdd-workflow` again to restart the constitutional setup."
+- Say: "Init aborted. No files were created. Run `sdd-superpowers:sdd-workflow` again to restart the constitutional setup."
 
 **Important:** Once Step 5 begins, write all three scaffold files in one uninterrupted sequence (constitution.md → .gitkeep → CLAUDE.md) without pausing for user input between files. This prevents partial scaffold state if the session is interrupted mid-write.
 

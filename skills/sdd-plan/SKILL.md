@@ -15,7 +15,7 @@ Transform a feature specification into a complete, executable implementation pla
 
 - A `spec.md` exists and has been approved (no `[NEEDS CLARIFICATION]` remaining)
 - Optionally: `research.md` exists with tech investigation results
-- NOT before a spec exists — run `sdd-specify` first
+- NOT before a spec exists — run `sdd-superpowers:sdd-specify` first
 - NOT when spec has unresolved open questions — resolve them first
 
 ## Quick Reference

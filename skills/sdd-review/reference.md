@@ -207,10 +207,10 @@ Confirm:
 If SPEC-ALIGNED:
 > "Implementation review complete — coverage matrix built, tests run (`<N> passing, 0 failing`), all requirements covered. Implementation matches spec.
 >
-> Ready to integrate. Use `finishing-a-development-branch` to choose merge, PR, or cleanup."
+> Ready to integrate. Use `sdd-superpowers:finishing-a-development-branch` to choose merge, PR, or cleanup."
 
 If DRIFT DETECTED or INCOMPLETE:
-> "Review found issues (see report above). Address them, then re-run `sdd-review` to confirm alignment before merging. Use `systematic-debugging` if any failures have unclear root causes."
+> "Review found issues (see report above). Address them, then re-run `sdd-superpowers:sdd-review` to confirm alignment before merging. Use `sdd-superpowers:systematic-debugging` if any failures have unclear root causes."
 
 ---
 

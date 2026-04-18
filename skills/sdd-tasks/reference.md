@@ -130,15 +130,15 @@ Check before presenting:
 
 ## Step 5: Branch Creation and Doc-First Commit
 
-Invoke `using-git` — **Branch Creation and Doc-First Commit**
+Invoke `sdd-superpowers:using-git` — **Branch Creation and Doc-First Commit**
 
-Pass to `using-git`:
+Pass to `sdd-superpowers:using-git`:
 - Spec folder path: `docs/specs/<NNN>-<feature-slug>/`
 - Optional ticket ID: ask the user now if not already known
 
-`using-git` will handle: convention loading, branch name suggestions, branch creation, doc staging, commit message confirmation, and commit execution.
+`sdd-superpowers:using-git` will handle: convention loading, branch name suggestions, branch creation, doc staging, commit message confirmation, and commit execution.
 
-Proceed to Step 6 (Handoff) only after `using-git` reports:
+Proceed to Step 6 (Handoff) only after `sdd-superpowers:using-git` reports:
 - Branch `<name>` created
 - Doc-first commit made: `<commit-sha>`
 
@@ -152,7 +152,7 @@ Proceed to Step 6 (Handoff) only after `using-git` reports:
 > **Execution options:**
 >
 > **Option A — Subagent-driven (recommended):**
-> Use `sdd-execute` — dispatches a fresh subagent per task with spec-compliance review and code-quality review after each task. Parallel groups dispatched concurrently.
+> Use `sdd-superpowers:sdd-execute` — dispatches a fresh subagent per task with spec-compliance review and code-quality review after each task. Parallel groups dispatched concurrently.
 >
 > **Option B — Manual/inline:**
 > Work through tasks in order, completing each checkbox before starting the next."

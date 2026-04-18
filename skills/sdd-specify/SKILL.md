@@ -18,9 +18,9 @@ Do NOT write any implementation code, scaffold any project, or make any architec
 ## When to Use
 
 - A new feature, idea, or problem needs to be formalized
-- `sdd-brainstorm` has completed and `design.md` exists (fast-path)
-- NOT when spec already exists — go to `sdd-plan` or `sdd-research`
-- NOT when the idea is still fuzzy — run `sdd-brainstorm` first
+- `sdd-superpowers:sdd-brainstorm` has completed and `design.md` exists (fast-path)
+- NOT when spec already exists — go to `sdd-superpowers:sdd-plan` or `sdd-superpowers:sdd-research`
+- NOT when the idea is still fuzzy — run `sdd-superpowers:sdd-brainstorm` first
 
 ## Quick Reference
 
@@ -28,7 +28,7 @@ Spec output: `docs/specs/NNN-<slug>/spec.md`
 
 Spec sections: Problem Statement → Goals → Non-Goals → Users and Context → User Stories (with acceptance criteria) → Functional Requirements → Non-Functional Requirements → Error Scenarios → Open Questions → Out of Scope
 
-**Fast-path:** if `design.md` exists from `sdd-brainstorm`, Steps 2–3 are skipped — the design is formalized directly.
+**Fast-path:** if `design.md` exists from `sdd-superpowers:sdd-brainstorm`, Steps 2–3 are skipped — the design is formalized directly.
 
 Key rules:
 - Requirements describe WHAT, never HOW (no technology mentions)

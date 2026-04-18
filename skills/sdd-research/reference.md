@@ -145,7 +145,7 @@ Present a summary of key findings and decisions made:
 >
 > **Remaining questions needing your input:** <list any DECISION NEEDED items>
 >
-> Ready to proceed with `sdd-plan`."
+> Ready to proceed with `sdd-superpowers:sdd-plan`."
 
 ## Research Quality Standards
 

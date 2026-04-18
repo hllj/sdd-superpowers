@@ -19,16 +19,16 @@ Entry point for SDD. When a skill might apply, invoke it before acting — non-n
 
 | Situation | Invoke |
 |-----------|--------|
-| Fuzzy or exploratory idea | `sdd-brainstorm` |
-| Clear idea | `sdd-specify` |
-| Unresolved tech choices | `sdd-research` |
-| Spec exists | `sdd-plan` |
-| Plan exists | `sdd-tasks` |
-| Tasks exist | `sdd-execute` |
-| Alignment check | `sdd-review` |
-| Task fails | `systematic-debugging` |
-| About to claim done | `verification-before-completion` |
-| Merge decision | `finishing-a-development-branch` |
+| Fuzzy or exploratory idea | `sdd-superpowers:sdd-brainstorm` |
+| Clear idea | `sdd-superpowers:sdd-specify` |
+| Unresolved tech choices | `sdd-superpowers:sdd-research` |
+| Spec exists | `sdd-superpowers:sdd-plan` |
+| Plan exists | `sdd-superpowers:sdd-tasks` |
+| Tasks exist | `sdd-superpowers:sdd-execute` |
+| Alignment check | `sdd-superpowers:sdd-review` |
+| Task fails | `sdd-superpowers:systematic-debugging` |
+| About to claim done | `sdd-superpowers:verification-before-completion` |
+| Merge decision | `sdd-superpowers:finishing-a-development-branch` |
 
 ```
 NO PLAN without an approved spec
@@ -39,8 +39,8 @@ NO COMPLETION CLAIM without fresh verification evidence
 
 ## Common Mistakes
 
-- Skipping `sdd-brainstorm` — assess fuzziness first
-- Coding without a spec — `sdd-specify` first
-- Claiming done without evidence — `verification-before-completion`
+- Skipping `sdd-superpowers:sdd-brainstorm` — assess fuzziness first
+- Coding without a spec — `sdd-superpowers:sdd-specify` first
+- Claiming done without evidence — `sdd-superpowers:verification-before-completion`
 
 Full routing rules and red flags: See [routing.md](routing.md)

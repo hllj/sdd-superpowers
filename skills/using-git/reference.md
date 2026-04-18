@@ -13,10 +13,10 @@ Read `docs/git-convention.md` from the project root. Parse YAML frontmatter:
 - `allowed_types` — list of valid commit type prefixes
 
 **If `docs/git-convention.md` is missing:**
-- No `CLAUDE.md` in project root (new project): halt — "Run `sdd-init` first to establish a git convention."
+- No `CLAUDE.md` in project root (new project): halt — "Run `sdd-superpowers:sdd-init` first to establish a git convention."
 - `CLAUDE.md` exists (existing project): offer one-time creation dialogue:
   > "I need to set up your git convention. I'll ask 4 quick questions."
-  Ask the same 4 questions as `sdd-init` Step 5.4. Write `docs/git-convention.md`. Continue.
+  Ask the same 4 questions as `sdd-superpowers:sdd-init` Step 5.4. Write `docs/git-convention.md`. Continue.
 - If user declines the dialogue: halt — do not perform any git operation.
 
 ## Direct Invocation — Operation Menu
@@ -39,7 +39,7 @@ Wait for selection, then run the corresponding operation.
 
 ## Operation A — Branch Creation
 
-**Invoked by:** `sdd-tasks` Step 5, or directly via menu option (1)
+**Invoked by:** `sdd-superpowers:sdd-tasks` Step 5, or directly via menu option (1)
 
 **Inputs:** spec folder path (`docs/specs/NNN-slug/`), optional ticket ID
 
@@ -83,7 +83,7 @@ Wait for selection, then run the corresponding operation.
 
 ## Operation B — Doc-First Commit
 
-**Invoked by:** `sdd-tasks` Step 5 immediately after Operation A
+**Invoked by:** `sdd-superpowers:sdd-tasks` Step 5 immediately after Operation A
 
 **Inputs:** spec folder path (`docs/specs/NNN-slug/`)
 
@@ -117,7 +117,7 @@ Wait for selection, then run the corresponding operation.
 
 ## Operation C — Per-Task Commit
 
-**Invoked by:** `sdd-execute` Step 3e (delegation only — NOT available in the direct menu)
+**Invoked by:** `sdd-superpowers:sdd-execute` Step 3e (delegation only — NOT available in the direct menu)
 
 **Inputs:** prior commit SHA (from caller), task description
 
@@ -154,11 +154,11 @@ Wait for selection, then run the corresponding operation.
    git log --oneline -1
    ```
 
-**Output:** New commit SHA returned to caller (`sdd-execute`)
+**Output:** New commit SHA returned to caller (`sdd-superpowers:sdd-execute`)
 
 ## Operation D — Merge Commit Message
 
-**Invoked by:** `finishing-a-development-branch` Step 2.5, or directly via menu option (3)
+**Invoked by:** `sdd-superpowers:finishing-a-development-branch` Step 2.5, or directly via menu option (3)
 
 **Inputs:** current branch name
 
@@ -184,7 +184,7 @@ Wait for selection, then run the corresponding operation.
 
 | Scenario | Behavior |
 |----------|----------|
-| `docs/git-convention.md` missing, new project | Halt: "Run `sdd-init` first" |
+| `docs/git-convention.md` missing, new project | Halt: "Run `sdd-superpowers:sdd-init` first" |
 | `docs/git-convention.md` missing, existing project | Offer 4-question creation dialogue |
 | User declines convention creation | Halt without git operation |
 | Branch name violates `branch_pattern` | Warn + "Proceed anyway? (yes/no)" — require explicit yes |

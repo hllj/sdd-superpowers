@@ -15,7 +15,7 @@ Convert an implementation plan into a flat, ordered, executable task list with p
 
 - A `plan.md` exists and execution is imminent
 - You want to track progress or dispatch agents
-- NOT before a plan exists — run `sdd-plan` first
+- NOT before a plan exists — run `sdd-superpowers:sdd-plan` first
 
 ## Quick Reference
 
@@ -31,6 +31,6 @@ Task anatomy — one task = one atomic action:
 
 `[P]` marks tasks safe to run concurrently — they touch different files and have no shared dependencies.
 
-After generating `tasks.md`, invokes `using-git` for branch creation and doc-first commit.
+After generating `tasks.md`, invokes `sdd-superpowers:using-git` for branch creation and doc-first commit.
 
 See [reference.md](reference.md) for full derivation rules, tasks.md template (with parallel group format), validation checklist, and task quality rules.

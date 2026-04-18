@@ -15,11 +15,11 @@ Complete a development branch by verifying tests, preparing a merge commit messa
 
 ## When to Use
 
-- After `sdd-review` reports SPEC-ALIGNED and all tasks are complete
+- After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED and all tasks are complete
 - All tests passing on the feature branch
 - Choosing between merge / PR / keep / discard
 - **NOT** before tests pass — fix failures first
-- **NOT** before `sdd-review` in the SDD workflow
+- **NOT** before `sdd-superpowers:sdd-review` in the SDD workflow
 
 ## Quick Reference
 
@@ -27,7 +27,7 @@ Complete a development branch by verifying tests, preparing a merge commit messa
 |------|--------|
 | 1 | Verify tests pass (`npm test` / `pytest` / etc.) |
 | 2 | Determine base branch |
-| 2.5 | Invoke `using-git` — Merge Commit Message |
+| 2.5 | Invoke `sdd-superpowers:using-git` — Merge Commit Message |
 | 3 | Present exactly 4 options |
 | 4 | Execute chosen option |
 | 5 | Cleanup worktree (only if one was used) |

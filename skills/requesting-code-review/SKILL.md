@@ -16,7 +16,7 @@ Dispatch a `superpowers:code-reviewer` subagent with precisely crafted context t
 ## When to Use
 
 **Mandatory:**
-- After completing a phase in `sdd-execute` (blocking gate before next phase starts)
+- After completing a phase in `sdd-superpowers:sdd-execute` (blocking gate before next phase starts)
 - Before merge to main
 - After completing a major feature
 

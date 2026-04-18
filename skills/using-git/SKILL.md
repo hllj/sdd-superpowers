@@ -15,8 +15,8 @@ All SDD git operations run through this skill. It enforces the convention in `do
 
 - Creating a feature branch for a new spec
 - Making a doc-first commit after tasks.md is written
-- Making a per-task commit during `sdd-execute`
-- Generating a merge commit message for `finishing-a-development-branch`
+- Making a per-task commit during `sdd-superpowers:sdd-execute`
+- Generating a merge commit message for `sdd-superpowers:finishing-a-development-branch`
 - Showing or verifying the git convention
 - NOT for general shell git commands outside an SDD project context
 
@@ -24,12 +24,12 @@ All SDD git operations run through this skill. It enforces the convention in `do
 
 | Operation | Invoked by | Menu option |
 |-----------|-----------|-------------|
-| A — Branch Creation | `sdd-tasks`, user | 1 |
-| B — Doc-First Commit | `sdd-tasks` (after A), user | 2 (ad-hoc) |
-| C — Per-Task Commit | `sdd-execute` (delegation only) | not in menu |
-| D — Merge Commit Message | `finishing-a-development-branch`, user | 3 |
+| A — Branch Creation | `sdd-superpowers:sdd-tasks`, user | 1 |
+| B — Doc-First Commit | `sdd-superpowers:sdd-tasks` (after A), user | 2 (ad-hoc) |
+| C — Per-Task Commit | `sdd-superpowers:sdd-execute` (delegation only) | not in menu |
+| D — Merge Commit Message | `sdd-superpowers:finishing-a-development-branch`, user | 3 |
 | Show convention | user | 4 |
 
-Convention file: `docs/git-convention.md` (YAML frontmatter with `branch_pattern`, `commit_format`, `allowed_types`). Missing file on new project → halt, run `sdd-init`. Missing on existing project → offer 4-question creation dialogue.
+Convention file: `docs/git-convention.md` (YAML frontmatter with `branch_pattern`, `commit_format`, `allowed_types`). Missing file on new project → halt, run `sdd-superpowers:sdd-init`. Missing on existing project → offer 4-question creation dialogue.
 
 See [reference.md](reference.md) for convention loading detail, full operation procedures (A–D), error reference table, and worktrees guide.

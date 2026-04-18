@@ -33,14 +33,14 @@ Or ask: "This branch split from main - is that correct?"
 
 ## Step 2.5: Prepare Merge Commit Message
 
-Invoke `using-git` — **Merge Commit Message**
+Invoke `sdd-superpowers:using-git` — **Merge Commit Message**
 
-Pass to `using-git`:
+Pass to `sdd-superpowers:using-git`:
 - Current branch name: `git branch --show-current`
 
-`using-git` will handle: convention loading, scope derivation, message suggestion, validation, re-prompting on violation.
+`sdd-superpowers:using-git` will handle: convention loading, scope derivation, message suggestion, validation, re-prompting on violation.
 
-Store the confirmed message returned by `using-git` as `<merge-commit-message>`.
+Store the confirmed message returned by `sdd-superpowers:using-git` as `<merge-commit-message>`.
 
 ## Step 3: Present Options
 

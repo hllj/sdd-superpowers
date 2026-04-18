@@ -18,7 +18,7 @@ Before anything else:
 1. Check the `docs/specs/` directory for existing feature numbers
 2. Determine the next available number (NNN)
 3. Check for related or overlapping specs that might affect scope
-4. **Fast-path detection:** Check if `docs/specs/NNN-<feature-slug>/design.md` exists (produced by `sdd-brainstorm`)
+4. **Fast-path detection:** Check if `docs/specs/NNN-<feature-slug>/design.md` exists (produced by `sdd-superpowers:sdd-brainstorm`)
    - If YES → validate the design doc:
      - Does it contain all required sections: **Problem**, **Chosen Approach**, **Trade-offs & Rationale**, **Key Design Decisions**, **Out of Scope**?
      - Is each section non-empty?
@@ -162,7 +162,7 @@ If changes requested: update the spec and re-review.
 
 ## Step 7: Note on Branch Creation
 
-Branch creation happens **after all documentation is complete** — at the end of `sdd-tasks`, not here. When `sdd-tasks` finishes generating the task list, it will:
+Branch creation happens **after all documentation is complete** — at the end of `sdd-superpowers:sdd-tasks`, not here. When `sdd-superpowers:sdd-tasks` finishes generating the task list, it will:
 1. Read `docs/git-convention.md` for the naming convention
 2. Suggest branch names based on this spec's NNN and slug
 3. Create the branch with your chosen name
@@ -177,13 +177,13 @@ After branch creation:
 > "Specification complete and saved to `docs/specs/NNN-feature-slug/spec.md` on branch `NNN-feature-slug`.
 >
 > **Option A — Research first (recommended for complex features):**
-> Use `sdd-research` to investigate technology options, performance implications, and constraints before planning.
+> Use `sdd-superpowers:sdd-research` to investigate technology options, performance implications, and constraints before planning.
 >
 > **Option B — Review the spec first:**
-> Use `sdd-review` (spec mode) for an independent completeness check before planning.
+> Use `sdd-superpowers:sdd-review` (spec mode) for an independent completeness check before planning.
 >
 > **Option C — Plan directly:**
-> Use `sdd-plan` to create the implementation plan from this spec.
+> Use `sdd-superpowers:sdd-plan` to create the implementation plan from this spec.
 >
 > Which would you like?"
 

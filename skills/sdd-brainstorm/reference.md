@@ -15,7 +15,7 @@ Complete these in order:
 7. **Write design doc** — save to `docs/specs/NNN-<feature-slug>/design.md` after user approves design
 8. **Spec review loop** — dispatch spec-document-reviewer subagent; fix issues and re-dispatch until approved (max 3 iterations, then surface to human)
 9. **User reviews written design** — ask user to review before proceeding
-10. **Transition** — invoke `sdd-specify` with the design doc path
+10. **Transition** — invoke `sdd-superpowers:sdd-specify` with the design doc path
 
 ## Process Flow
 
@@ -54,7 +54,7 @@ digraph sdd_brainstorm {
 }
 ```
 
-**The terminal state is invoking `sdd-specify`.** Do NOT invoke `sdd-plan`, `sdd-tasks`, `sdd-execute`, or any other skill. `sdd-specify` is the only next step.
+**The terminal state is invoking `sdd-superpowers:sdd-specify`.** Do NOT invoke `sdd-superpowers:sdd-plan`, `sdd-superpowers:sdd-tasks`, `sdd-superpowers:sdd-execute`, or any other skill. `sdd-superpowers:sdd-specify` is the only next step.
 
 ## The Process
 
@@ -62,7 +62,7 @@ digraph sdd_brainstorm {
 
 - Check `docs/specs/` first — are there existing features this relates to or overlaps with?
 - Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with auth, billing, and notifications"), flag this immediately and help decompose before brainstorming any single piece.
-- If the project is too large, help decompose: what are the independent pieces, how do they relate, what order should they be built? Each piece gets its own `sdd-brainstorm` → `sdd-specify` cycle.
+- If the project is too large, help decompose: what are the independent pieces, how do they relate, what order should they be built? Each piece gets its own `sdd-superpowers:sdd-brainstorm` → `sdd-superpowers:sdd-specify` cycle.
 - For appropriately scoped ideas, ask clarifying questions one at a time
 - Prefer multiple-choice questions when possible
 - Only one question per message
@@ -146,9 +146,9 @@ Wait for the user's response. If they request changes: update `design.md`, re-ru
 
 After user approval:
 
-> "Design approved. Invoking `sdd-specify` with this design as input — it will formalize `design.md` into a complete `spec.md` without re-asking the questions we've already answered."
+> "Design approved. Invoking `sdd-superpowers:sdd-specify` with this design as input — it will formalize `design.md` into a complete `spec.md` without re-asking the questions we've already answered."
 
-**REQUIRED NEXT SKILL:** Use `sdd-specify`. Pass the path `docs/specs/NNN-<feature-slug>/design.md`.
+**REQUIRED NEXT SKILL:** Use `sdd-superpowers:sdd-specify`. Pass the path `docs/specs/NNN-<feature-slug>/design.md`.
 
 ## Visual Companion
 

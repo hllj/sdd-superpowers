@@ -2,7 +2,7 @@
 
 Use this template when dispatching a spec-document-reviewer subagent after writing `design.md`.
 
-**Purpose:** Verify the design document is complete, consistent, and ready to be formalized into a spec by `sdd-specify`.
+**Purpose:** Verify the design document is complete, consistent, and ready to be formalized into a spec by `sdd-superpowers:sdd-specify`.
 
 **Dispatch after:** Design document is written to `docs/specs/NNN-<feature-slug>/design.md`
 

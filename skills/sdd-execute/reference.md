@@ -7,11 +7,11 @@
 ```bash
 git branch --show-current
 ```
-If output is `main` or `master`: **STOP**. Route user back to `sdd-tasks` to create a feature branch first.
+If output is `main` or `master`: **STOP**. Route user back to `sdd-superpowers:sdd-tasks` to create a feature branch first.
 
 **Load git convention:** Read `docs/git-convention.md`.
-- Missing on new project (no `CLAUDE.md`): halt — "Run `sdd-init` first."
-- Missing on existing project: offer one-time creation dialogue (same 4 questions as `sdd-init` Step 5.4), write `docs/git-convention.md`, then continue.
+- Missing on new project (no `CLAUDE.md`): halt — "Run `sdd-superpowers:sdd-init` first."
+- Missing on existing project: offer one-time creation dialogue (same 4 questions as `sdd-superpowers:sdd-init` Step 5.4), write `docs/git-convention.md`, then continue.
 
 ```bash
 # Confirm baseline tests pass
@@ -41,7 +41,7 @@ Provide the subagent with:
 - The complete task text (copy verbatim from tasks.md)
 - The feature branch name
 - The spec file path: `docs/specs/<NNN>-<feature-slug>/spec.md`
-- The scene: "You are implementing task TNNNN as part of feature NNN-<slug>. Complete this task using the `test-driven-development` skill (RED-GREEN-REFACTOR: write failing test → confirm it fails → write minimal implementation → confirm it passes → commit). Do NOT write implementation code before a failing test exists. Report DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED."
+- The scene: "You are implementing task TNNNN as part of feature NNN-<slug>. Complete this task using the `sdd-superpowers:test-driven-development` skill (RED-GREEN-REFACTOR: write failing test → confirm it fails → write minimal implementation → confirm it passes → commit). Do NOT write implementation code before a failing test exists. Report DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED."
 
 **3b. Handle implementer status**
 
@@ -66,7 +66,7 @@ The reviewer must answer:
 2. Did the implementation add anything not in the spec (scope creep)?
 3. Are tests actually testing the spec requirements (not just testing the implementation)?
 
-If spec-compliance fails: invoke `receiving-code-review` with the reviewer's findings, then dispatch the original implementer to fix. Re-review until passing.
+If spec-compliance fails: invoke `sdd-superpowers:receiving-code-review` with the reviewer's findings, then dispatch the original implementer to fix. Re-review until passing.
 
 **3d. Code-quality review**
 
@@ -76,21 +76,21 @@ After spec-compliance passes, dispatch a code-quality reviewer. Provide:
 
 The reviewer checks: naming clarity, test coverage completeness, no magic numbers, no dead code, error handling correct per spec.
 
-If quality review fails: invoke `receiving-code-review`, send implementer to fix. Re-review until approved.
+If quality review fails: invoke `sdd-superpowers:receiving-code-review`, send implementer to fix. Re-review until approved.
 
 **3e. Commit completed task**
 
-Invoke `using-git` — **Per-Task Commit**. Pass: prior commit SHA (`git rev-parse HEAD` recorded before dispatch) and task description. `using-git` handles conflict detection, staging, message validation, and commit execution.
+Invoke `sdd-superpowers:using-git` — **Per-Task Commit**. Pass: prior commit SHA (`git rev-parse HEAD` recorded before dispatch) and task description. `sdd-superpowers:using-git` handles conflict detection, staging, message validation, and commit execution.
 
 **3f. Phase boundary review**
 
 When all tasks in a phase complete, before starting the next phase:
 
-Invoke `requesting-code-review`. Blocking gate — critical issues must be resolved before proceeding.
+Invoke `sdd-superpowers:requesting-code-review`. Blocking gate — critical issues must be resolved before proceeding.
 
 ### Parallel Task Groups
 
-**REQUIRED:** Invoke `dispatching-parallel-agents` before dispatching this group.
+**REQUIRED:** Invoke `sdd-superpowers:dispatching-parallel-agents` before dispatching this group.
 
 Safety check before dispatch:
 - [ ] Tasks touch different source files
@@ -103,7 +103,7 @@ If any check fails: execute sequentially.
 2. Wait for ALL implementers to finish
 3. Run spec-compliance review for each (can be concurrent)
 4. Run code-quality review for each (can be concurrent)
-5. Fix issues via `receiving-code-review`, re-review
+5. Fix issues via `sdd-superpowers:receiving-code-review`, re-review
 
 ## Step 4: Final Verification
 
@@ -111,13 +111,13 @@ If any check fails: execute sequentially.
 <project test command>
 ```
 
-Read complete output. Count failures. If any fail: use `systematic-debugging` before proceeding.
+Read complete output. Count failures. If any fail: use `sdd-superpowers:systematic-debugging` before proceeding.
 
-Dispatch `sdd-review` (implementation mode) to build the coverage matrix.
+Dispatch `sdd-superpowers:sdd-review` (implementation mode) to build the coverage matrix.
 
 ## Step 5: Finish
 
-After `sdd-review` reports SPEC-ALIGNED, use `finishing-a-development-branch`. Do not merge, push, or delete branches directly.
+After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED, use `sdd-superpowers:finishing-a-development-branch`. Do not merge, push, or delete branches directly.
 
 ---
 
@@ -140,7 +140,7 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 1. Read the failure carefully
 2. Plan problem? → Update `plan.md` and `tasks.md`, continue
 3. Spec ambiguity? → Clarify with user, update `spec.md`, continue
-4. Architectural issue (3+ different fixes all fail)? → Stop, invoke `systematic-debugging`, discuss with user
+4. Architectural issue (3+ different fixes all fail)? → Stop, invoke `sdd-superpowers:systematic-debugging`, discuss with user
 
 **Never try a 4th implementation approach without architectural discussion.**
 
@@ -148,17 +148,17 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 
 ## Integration
 
-**Called after:** `sdd-tasks`
+**Called after:** `sdd-superpowers:sdd-tasks`
 
 **Subagents must use:**
-- `test-driven-development` — mandatory for every implementation task
-- `verification-before-completion` — before reporting DONE
+- `sdd-superpowers:test-driven-development` — mandatory for every implementation task
+- `sdd-superpowers:verification-before-completion` — before reporting DONE
 
 **During execution:**
-- `requesting-code-review` — at every phase boundary (blocking gate)
-- `receiving-code-review` — whenever review feedback requires fixes
-- `dispatching-parallel-agents` — before every parallel group dispatch
+- `sdd-superpowers:requesting-code-review` — at every phase boundary (blocking gate)
+- `sdd-superpowers:receiving-code-review` — whenever review feedback requires fixes
+- `sdd-superpowers:dispatching-parallel-agents` — before every parallel group dispatch
 
-**On failure:** `systematic-debugging`
+**On failure:** `sdd-superpowers:systematic-debugging`
 
-**On completion:** `sdd-review` → `finishing-a-development-branch`
+**On completion:** `sdd-superpowers:sdd-review` → `sdd-superpowers:finishing-a-development-branch`

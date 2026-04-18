@@ -14,7 +14,7 @@ Implement a feature by dispatching a fresh subagent per task, with two-stage rev
 ## When to Use
 
 - A `tasks.md` exists and implementation is ready to start
-- NOT when `tasks.md` is missing — run `sdd-tasks` first
+- NOT when `tasks.md` is missing — run `sdd-superpowers:sdd-tasks` first
 - NOT on `main`/`master` — a feature branch must exist
 
 <HARD-GATE>

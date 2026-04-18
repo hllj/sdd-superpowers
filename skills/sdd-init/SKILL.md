@@ -35,7 +35,7 @@ The Nine Articles cover: Library-First, CLI Interface, Test-First, three user-de
 3. Confirm amendment process (Section 4.2)
 4. Final approval gate — write nothing until user says yes
 5. Create all scaffold files in one uninterrupted sequence
-6. Initial commit, then hand off to `sdd-workflow`
+6. Initial commit, then hand off to `sdd-superpowers:sdd-workflow`
 
 <HARD-GATE>
 Do NOT create any feature specs, plans, or code until the constitution is approved and the scaffold is written.

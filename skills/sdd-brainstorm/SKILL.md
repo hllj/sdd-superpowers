@@ -9,7 +9,7 @@ description: Use when an idea is fuzzy, exploratory, or has competing approaches
 
 ## Overview
 
-Turn fuzzy ideas into validated designs through collaborative dialogue. Produces a `design.md` that feeds directly into `sdd-specify` as a fast-path input, skipping questions already answered here.
+Turn fuzzy ideas into validated designs through collaborative dialogue. Produces a `design.md` that feeds directly into `sdd-superpowers:sdd-specify` as a fast-path input, skipping questions already answered here.
 
 <HARD-GATE>
 Do NOT invoke sdd-specify, sdd-plan, or any implementation skill until the user has approved the design. Do NOT write code. This skill produces ONLY a design document.
@@ -19,8 +19,8 @@ Do NOT invoke sdd-specify, sdd-plan, or any implementation skill until the user 
 
 - The idea is vague, exploratory, or has competing approaches ("I'm thinking about…", "what if we…")
 - Multiple directions are possible and trade-offs need exploring
-- NOT when the idea is already clear and concrete — go straight to `sdd-specify`
-- NOT when another brainstorm has already produced a `design.md` — skip to `sdd-specify`
+- NOT when the idea is already clear and concrete — go straight to `sdd-superpowers:sdd-specify`
+- NOT when another brainstorm has already produced a `design.md` — skip to `sdd-superpowers:sdd-specify`
 
 ## Quick Reference
 
@@ -34,7 +34,7 @@ Brainstorm outputs one artifact: `docs/specs/NNN-<feature-slug>/design.md`
 | 4 | Present design in sections, get approval per section |
 | 5 | Write `design.md`, run spec-review loop (max 3 iterations) |
 | 6 | User reviews written design |
-| 7 | Invoke `sdd-specify` with design doc path |
+| 7 | Invoke `sdd-superpowers:sdd-specify` with design doc path |
 
 Key principles: one question per message, YAGNI ruthlessly, always 2-3 approaches before settling, decompose multi-subsystem ideas before brainstorming any single piece.
 

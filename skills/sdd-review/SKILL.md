@@ -13,9 +13,9 @@ Two-mode skill: Mode A validates a spec is complete and implementable before pla
 
 ## When to Use
 
-**Mode A (spec review):** before running `sdd-plan`, when a spec has `[NEEDS CLARIFICATION]` items, or when a spec feels underspecified.
+**Mode A (spec review):** before running `sdd-superpowers:sdd-plan`, when a spec has `[NEEDS CLARIFICATION]` items, or when a spec feels underspecified.
 
-**Mode B (implementation review):** after `sdd-execute` completes, before merging — confirms every acceptance criterion has a passing test.
+**Mode B (implementation review):** after `sdd-superpowers:sdd-execute` completes, before merging — confirms every acceptance criterion has a passing test.
 
 **NOT for:** style reviews, code quality opinions, or general debugging.
 
