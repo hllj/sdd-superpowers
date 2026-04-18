@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2026-04-19
+
+### Fixed
+
+- **`CLAUDE.md` Project Context section** — added explicit context sources table pointing to `memory/constitution.md`, `memory/MEMORY.md`, `docs/git-convention.md`, and `docs/specs/`; Claude now knows where to look at the start of every conversation
+- **`CLAUDE.md` Directory Structure** — expanded to show `memory/` and `docs/` as top-level entries with their contents
+- **`sdd-init` CLAUDE.md template** — generated `CLAUDE.md` for new projects now includes the same Project Context table so the context-loading pattern is inherited automatically
+- **`README.md` Project Context section** — added explanation of the generated CLAUDE.md context sources for plugin users
+
+---
+
 ## [2.2.0] - 2026-04-18
 
 ### Added
@@ -163,6 +174,8 @@ docs/specs/NNN-feature/
 skills/          # All SDD and bundled Superpowers skills
 ```
 
+[2.2.1]: https://github.com/hllj/sdd-superpowers/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/hllj/sdd-superpowers/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/hllj/sdd-superpowers/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/hllj/sdd-superpowers/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/hllj/sdd-superpowers/compare/v1.1.0...v1.2.0
