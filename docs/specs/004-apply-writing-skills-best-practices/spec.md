@@ -149,6 +149,13 @@ Each SKILL.md must include standard sections.
 - **writing-skills in routing table:** Remains discoverable-only. Not added to sdd-workflow routing table.
 - **subagent-driven-development:** Exempt from FR-3 word-count reduction and FR-4 structure standardization. Its current content (process flowchart, worked example, status-handling detail) is intentional and should not be trimmed. verify.sh excludes this skill from word-count and section checks.
 
+## Implementation Notes
+
+Changes made during execution that extended beyond FR-1 through FR-4:
+
+- **`sdd-superpowers:` namespace prefix:** All cross-skill references in backticks across every `SKILL.md` and `reference.md` were updated from bare skill names (e.g. `` `sdd-plan` ``) to fully-qualified names (e.g. `` `sdd-superpowers:sdd-plan` ``), matching the `Skill` tool invocation format.
+- **HARD-GATE blocks in `sdd-plan` and `sdd-tasks`:** Explicit approval gates added — `sdd-plan` blocks until `spec.md` is user-approved and all `[NEEDS CLARIFICATION]` items are resolved; `sdd-tasks` blocks until `plan.md` is user-approved.
+
 ## Out of Scope (Future Considerations)
 
 - Renaming skill directories to gerund form (e.g., `sdd-specify` → `specifying`)
