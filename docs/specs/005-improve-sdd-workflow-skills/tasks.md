@@ -245,14 +245,56 @@
 
 ---
 
-## Phase 5: Integration Verification
+## Phase 5 `[P]`: Update sdd-specify SKILL.md — Status Prompt
+
+*Independent of Phase 6. Touches only `skills/sdd-specify/SKILL.md`.*
+
+- [ ] **T027** In `skills/sdd-specify/SKILL.md`, append to the existing **Self-Review** section (or after it if Self-Review was just added in Phase 4):
+  ```markdown
+  After the user approves the spec, update `Status: Draft` → `Status: Approved` in spec.md before handing off to sdd-plan.
+  ```
+  Verify: status-update prompt appears in sdd-specify SKILL.md.
+
+- [ ] **T028** Commit:
+  ```bash
+  git add skills/sdd-specify/SKILL.md
+  git commit -m "feat(005): prompt status update to Approved in sdd-specify"
+  ```
+
+---
+
+## Phase 6 `[P]`: Add Status Gate to sdd-plan and sdd-tasks HARD-GATEs
+
+*Independent of Phase 5. Touches `skills/sdd-plan/SKILL.md` and `skills/sdd-tasks/SKILL.md`.*
+
+- [ ] **T029** In `skills/sdd-plan/SKILL.md`, add to the HARD-GATE block a new condition:
+  ```markdown
+  4. `spec.md` status is `Approved` (not `Draft`)
+  ```
+  Verify: condition 4 appears inside the HARD-GATE block, existing conditions 1–3 unchanged.
+
+- [ ] **T030** In `skills/sdd-tasks/SKILL.md`, add to the HARD-GATE block a new condition:
+  ```markdown
+  3. `spec.md` status is `Approved` (not `Draft`)
+  ```
+  Verify: condition 3 appears inside the HARD-GATE block, existing conditions 1–2 unchanged.
+
+- [ ] **T031** Commit:
+  ```bash
+  git add skills/sdd-plan/SKILL.md skills/sdd-tasks/SKILL.md
+  git commit -m "feat(005): add spec status Approved gate to sdd-plan and sdd-tasks"
+  ```
+
+---
+
+## Phase 7: Integration Verification
 
 *Run after all parallel phases complete.*
 
-- [ ] **T027** Read `skills/sdd-plan/SKILL.md` — verify: Scope Check, File Structure, No Placeholders, Self-Review, Execution Handoff all present; HARD-GATE block intact; Quick Reference unchanged
-- [ ] **T028** Read `skills/sdd-tasks/SKILL.md` — verify: Bite-Sized Task Granularity, No Placeholders, Remember, Execution Handoff all present; HARD-GATE block intact; Quick Reference unchanged
-- [ ] **T029** Read `skills/sdd-execute/SKILL.md` — verify: When to Stop and Ask, Remember, Integration all present; HARD-GATE block intact; Quick Reference unchanged
-- [ ] **T030** Read `skills/sdd-specify/SKILL.md` — verify: Remember, Self-Review both present; HARD-GATE block intact; Quick Reference unchanged
+- [ ] **T032** Read `skills/sdd-plan/SKILL.md` — verify: Scope Check, File Structure, No Placeholders, Self-Review, Execution Handoff all present; HARD-GATE has 4 conditions including status check; Quick Reference unchanged
+- [ ] **T033** Read `skills/sdd-tasks/SKILL.md` — verify: Bite-Sized Task Granularity, No Placeholders, Remember, Execution Handoff all present; HARD-GATE has 3 conditions including status check; Quick Reference unchanged
+- [ ] **T034** Read `skills/sdd-execute/SKILL.md` — verify: When to Stop and Ask, Remember, Integration all present; HARD-GATE block intact; Quick Reference unchanged
+- [ ] **T035** Read `skills/sdd-specify/SKILL.md` — verify: Remember, Self-Review both present with status-update prompt; HARD-GATE block intact; Quick Reference unchanged
 
 ---
 

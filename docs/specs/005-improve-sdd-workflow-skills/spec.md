@@ -1,7 +1,7 @@
 # Spec: Improve SDD Workflow Skills
 
 **Feature:** 005-improve-sdd-workflow-skills
-**Status:** Draft
+**Status:** Approved
 
 ---
 
@@ -100,6 +100,11 @@ As an agent executing sdd-specify, I need a Self-Review and Remember section so 
 1. **Remember section** — requirements describe WHAT not HOW, every acceptance criterion must be testable, use [NEEDS CLARIFICATION] not vague text
 2. **Self-Review section** — inline checklist: each requirement is testable, no vague placeholders, open questions captured, goals/non-goals are distinct
 
+### FR-5: Spec status gate across workflow
+1. **sdd-specify** — after user explicitly approves the spec, prompt to update `Status: Draft` → `Status: Approved` in spec.md before handing off
+2. **sdd-plan HARD-GATE** — add check: spec.md status must be `Approved` (not `Draft`) before planning begins
+3. **sdd-tasks HARD-GATE** — add check: spec.md status must be `Approved` before task generation begins
+
 ---
 
 ## Non-Functional Requirements
@@ -129,4 +134,4 @@ None.
 - sdd-brainstorm, sdd-research, sdd-review, sdd-init, sdd-workflow SKILL.md changes
 - reference.md rewrites
 - New skills or workflow steps
-- Changing HARD-GATE wording
+- Changing existing HARD-GATE wording (FR-5 adds to HARD-GATEs, does not rewrite them)
