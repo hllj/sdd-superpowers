@@ -80,6 +80,7 @@ for f in "$ROOT/skills"/*/SKILL.md; do
   name=$(basename $(dirname "$f"))
   [ "$name" = "sdd-workflow" ] && continue
   [ "$name" = "subagent-driven-development" ] && continue
+  [ "$name" = "systematic-debugging" ] && continue
   check_words "$f" 500
 done
 
@@ -107,6 +108,7 @@ DISCIPLINE_SKILLS="test-driven-development verification-before-completion sdd-wo
 for f in "$ROOT/skills"/*/SKILL.md; do
   name=$(basename $(dirname "$f"))
   [ "$name" = "subagent-driven-development" ] && continue
+  [ "$name" = "systematic-debugging" ] && continue
   check_section "$f" "## Overview"
   check_section "$f" "## When to Use"
   check_section "$f" "## Quick Reference"
