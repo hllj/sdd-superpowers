@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-04-19
+
+### Added
+
+- **`sdd-update` skill** — new skill intercepting mid-flight spec changes; classifies them as PATCH/MINOR/MAJOR, versions the spec, and propagates changes downstream in strict artifact order (spec → plan → tasks → flag code)
+  - HARD-GATE blocks all downstream artifact updates until change is understood, version bump assigned, and user confirms scope
+  - Spec versioning table: PATCH (clarification/wording, spec only), MINOR (new requirement, spec+plan+tasks), MAJOR (breaks/rewrites existing requirement, full review + flag code)
+  - Graphviz flowchart: clarify → classify → per-path update → user confirms → propagate
+  - 5-question clarification protocol; stops when change is expressible as testable acceptance criterion
+  - `reference.md` with 7-step full process: clarification → classification → spec versioning → plan update → tasks update → code flagging → resume rules
+- **Integration sections** — explicit sub-skill registration tables added to all relevant SDD skills:
+  - `sdd-execute` Integration table extended with `dispatching-parallel-agents`, `subagent-driven-development`, `using-git`, `receiving-code-review`, `systematic-debugging`
+  - `sdd-tasks` — new Integration section: `using-git` (branch creation + doc-first commit)
+  - `sdd-review` — new Integration section: `verification-before-completion` (before claiming review complete)
+  - `sdd-update` — Integration section: `using-git` (committing versioned artifacts after propagation)
+- **`sdd-workflow` Quick Reference** extended with 6 previously missing bundled support skills: `using-git`, `test-driven-development`, `requesting-code-review`, `receiving-code-review`, `dispatching-parallel-agents`, `subagent-driven-development`
+
+### Changed
+
+- **`sdd-workflow` routing table** — added `sdd-update` row: mandatory for any change or addition to an approved spec
+- **`sdd-workflow` Common Mistakes** — added: updating tasks/plan without running `sdd-update` first
+- **`sdd-workflow` routing.md** — skill map, priority ordering, mandatory conditions, and red flags updated for `sdd-update`
+- **`CLAUDE.md` skills table and workflow diagram** — `sdd-update` added with mid-flight change loop
+- **README Bundled Support Skills** — replaced `using-git-worktrees` with `using-git`; SDD uses convention enforcement (branch naming + commit format), not isolated workspaces
+
+---
+
 ## [2.2.1] - 2026-04-19
 
 ### Fixed
@@ -174,6 +201,7 @@ docs/specs/NNN-feature/
 skills/          # All SDD and bundled Superpowers skills
 ```
 
+[2.3.0]: https://github.com/hllj/sdd-superpowers/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/hllj/sdd-superpowers/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/hllj/sdd-superpowers/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/hllj/sdd-superpowers/compare/v2.0.0...v2.1.0
