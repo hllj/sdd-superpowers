@@ -64,9 +64,9 @@ These are plan failures — never write them:
 - "TBD", "TODO", "implement later", "fill in details"
 - "Add appropriate error handling" / "handle edge cases" (without code)
 - "Write tests for the above" (without actual test code)
-- "Similar to Task N" — repeat the code; tasks may be read out of order
+- "Similar to Phase N" — repeat the code; phases may be read out of order
 - Steps that describe what to do without showing how (code blocks required for every code step)
-- References to types or functions not defined in any task
+- References to types or functions not defined in any phase
 
 ## Self-Review
 
