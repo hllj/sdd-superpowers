@@ -134,9 +134,13 @@ git worktree remove <worktree-path>
 
 ## Integration
 
+**Prerequisites (must complete before invoking this skill):**
+- `sdd-superpowers:sdd-review` — implementation review must report SPEC-ALIGNED
+- `sdd-superpowers:verification-before-completion` — fresh test evidence required
+
 **Called by:**
-- **subagent-driven-development** (Step 7) — after all tasks complete
-- **executing-plans** (Step 5) — after all batches complete
+- `sdd-superpowers:subagent-driven-development` — after all tasks and reviews complete
+- `sdd-superpowers:sdd-execute` — after all phases complete
 
 **Pairs with:**
-- **using-git** — merge commit message (Step 2.5) and worktree cleanup (Step 5, when in use)
+- `sdd-superpowers:using-git` — merge commit message (Step 2.5) and worktree cleanup (Step 5, when in use)

@@ -3,34 +3,41 @@ name: dispatching-parallel-agents
 description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
 ---
 
+<SUBAGENT-STOP>
+If you were dispatched as a subagent to execute a specific task, skip this skill.
+</SUBAGENT-STOP>
+
 # Dispatching Parallel Agents
 
 ## Overview
 
-Delegate independent tasks to specialized agents with isolated context. Each agent receives only what it needs — no session history — keeping them focused and results verifiable. Parallel dispatch turns N sequential investigations into 1 concurrent round.
+Delegate independent tasks to specialized agents with isolated context. Each agent receives only what it needs — no session history — keeping them focused and results verifiable. Parallel dispatch turns N sequential tasks into 1 concurrent round.
+
+In SDD, this skill is invoked from within `sdd-superpowers:sdd-execute` when a task group in `tasks.md` has 2+ independent tasks that can be built concurrently without shared state.
 
 ## When to Use
 
 ```dot
 digraph when_to_use {
-    "Multiple tasks/failures?" [shape=diamond];
+    "tasks.md has 2+ tasks in this phase?" [shape=diamond];
     "Are they independent?" [shape=diamond];
-    "Single agent handles all" [shape=box];
+    "Sequential agents (subagent-driven-development)" [shape=box];
     "Can they work in parallel?" [shape=diamond];
-    "Sequential agents" [shape=box];
+    "Sequential agents (subagent-driven-development)" [shape=box];
     "Parallel dispatch" [shape=box];
 
-    "Multiple tasks/failures?" -> "Are they independent?" [label="yes"];
-    "Are they independent?" -> "Single agent handles all" [label="no - related"];
+    "tasks.md has 2+ tasks in this phase?" -> "Are they independent?" [label="yes"];
+    "tasks.md has 2+ tasks in this phase?" -> "Sequential agents (subagent-driven-development)" [label="no - single task"];
+    "Are they independent?" -> "Sequential agents (subagent-driven-development)" [label="no - coupled"];
     "Are they independent?" -> "Can they work in parallel?" [label="yes"];
-    "Can they work in parallel?" -> "Parallel dispatch" [label="yes"];
-    "Can they work in parallel?" -> "Sequential agents" [label="no - shared state"];
+    "Can they work in parallel?" -> "Parallel dispatch" [label="yes - different files/subsystems"];
+    "Can they work in parallel?" -> "Sequential agents (subagent-driven-development)" [label="no - shared state"];
 }
 ```
 
-**Use when:** 2+ test files failing with different root causes; multiple subsystems broken independently; each problem can be understood without context from others.
+**Use when:** A phase in `tasks.md` has 2+ tasks touching different files or subsystems with no shared output dependencies.
 
-**Don't use when:** failures are related (fix one might fix others); agents would modify the same files; need to understand full system state first.
+**Don't use when:** tasks are coupled (one depends on another's output); tasks modify the same files; only one task remains in the phase.
 
 ## Quick Reference
 
@@ -44,6 +51,22 @@ NOT safe to parallelize:
 - Tasks where one depends on another's output
 - Exploratory debugging (root cause unknown)
 
-After agents return: review each summary → check for conflicts → run full suite → integrate.
+After agents return: review each summary → check for conflicts → run spec compliance review per task → run code quality review per task → run full suite → mark tasks complete.
 
-See [reference.md](reference.md) for the full dispatch pattern, agent prompt template, real worked example, and verification procedure.
+See [reference.md](reference.md) for the full dispatch pattern, agent prompt template, worked example, and post-dispatch review procedure.
+
+## Integration
+
+**Invoked from:**
+- `sdd-superpowers:sdd-execute` — when a task group has 2+ independent tasks
+
+**Each dispatched agent must use:**
+- `sdd-superpowers:test-driven-development` — write failing test first, then implement
+- `sdd-superpowers:using-git` — commit with proper convention
+
+**After all parallel agents return:**
+- Run spec compliance review per task (`sdd-superpowers:requesting-code-review`)
+- Run code quality review per task (`sdd-superpowers:requesting-code-review`)
+- Fix issues with `sdd-superpowers:receiving-code-review` if reviews fail
+- Mark tasks complete in TodoWrite
+- Continue to next phase with `sdd-superpowers:sdd-execute`

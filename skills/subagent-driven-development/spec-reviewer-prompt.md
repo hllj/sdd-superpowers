@@ -10,9 +10,13 @@ Task tool (general-purpose):
   prompt: |
     You are reviewing whether an implementation matches its specification.
 
-    ## What Was Requested
+    ## Authoritative Spec (Source of Truth)
 
-    [FULL TEXT of task requirements]
+    [FULL TEXT of docs/specs/NNN-feature/spec.md — the SDD spec is the ground truth]
+
+    ## Task Requirements
+
+    [FULL TEXT of this specific task from tasks.md]
 
     ## What Implementer Claims They Built
 
@@ -53,9 +57,9 @@ Task tool (general-purpose):
     - Did they solve the wrong problem?
     - Did they implement the right feature but wrong way?
 
-    **Verify by reading code, not by trusting report.**
+    **Verify by reading code, not by trusting report. The spec.md is the authority — if the task description conflicts with it, the spec.md wins.**
 
     Report:
     - ✅ Spec compliant (if everything matches after code inspection)
-    - ❌ Issues found: [list specifically what's missing or extra, with file:line references]
+    - ❌ Issues found: [list specifically what's missing or extra, with file:line references and spec.md section]
 ```

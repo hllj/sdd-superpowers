@@ -41,27 +41,38 @@ When agents return:
 
 ## Agent Prompt Structure
 
-Good agent prompts are focused, self-contained, and specific about output:
+Good agent prompts are focused, self-contained, and specific about output. In SDD, each agent implements one task from `tasks.md`:
 
 ```markdown
-Fix the 3 failing tests in src/agents/agent-tool-abort.test.ts:
+You are implementing Task N: [task name] as part of the NNN-feature feature.
 
-1. "should abort tool with partial output capture" - expects 'interrupted at' in message
-2. "should handle mixed completed and aborted tools" - fast tool aborted instead of completed
-3. "should properly track pendingToolCount" - expects 3 results but gets 0
+## Authoritative Spec (Source of Truth)
+[FULL TEXT of docs/specs/NNN-feature/spec.md — relevant sections]
 
-These are timing/race condition issues. Your task:
+## Task Requirements
+[FULL TEXT of this task from tasks.md]
 
-1. Read the test file and understand what each test verifies
-2. Identify root cause - timing issues or actual bugs?
-3. Fix by:
-   - Replacing arbitrary timeouts with event-based waiting
-   - Fixing bugs in abort implementation if found
-   - Adjusting test expectations if testing changed behavior
+## Architectural Context
+[Relevant section from docs/specs/NNN-feature/plan.md]
 
-Do NOT just increase timeouts - find the real issue.
+## Your Job
 
-Return: Summary of what you found and what you fixed.
+Follow sdd-superpowers:test-driven-development strictly:
+1. Write a failing test first
+2. Implement exactly what the task requires (no more, no less)
+3. Make the test pass
+4. Commit using sdd-superpowers:using-git conventions
+
+## Constraints
+- Touch only the files listed in this task
+- Do NOT modify files owned by sibling tasks running in parallel
+- Do NOT add features not in the spec
+
+## Report Format
+- **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
+- Files changed
+- Tests written and results
+- Self-review findings
 ```
 
 ## Common Mistakes
@@ -78,37 +89,40 @@ Return: Summary of what you found and what you fixed.
 **❌ Vague output:** "Fix it" - you don't know what changed
 **✅ Specific:** "Return summary of root cause and changes"
 
-## Real Example
+## Real Example (SDD)
 
-**Scenario:** 6 test failures across 3 files after major refactoring
+**Scenario:** `docs/specs/007-auth/tasks.md` Phase 1 has 3 independent tasks
 
-**Failures:**
-- agent-tool-abort.test.ts: 3 failures (timing issues)
-- batch-completion-behavior.test.ts: 2 failures (tools not executing)
-- tool-approval-race-conditions.test.ts: 1 failure (execution count = 0)
+**Tasks:**
+- Task 1: Implement JWT token generation (`src/auth/token.ts`)
+- Task 2: Implement session store adapter (`src/auth/session.ts`)
+- Task 3: Implement refresh token rotation (`src/auth/refresh.ts`)
 
-**Decision:** Independent domains — abort logic separate from batch completion separate from race conditions
+**Decision:** Independent domains — different files, no shared state, no output dependencies
 
 **Dispatch:**
 ```
-Agent 1 → Fix agent-tool-abort.test.ts
-Agent 2 → Fix batch-completion-behavior.test.ts
-Agent 3 → Fix tool-approval-race-conditions.test.ts
+Agent 1 → Task 1: JWT token generation
+Agent 2 → Task 2: Session store adapter
+Agent 3 → Task 3: Refresh token rotation
+// All three run concurrently, each following TDD
 ```
 
 **Results:**
-- Agent 1: Replaced timeouts with event-based waiting
-- Agent 2: Fixed event structure bug (threadId in wrong place)
-- Agent 3: Added wait for async tool execution to complete
+- Agent 1: DONE — token.ts implemented, 6/6 tests passing, committed
+- Agent 2: DONE — session.ts implemented, 4/4 tests passing, committed
+- Agent 3: DONE_WITH_CONCERNS — refresh.ts done, flagged that rotation window may be too short per spec
 
-**Integration:** All fixes independent, no conflicts, full suite green
+**Integration:** Review concerns from Agent 3 → run spec compliance review for each task → run code quality review → all tasks marked complete
 
-## Verification After Agents Return
+## After Agents Return (SDD Review Process)
 
-1. **Review each summary** — Understand what changed
-2. **Check for conflicts** — Did agents edit same code?
-3. **Run full suite** — Verify all fixes work together
-4. **Spot check** — Agents can make systematic errors
+1. **Review each summary** — Read status and concerns; address BLOCKED/NEEDS_CONTEXT before proceeding
+2. **Check for conflicts** — Did agents edit the same files? Resolve before reviewing
+3. **Spec compliance review per task** — Dispatch `sdd-superpowers:requesting-code-review` in spec mode; fix failures with `sdd-superpowers:receiving-code-review`
+4. **Code quality review per task** — Dispatch `sdd-superpowers:requesting-code-review` in quality mode after spec passes
+5. **Run full test suite** — Verify all parallel implementations work together
+6. **Mark tasks complete** — Update TodoWrite; continue to next phase with `sdd-superpowers:sdd-execute`
 
 ## Key Benefits
 
