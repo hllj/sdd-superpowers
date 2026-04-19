@@ -73,18 +73,18 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | Spec exists | `sdd-superpowers:sdd-plan` |
 | Plan exists | `sdd-superpowers:sdd-tasks` |
 | Tasks exist | `sdd-superpowers:sdd-execute` |
-| **Change or addition to an approved spec** | `sdd-superpowers:sdd-update` |
+| **Change or addition to an approved spec** | `sdd-superpowers:sdd-spec-update` |
 | **All tasks complete** (post-implementation) | `sdd-superpowers:sdd-review` ← required before merge |
 | Spec completeness check (pre-plan) | `sdd-superpowers:sdd-review` |
 | Task fails | `sdd-superpowers:systematic-debugging` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | Merge decision | `sdd-superpowers:finishing-a-development-branch` |
 | Any git operation (branch, commit, convention) | `sdd-superpowers:using-git` |
-| Any implementation task | `sdd-superpowers:test-driven-development` |
 | Phase boundary during execution | `sdd-superpowers:requesting-code-review` |
 | Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
-| Dispatching 2+ independent tasks | `sdd-superpowers:dispatching-parallel-agents` |
-| Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
+| Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
+| Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
+| Each implementer subagent (dispatched from subagent-driven-development) | `sdd-superpowers:test-driven-development` |
 
 ```
 NO PLAN without an approved spec
@@ -105,7 +105,7 @@ The skill itself tells you which type it is.
 
 - Skipping `sdd-superpowers:sdd-brainstorm` — assess fuzziness first
 - Coding without a spec — `sdd-superpowers:sdd-specify` first
-- Updating tasks or plan without running `sdd-superpowers:sdd-update` when user requests a change — spec must be versioned first
+- Updating tasks or plan without running `sdd-superpowers:sdd-spec-update` when user requests a change — spec must be versioned first
 - Claiming done without evidence — `sdd-superpowers:verification-before-completion`
 - Skipping `sdd-superpowers:sdd-review` after implementation — it is a required step before `finishing-a-development-branch`
 - Invoking this skill inside a subagent task — subagents skip this skill entirely

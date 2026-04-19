@@ -15,24 +15,25 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 ```dot
 digraph when_to_use {
+    "sdd-execute invoked?" [shape=diamond];
     "Have tasks.md?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
-    "Stay in this session?" [shape=diamond];
-    "sdd-superpowers:subagent-driven-development" [shape=box];
-    "sdd-superpowers:sdd-execute" [shape=box];
+    "Use subagent-driven-development" [shape=box];
     "Run sdd-tasks first" [shape=box];
+    "Re-order or split tightly coupled tasks" [shape=box];
 
+    "sdd-execute invoked?" -> "Have tasks.md?" [label="yes"];
+    "sdd-execute invoked?" -> "Run sdd-tasks first" [label="no — tasks.md missing"];
     "Have tasks.md?" -> "Tasks mostly independent?" [label="yes"];
     "Have tasks.md?" -> "Run sdd-tasks first" [label="no"];
-    "Tasks mostly independent?" -> "Stay in this session?" [label="yes"];
-    "Tasks mostly independent?" -> "Run sdd-tasks first" [label="no - tightly coupled"];
-    "Stay in this session?" -> "sdd-superpowers:subagent-driven-development" [label="yes"];
-    "Stay in this session?" -> "sdd-superpowers:sdd-execute" [label="no - parallel worktree"];
+    "Tasks mostly independent?" -> "Use subagent-driven-development" [label="yes"];
+    "Tasks mostly independent?" -> "Re-order or split tightly coupled tasks" [label="no"];
 }
 ```
 
-**vs. sdd-execute (parallel worktree):**
-- Same session (no context switch)
+**Role:** This skill is invoked by `sdd-execute` (the controller) to orchestrate session-based execution. It is not a peer of `sdd-execute` — `sdd-execute` calls it.
+
+**How it works:**
 - Fresh subagent per task (no context pollution)
 - Two-stage review after each task: spec compliance first, then code quality
 - Faster iteration (no human-in-loop between tasks)
