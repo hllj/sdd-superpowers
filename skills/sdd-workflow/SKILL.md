@@ -80,11 +80,11 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | Merge decision | `sdd-superpowers:finishing-a-development-branch` |
 | Any git operation (branch, commit, convention) | `sdd-superpowers:using-git` |
-| Any implementation task | `sdd-superpowers:test-driven-development` |
 | Phase boundary during execution | `sdd-superpowers:requesting-code-review` |
 | Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
-| Dispatching 2+ independent tasks | `sdd-superpowers:dispatching-parallel-agents` |
-| Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
+| Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
+| Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
+| Each implementer subagent (dispatched from subagent-driven-development) | `sdd-superpowers:test-driven-development` |
 
 ```
 NO PLAN without an approved spec

@@ -50,6 +50,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 | Implementing fixes after a code review flagged issues | `sdd-superpowers:receiving-code-review` |
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
+| Each implementer subagent (dispatched from subagent-driven-development) | `sdd-superpowers:test-driven-development` |
 
 ---
 
@@ -146,6 +147,10 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 
 **`sdd-superpowers:subagent-driven-development` is mandatory when:**
 - Executing tasks in the current session using subagents (not dispatching to parallel agents, but running sequentially or semi-sequentially in session)
+
+**`sdd-superpowers:test-driven-development` is mandatory when:**
+- An implementer subagent begins work on any task — invoked by the subagent, not the controller
+- This skill is NOT invoked by `sdd-execute` or `subagent-driven-development` directly; it is the responsibility of each implementer subagent
 
 ---
 
