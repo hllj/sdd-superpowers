@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-04-19
+
+### Changed
+
+- **`sdd-workflow`** — added `<SUBAGENT-STOP>` gate, `<EXTREMELY-IMPORTANT>` 1% rule block, Instruction Priority section, skill invocation decision flowchart, TodoWrite requirement, and Skill Types (Rigid/Flexible) classification; `routing.md` adds `subagent-driven-development` to full skill map and mandatory conditions, plus Reality column in Red Flags table
+- **`subagent-driven-development`** — fixed all `superpowers:` namespace references to `sdd-superpowers:`; added SDD Source Files table (`tasks.md`/`spec.md`/`plan.md` roles); updated example workflow paths to `docs/specs/NNN-feature/`; fixed all prompt templates: `implementer-prompt.md` now mandates TDD and `using-git` conventions, `spec-reviewer-prompt.md` injects `spec.md` as authoritative source, `code-quality-reviewer-prompt.md` corrects skill namespace
+- **`dispatching-parallel-agents`** — added `<SUBAGENT-STOP>` gate and SDD context in overview; rewrote When to Use flowchart to start from `tasks.md`; rewrote agent prompt template with SDD artifact injection and file-ownership constraints; replaced debugging example with SDD implementation example; rewrote post-dispatch review section as 6-step SDD process with correct spec-compliance (via `spec-reviewer-prompt.md`) and code-quality (via `requesting-code-review`) split
+- **`receiving-code-review`** — added "From Reviewer Subagents (SDD)" source category as first handler; added YAGNI override rule (`spec.md` takes precedence); added re-dispatch requirement after fixes; added Integration section mapping callers and post-fix flow
+- **`requesting-code-review`** — fixed `superpowers:code-reviewer` → `sdd-superpowers:code-reviewer`; clarified this skill handles code quality only (spec compliance handled separately by `spec-reviewer-prompt.md`); added `subagent-driven-development` and `dispatching-parallel-agents` to mandatory invocation contexts; added Integration section; `code-reviewer.md` updated with SDD artifact injection guidance
+- **`test-driven-development`** — removed `@testing-anti-patterns.md` force-load syntax; added SDD checklist item (tests must verify spec requirements, not just implementation behavior); added Integration (SDD) section naming callers and spec context
+- **`sdd-execute`** — added mid-flight spec change procedure (`STOP → sdd-update → propagate → resume`) to both SKILL.md and reference.md; added `verification-before-completion` as explicit hard gate before `sdd-review` in both the Quick Reference flow and reference.md Step 4
+- **`finishing-a-development-branch`** — fixed integration section: added Prerequisites block (`sdd-review` + `verification-before-completion`), corrected all bare skill names to `sdd-superpowers:` namespace, replaced `executing-plans` with `sdd-superpowers:sdd-execute`
+
 ## [2.3.0] - 2026-04-19
 
 ### Added
