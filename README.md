@@ -44,7 +44,7 @@ NO COMPLETION CLAIM without fresh verification evidence
 | `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
-| `sdd-execute` | Tasks exist → subagent dispatch with spec-compliance + code-quality review |
+| `sdd-execute` | Tasks exist → invokes `subagent-driven-development` to orchestrate per-task subagents with spec-compliance + code-quality review |
 | `sdd-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
 | `sdd-review` | Spec completeness check (pre-plan) or implementation alignment (post-execute) |
 
@@ -114,11 +114,13 @@ These skills are invoked at specific SDD workflow points:
 | About to claim anything is complete | `verification-before-completion` |
 | All tasks done, tests passing | `finishing-a-development-branch` |
 | Any git operation — branches, commits, convention | `using-git` |
-| Any implementation task (every task) | `test-driven-development` |
 | At a phase boundary during execution | `requesting-code-review` |
 | Implementing fixes after review feedback | `receiving-code-review` |
-| Dispatching 2+ independent tasks | `dispatching-parallel-agents` |
-| Executing tasks in current session | `subagent-driven-development` |
+| Dispatching 2+ independent tasks concurrently | `dispatching-parallel-agents` |
+| Executing tasks in current session with subagents | `subagent-driven-development` |
+| Each implementer subagent (dispatched from `subagent-driven-development`) | `test-driven-development` |
+
+**Skill hierarchy during execution:** `sdd-execute` (controller) → invokes `subagent-driven-development` → dispatches implementer subagents → each subagent invokes `test-driven-development`. TDD is enforced at the implementer-subagent level, not by the controller directly.
 
 ## Project Context (CLAUDE.md)
 
