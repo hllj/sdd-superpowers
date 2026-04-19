@@ -119,8 +119,8 @@ Agent 3 → Task 3: Refresh token rotation
 
 1. **Review each summary** — Read status and concerns; address BLOCKED/NEEDS_CONTEXT before proceeding
 2. **Check for conflicts** — Did agents edit the same files? Resolve before reviewing
-3. **Spec compliance review per task** — Dispatch `sdd-superpowers:requesting-code-review` in spec mode; fix failures with `sdd-superpowers:receiving-code-review`
-4. **Code quality review per task** — Dispatch `sdd-superpowers:requesting-code-review` in quality mode after spec passes
+3. **Spec compliance review per task** — Dispatch using `spec-reviewer-prompt.md` from `sdd-superpowers:subagent-driven-development`; fix failures with `sdd-superpowers:receiving-code-review`
+4. **Code quality review per task** — Dispatch using `sdd-superpowers:requesting-code-review` after spec compliance passes per task
 5. **Run full test suite** — Verify all parallel implementations work together
 6. **Mark tasks complete** — Update TodoWrite; continue to next phase with `sdd-superpowers:sdd-execute`
 

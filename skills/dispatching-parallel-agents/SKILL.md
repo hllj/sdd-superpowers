@@ -51,7 +51,7 @@ NOT safe to parallelize:
 - Tasks where one depends on another's output
 - Exploratory debugging (root cause unknown)
 
-After agents return: review each summary → check for conflicts → run spec compliance review per task → run code quality review per task → run full suite → mark tasks complete.
+After agents return: review each summary → check for conflicts → spec compliance review per task (spec-reviewer-prompt.md) → code quality review per task (requesting-code-review) → run full suite → mark tasks complete.
 
 See [reference.md](reference.md) for the full dispatch pattern, agent prompt template, worked example, and post-dispatch review procedure.
 
@@ -65,8 +65,8 @@ See [reference.md](reference.md) for the full dispatch pattern, agent prompt tem
 - `sdd-superpowers:using-git` — commit with proper convention
 
 **After all parallel agents return:**
-- Run spec compliance review per task (`sdd-superpowers:requesting-code-review`)
-- Run code quality review per task (`sdd-superpowers:requesting-code-review`)
+- Run spec compliance review per task — dispatch using `spec-reviewer-prompt.md` from `sdd-superpowers:subagent-driven-development`
+- Run code quality review per task — dispatch using `sdd-superpowers:requesting-code-review` (only after spec compliance passes)
 - Fix issues with `sdd-superpowers:receiving-code-review` if reviews fail
 - Mark tasks complete in TodoWrite
 - Continue to next phase with `sdd-superpowers:sdd-execute`
