@@ -1,11 +1,11 @@
 ---
-name: sdd-update
+name: sdd-spec-update
 description: Use when a user describes a change, addition, or correction to an in-progress feature — after a spec exists but before or during implementation — to assess impact, version the spec, and propagate changes downstream
 ---
 
-# SDD: Update
+# SDD: Spec Update
 
-**Announce at start:** "I'm using the sdd-update skill to assess and integrate this change."
+**Announce at start:** "I'm using the sdd-spec-update skill to assess and integrate this change."
 
 ## Overview
 

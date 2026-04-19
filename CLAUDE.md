@@ -39,7 +39,7 @@ Key principles:
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
 | `sdd-execute` | Tasks exist → subagent dispatch with spec-compliance + code-quality review |
-| `sdd-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
+| `sdd-spec-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
 | `sdd-review` | Spec completeness check (pre-plan) or implementation alignment (post-execute) |
 
 ## Workflow
@@ -79,7 +79,7 @@ sdd-tasks ────────────────────► docs/s
 sdd-execute ──────────────────► Implementation with per-task subagents
  │    ▲                          Spec-compliance review after each task
  │    │ (mid-flight change)      Code-quality review after each task
- │  sdd-update ────────────────► classify PATCH/MINOR/MAJOR
+ │  sdd-spec-update ────────────────► classify PATCH/MINOR/MAJOR
  │    │                          version spec, propagate downstream
  │    └── resume execution
  │
@@ -146,7 +146,7 @@ skills/
   sdd-plan/               # Spec → implementation plan
   sdd-tasks/              # Plan → executable task list
   sdd-execute/            # Tasks → subagent-driven implementation
-  sdd-update/             # Mid-flight spec change → PATCH/MINOR/MAJOR versioning + propagation
+  sdd-spec-update/             # Mid-flight spec change → PATCH/MINOR/MAJOR versioning + propagation
   sdd-review/             # Spec/implementation alignment validation
   systematic-debugging/   # Root-cause investigation before any fix
     root-cause-tracing.md

@@ -45,7 +45,7 @@ NO COMPLETION CLAIM without fresh verification evidence
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
 | `sdd-execute` | Tasks exist → invokes `subagent-driven-development` to orchestrate per-task subagents with spec-compliance + code-quality review |
-| `sdd-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
+| `sdd-spec-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
 | `sdd-review` | Spec completeness check (pre-plan) or implementation alignment (post-execute) |
 
 ## Workflow
@@ -76,7 +76,7 @@ sdd-tasks ────────────────────► docs/s
 sdd-execute ──────────────────► Implementation with per-task subagents
  │    ▲                          Spec-compliance review after each task
  │    │ (mid-flight change)      Code-quality review after each task
- │  sdd-update ────────────────► classify PATCH/MINOR/MAJOR
+ │  sdd-spec-update ────────────────► classify PATCH/MINOR/MAJOR
  │    │                          version spec, propagate downstream
  │    └── resume execution
  │
@@ -100,7 +100,7 @@ finishing-a-development-branch ──► merge / PR / keep / discard
 # 2. Use sdd-plan to plan the feature
 # 3. Use sdd-tasks to generate the task list
 # 4. Use sdd-execute to implement it
-#    (if requirements change mid-flight: use sdd-update first)
+#    (if requirements change mid-flight: use sdd-spec-update first)
 # 5. Use sdd-review to validate the implementation
 ```
 

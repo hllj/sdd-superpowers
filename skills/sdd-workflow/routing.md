@@ -40,7 +40,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 | Spec exists, need an implementation plan | `sdd-superpowers:sdd-plan` |
 | Plan exists, need executable tasks | `sdd-superpowers:sdd-tasks` |
 | Ready to execute tasks with agents | `sdd-superpowers:sdd-execute` |
-| User describes a change or addition to an approved spec | `sdd-superpowers:sdd-update` |
+| User describes a change or addition to an approved spec | `sdd-superpowers:sdd-spec-update` |
 | Checking spec completeness before planning | `sdd-superpowers:sdd-review` |
 | Checking implementation matches spec after coding | `sdd-superpowers:sdd-review` |
 | A task fails or behavior is unexpected | `sdd-superpowers:systematic-debugging` |
@@ -63,7 +63,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 3. `sdd-superpowers:sdd-plan` — establish the technical approach
 4. `sdd-superpowers:sdd-tasks` — establish the ORDER to build it
 5. `sdd-superpowers:sdd-execute` — actually build it
-   - **At any point after spec approval:** `sdd-superpowers:sdd-update` — integrate mid-flight changes before continuing
+   - **At any point after spec approval:** `sdd-superpowers:sdd-spec-update` — integrate mid-flight changes before continuing
 6. `sdd-superpowers:sdd-review` + `sdd-superpowers:verification-before-completion` — confirm it was built correctly
 
 Never skip steps. "Let's just code it" means `sdd-superpowers:sdd-brainstorm` or `sdd-superpowers:sdd-specify` first.
@@ -126,11 +126,11 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 **`sdd-superpowers:sdd-execute` is mandatory when:**
 - A tasks.md exists and user says "implement", "build", "execute"
 
-**`sdd-superpowers:sdd-update` is mandatory when:**
+**`sdd-superpowers:sdd-spec-update` is mandatory when:**
 - User describes a change, addition, or correction to an already-approved spec
 - User says "can we also add X", "actually I want Y instead of Z", "I realize we need to change…"
 - A mid-implementation discovery invalidates an existing requirement
-- Do NOT proceed with plan/tasks/code changes until `sdd-update` has classified the bump and the user has confirmed scope
+- Do NOT proceed with plan/tasks/code changes until `sdd-spec-update` has classified the bump and the user has confirmed scope
 
 **`sdd-superpowers:sdd-review` is mandatory when:**
 - Spec is about to be handed to planning (spec review mode)
@@ -165,8 +165,8 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 | "I'm sure it works" | Confidence is not evidence. Evidence is evidence. | `sdd-superpowers:verification-before-completion` |
 | "Tests pass so it's done" | Tests passing ≠ spec alignment. They verify code, not intent. | `sdd-superpowers:sdd-review` to confirm spec alignment |
 | "Let me just fix this quickly" | Quick fixes skip root-cause analysis and create regression risk. | `sdd-superpowers:systematic-debugging` first |
-| "User said 'also add X' — I'll just update the tasks" | Un-versioned spec changes corrupt traceability and cause downstream drift. | `sdd-superpowers:sdd-update` first — classify impact, update spec, then propagate |
-| "This change seems minor, no need to update the spec" | Even PATCH bumps must be recorded. Minor = still versioned. | `sdd-superpowers:sdd-update` — even PATCH bumps are recorded in the spec |
+| "User said 'also add X' — I'll just update the tasks" | Un-versioned spec changes corrupt traceability and cause downstream drift. | `sdd-superpowers:sdd-spec-update` first — classify impact, update spec, then propagate |
+| "This change seems minor, no need to update the spec" | Even PATCH bumps must be recorded. Minor = still versioned. | `sdd-superpowers:sdd-spec-update` — even PATCH bumps are recorded in the spec |
 
 ---
 

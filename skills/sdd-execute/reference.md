@@ -128,15 +128,15 @@ After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED, use `sdd-superpowers:fi
 If the user requests a change, addition, or correction during execution:
 
 1. **STOP** the current task (do not implement the change directly)
-2. Invoke `sdd-superpowers:sdd-update` — classify PATCH / MINOR / MAJOR, version the spec
-3. Propagate to `plan.md` and `tasks.md` as directed by `sdd-update`
+2. Invoke `sdd-superpowers:sdd-spec-update` — classify PATCH / MINOR / MAJOR, version the spec
+3. Propagate to `plan.md` and `tasks.md` as directed by `sdd-spec-update`
 4. Resume execution from the updated tasks
 
 **MAJOR bump** (architectural change): re-evaluate the entire task list before resuming.
 **MINOR bump** (new scope): add tasks, continue sequential execution.
 **PATCH bump** (clarification): update task text in place, continue.
 
-Never touch plan or tasks directly — `sdd-update` owns that propagation.
+Never touch plan or tasks directly — `sdd-spec-update` owns that propagation.
 
 ---
 

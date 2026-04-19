@@ -31,7 +31,7 @@ Verify branch + baseline
 → Parallel groups: dispatch concurrently, wait for all, then review
 → After each task: spec-compliance → code-quality → commit
 → Phase boundary: requesting-code-review (blocking gate)
-→ Mid-flight change: STOP → sdd-update → resume
+→ Mid-flight change: STOP → sdd-spec-update → resume
 After all tasks: verification-before-completion → sdd-review → finishing-a-development-branch
 ```
 
@@ -61,11 +61,11 @@ Ask for clarification rather than guessing. Don't force through blockers.
 If the user requests a change, addition, or correction during execution:
 
 1. **STOP** — do not implement the change directly
-2. Invoke `sdd-superpowers:sdd-update` to classify impact (PATCH / MINOR / MAJOR) and version the spec
-3. Propagate the change to `plan.md` and `tasks.md` as directed by `sdd-update`
+2. Invoke `sdd-superpowers:sdd-spec-update` to classify impact (PATCH / MINOR / MAJOR) and version the spec
+3. Propagate the change to `plan.md` and `tasks.md` as directed by `sdd-spec-update`
 4. Resume execution from the updated tasks
 
-Never update tasks or plan directly without running `sdd-superpowers:sdd-update` first.
+Never update tasks or plan directly without running `sdd-superpowers:sdd-spec-update` first.
 
 ## Remember
 
