@@ -113,11 +113,30 @@ If any check fails: execute sequentially.
 
 Read complete output. Count failures. If any fail: use `sdd-superpowers:systematic-debugging` before proceeding.
 
+Invoke `sdd-superpowers:verification-before-completion` — capture fresh test evidence before any completion claim. This is a **hard gate**: no completion claim without running this.
+
 Dispatch `sdd-superpowers:sdd-review` (implementation mode) to build the coverage matrix.
 
 ## Step 5: Finish
 
 After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED, use `sdd-superpowers:finishing-a-development-branch`. Do not merge, push, or delete branches directly.
+
+---
+
+## Mid-Flight Spec Changes
+
+If the user requests a change, addition, or correction during execution:
+
+1. **STOP** the current task (do not implement the change directly)
+2. Invoke `sdd-superpowers:sdd-update` — classify PATCH / MINOR / MAJOR, version the spec
+3. Propagate to `plan.md` and `tasks.md` as directed by `sdd-update`
+4. Resume execution from the updated tasks
+
+**MAJOR bump** (architectural change): re-evaluate the entire task list before resuming.
+**MINOR bump** (new scope): add tasks, continue sequential execution.
+**PATCH bump** (clarification): update task text in place, continue.
+
+Never touch plan or tasks directly — `sdd-update` owns that propagation.
 
 ---
 

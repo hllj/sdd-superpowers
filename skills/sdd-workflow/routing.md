@@ -49,6 +49,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 | At a phase boundary during execution, before starting the next phase | `sdd-superpowers:requesting-code-review` |
 | Implementing fixes after a code review flagged issues | `sdd-superpowers:receiving-code-review` |
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
+| Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
 
 ---
 
@@ -143,20 +144,24 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 **`sdd-superpowers:dispatching-parallel-agents` is mandatory when:**
 - Dispatching a parallel task group in `sdd-superpowers:sdd-execute` (2+ independent tasks concurrently)
 
+**`sdd-superpowers:subagent-driven-development` is mandatory when:**
+- Executing tasks in the current session using subagents (not dispatching to parallel agents, but running sequentially or semi-sequentially in session)
+
 ---
 
 ## Red Flags — Stop and Check Skills
 
-| Thought | Action |
-|---------|--------|
-| "This is small, I'll just code it" | `sdd-superpowers:sdd-specify` first |
-| "The plan is obvious, skip planning" | `sdd-superpowers:sdd-plan` first |
-| "I know what tests to write" | `sdd-superpowers:sdd-tasks` first |
-| "I'm sure it works" | `sdd-superpowers:verification-before-completion` |
-| "Tests pass so it's done" | `sdd-superpowers:sdd-review` to confirm spec alignment |
-| "Let me just fix this quickly" | `sdd-superpowers:systematic-debugging` first |
-| "User said 'also add X' — I'll just update the tasks" | `sdd-superpowers:sdd-update` first — classify impact, update spec, then propagate |
-| "This change seems minor, no need to update the spec" | `sdd-superpowers:sdd-update` — even PATCH bumps are recorded in the spec |
+| Thought | Reality | Action |
+|---------|---------|--------|
+| "This is small, I'll just code it" | Small features become large ones. Specs prevent scope drift. | `sdd-superpowers:sdd-specify` first |
+| "The plan is obvious, skip planning" | Obvious plans surface hidden dependencies when written down. | `sdd-superpowers:sdd-plan` first |
+| "I know what tests to write" | Skipping tasks skips parallelization hints and spec traceability. | `sdd-superpowers:sdd-tasks` first |
+| "I need more context before invoking a skill" | Skill check comes BEFORE information gathering. Skills tell you HOW to gather it. | Invoke the relevant skill first |
+| "I'm sure it works" | Confidence is not evidence. Evidence is evidence. | `sdd-superpowers:verification-before-completion` |
+| "Tests pass so it's done" | Tests passing ≠ spec alignment. They verify code, not intent. | `sdd-superpowers:sdd-review` to confirm spec alignment |
+| "Let me just fix this quickly" | Quick fixes skip root-cause analysis and create regression risk. | `sdd-superpowers:systematic-debugging` first |
+| "User said 'also add X' — I'll just update the tasks" | Un-versioned spec changes corrupt traceability and cause downstream drift. | `sdd-superpowers:sdd-update` first — classify impact, update spec, then propagate |
+| "This change seems minor, no need to update the spec" | Even PATCH bumps must be recorded. Minor = still versioned. | `sdd-superpowers:sdd-update` — even PATCH bumps are recorded in the spec |
 
 ---
 

@@ -15,23 +15,23 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 ```dot
 digraph when_to_use {
-    "Have implementation plan?" [shape=diamond];
+    "Have tasks.md?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
     "Stay in this session?" [shape=diamond];
-    "subagent-driven-development" [shape=box];
-    "executing-plans" [shape=box];
-    "Manual execution or brainstorm first" [shape=box];
+    "sdd-superpowers:subagent-driven-development" [shape=box];
+    "sdd-superpowers:sdd-execute" [shape=box];
+    "Run sdd-tasks first" [shape=box];
 
-    "Have implementation plan?" -> "Tasks mostly independent?" [label="yes"];
-    "Have implementation plan?" -> "Manual execution or brainstorm first" [label="no"];
+    "Have tasks.md?" -> "Tasks mostly independent?" [label="yes"];
+    "Have tasks.md?" -> "Run sdd-tasks first" [label="no"];
     "Tasks mostly independent?" -> "Stay in this session?" [label="yes"];
-    "Tasks mostly independent?" -> "Manual execution or brainstorm first" [label="no - tightly coupled"];
-    "Stay in this session?" -> "subagent-driven-development" [label="yes"];
-    "Stay in this session?" -> "executing-plans" [label="no - parallel session"];
+    "Tasks mostly independent?" -> "Run sdd-tasks first" [label="no - tightly coupled"];
+    "Stay in this session?" -> "sdd-superpowers:subagent-driven-development" [label="yes"];
+    "Stay in this session?" -> "sdd-superpowers:sdd-execute" [label="no - parallel worktree"];
 }
 ```
 
-**vs. Executing Plans (parallel session):**
+**vs. sdd-execute (parallel worktree):**
 - Same session (no context switch)
 - Fresh subagent per task (no context pollution)
 - Two-stage review after each task: spec compliance first, then code quality
@@ -58,12 +58,12 @@ digraph process {
         "Mark task complete in TodoWrite" [shape=box];
     }
 
-    "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
+    "Read tasks.md + spec.md, extract all tasks with full text, note context, create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
     "Use finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
-    "Read plan, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
+    "Read tasks.md + spec.md, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer subagent asks questions?";
     "Implementer subagent asks questions?" -> "Answer questions, provide context" [label="yes"];
     "Answer questions, provide context" -> "Dispatch implementer subagent (./implementer-prompt.md)";
@@ -117,6 +117,18 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 
 **Never** ignore an escalation or force the same model to retry without changes. If the implementer said it's stuck, something needs to change.
 
+## SDD Source Files
+
+Before dispatching any subagent, read these files once and keep the content in context:
+
+| File | Purpose |
+|------|---------|
+| `docs/specs/NNN-feature/tasks.md` | Source of all tasks — extract full text per task |
+| `docs/specs/NNN-feature/spec.md` | Authoritative spec — pass to spec reviewer as ground truth |
+| `docs/specs/NNN-feature/plan.md` | Architecture and contracts — include as implementer context |
+
+Never make subagents read these files themselves. Extract and inject the relevant content into each prompt.
+
 ## Prompt Templates
 
 - `./implementer-prompt.md` - Dispatch implementer subagent
@@ -126,9 +138,9 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 ## Example Workflow
 
 ```
-You: I'm using Subagent-Driven Development to execute this plan.
+You: I'm using sdd-superpowers:subagent-driven-development to execute this plan.
 
-[Read plan file once: docs/superpowers/plans/feature-plan.md]
+[Read docs/specs/NNN-feature/tasks.md and docs/specs/NNN-feature/spec.md once]
 [Extract all 5 tasks with full text and context]
 [Create TodoWrite with all tasks]
 
@@ -265,13 +277,13 @@ Done!
 ## Integration
 
 **Required workflow skills:**
-- **using-git** - For any git operation (branch creation, commits, convention validation); advanced worktrees guidance available within `sdd-superpowers:using-git`
-- **superpowers:writing-plans** - Creates the plan this skill executes (SDD equivalent: `sdd-superpowers:sdd-plan`)
-- **requesting-code-review** - Code review template for reviewer subagents
-- **finishing-a-development-branch** - Complete development after all tasks
+- `sdd-superpowers:using-git` - For any git operation (branch creation, commits, convention validation)
+- `sdd-superpowers:sdd-plan` - Creates the plan and `sdd-superpowers:sdd-tasks` creates the tasks.md this skill executes
+- `sdd-superpowers:requesting-code-review` - Code review template for reviewer subagents
+- `sdd-superpowers:finishing-a-development-branch` - Complete development after all tasks
 
 **Subagents should use:**
-- **test-driven-development** - Subagents follow TDD for each task
+- `sdd-superpowers:test-driven-development` - Subagents follow TDD for each task
 
 **Alternative workflow:**
-- **superpowers:executing-plans** - Use for parallel session instead of same-session execution (SDD equivalent: `sdd-superpowers:sdd-execute`)
+- `sdd-superpowers:sdd-execute` - Use for parallel worktree execution instead of same-session subagents

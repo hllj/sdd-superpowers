@@ -7,7 +7,9 @@ description: Use when completing a development phase or major feature, and befor
 
 ## Overview
 
-Dispatch a `superpowers:code-reviewer` subagent with precisely crafted context to catch issues before they cascade. The reviewer gets the work product, not your session history — keeping review focused and your context uncluttered.
+Dispatch a `sdd-superpowers:code-reviewer` subagent with precisely crafted context to catch issues before they cascade. The reviewer gets the work product, not your session history — keeping review focused and your context uncluttered.
+
+In SDD this is the **code quality** review stage — invoked after spec compliance review passes. Spec compliance is handled separately by `spec-reviewer-prompt.md` in `sdd-superpowers:subagent-driven-development`.
 
 **Core principle:** Review early, review often.
 
@@ -16,6 +18,8 @@ Dispatch a `superpowers:code-reviewer` subagent with precisely crafted context t
 ## When to Use
 
 **Mandatory:**
+- After spec compliance passes for each task in `sdd-superpowers:subagent-driven-development`
+- After spec compliance passes for each parallel task in `sdd-superpowers:dispatching-parallel-agents`
 - After completing a phase in `sdd-superpowers:sdd-execute` (blocking gate before next phase starts)
 - Before merge to main
 - After completing a major feature
@@ -35,7 +39,7 @@ BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
 HEAD_SHA=$(git rev-parse HEAD)
 ```
 
-**2. Dispatch `superpowers:code-reviewer` subagent with:**
+**2. Dispatch `sdd-superpowers:code-reviewer` subagent with:**
 - `{WHAT_WAS_IMPLEMENTED}` — what you just built
 - `{PLAN_OR_REQUIREMENTS}` — what it should do
 - `{BASE_SHA}` / `{HEAD_SHA}` — commit range
@@ -57,3 +61,14 @@ HEAD_SHA=$(git rev-parse HEAD)
 | Accepting wrong feedback without pushback | Use technical reasoning and show evidence |
 
 See template at: `requesting-code-review/code-reviewer.md`
+
+## Integration
+
+**Called by:**
+- `sdd-superpowers:subagent-driven-development` — code quality review after spec compliance passes per task
+- `sdd-superpowers:dispatching-parallel-agents` — code quality review after spec compliance passes per parallel task
+- `sdd-superpowers:sdd-execute` — phase boundary review
+
+**After review:**
+- Critical/Important issues → `sdd-superpowers:receiving-code-review` to implement fixes, then re-dispatch this reviewer
+- All issues resolved → mark task complete, continue with `sdd-superpowers:sdd-execute`

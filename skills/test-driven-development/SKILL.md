@@ -336,6 +336,7 @@ Before marking work complete:
 - [ ] Output pristine (no errors, warnings)
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
+- [ ] (SDD) Tests verify **spec requirements** from `spec.md`, not just implementation behavior
 
 Can't check all boxes? You skipped TDD. Start over.
 
@@ -356,7 +357,7 @@ Never fix bugs without a test.
 
 ## Testing Anti-Patterns
 
-When adding mocks or test utilities, read @testing-anti-patterns.md to avoid common pitfalls:
+When adding mocks or test utilities, read `testing-anti-patterns.md` (in this skill's directory) to avoid common pitfalls:
 - Testing mock behavior instead of real behavior
 - Adding test-only methods to production classes
 - Mocking without understanding dependencies
@@ -369,3 +370,12 @@ Otherwise → not TDD
 ```
 
 No exceptions without your human partner's permission.
+
+## Integration (SDD)
+
+**Called by:**
+- `sdd-superpowers:sdd-execute` — mandated for every implementer subagent
+- `sdd-superpowers:subagent-driven-development` — mandated for every implementer subagent
+
+**What the spec provides:**
+The task prompt injected by the controller includes `spec.md` and the task text from `tasks.md`. Use these as the source of truth for what behaviors to test. A test that passes but doesn't cover a spec requirement is a gap — not a success.

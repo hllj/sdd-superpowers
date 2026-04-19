@@ -12,6 +12,7 @@ Code review requires technical evaluation, not emotional performance. Verify bef
 ## When to Use
 
 - Receiving feedback from a human partner or external reviewer
+- After a spec-compliance or code-quality reviewer subagent returns issues in `sdd-superpowers:sdd-execute` or `sdd-superpowers:subagent-driven-development`
 - Before implementing any review suggestion (especially if it seems unclear or wrong)
 - NOT for general debugging or self-review
 

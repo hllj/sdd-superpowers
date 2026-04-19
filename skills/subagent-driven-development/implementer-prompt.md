@@ -29,10 +29,10 @@ Task tool (general-purpose):
     ## Your Job
 
     Once you're clear on requirements:
-    1. Implement exactly what the task specifies
-    2. Write tests (following TDD if task says to)
-    3. Verify implementation works
-    4. Commit your work
+    1. Follow `sdd-superpowers:test-driven-development` — write a failing test first, then implement
+    2. Implement exactly what the task specifies (no more, no less)
+    3. Verify all tests pass
+    4. Commit your work using `sdd-superpowers:using-git` conventions
     5. Self-review (see below)
     6. Report back
 

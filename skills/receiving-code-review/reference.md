@@ -4,6 +4,24 @@
 
 ## Source-Specific Handling
 
+### From Reviewer Subagents (SDD — most common in sdd-execute / subagent-driven-development)
+
+Reviewer subagents are dispatched by the controller and are authoritative within their domain:
+
+- **Spec compliance reviewer** — its findings are ground truth against `docs/specs/NNN-feature/spec.md`. If it says something is missing or extra, it is.
+- **Code quality reviewer** — its findings are advisory; use technical judgment to evaluate severity.
+
+```
+BEFORE implementing:
+  1. Read the reviewer's findings carefully
+  2. Verify against the actual code (don't just trust the finding)
+  3. If spec compliance: cross-check against spec.md directly
+  4. Implement fixes one at a time, test each
+  5. Re-dispatch the SAME reviewer subagent to verify fixes before moving on
+```
+
+**Never skip the re-dispatch.** Fixes must be verified by the reviewer, not self-assessed.
+
 ### From your human partner
 - **Trusted** - implement after understanding
 - **Still ask** if scope unclear
@@ -34,11 +52,16 @@ IF conflicts with your human partner's prior decisions:
 
 ```
 IF reviewer suggests "implementing properly":
-  grep codebase for actual usage
+  FIRST: Check docs/specs/NNN-feature/spec.md
 
-  IF unused: "This endpoint isn't called. Remove it (YAGNI)?"
-  IF used: Then implement properly
+  IF spec.md requires it: Implement — spec overrides YAGNI
+  IF spec.md is silent:
+    grep codebase for actual usage
+    IF unused: "This endpoint isn't called. Remove it (YAGNI)?"
+    IF used: Then implement properly
 ```
+
+**SDD rule:** `spec.md` is the authority. If it's in the spec, build it. YAGNI only applies to things outside the spec's scope.
 
 ## Implementation Order
 
@@ -51,6 +74,8 @@ FOR multi-item feedback:
      - Complex fixes (refactoring, logic)
   3. Test each fix individually
   4. Verify no regressions
+  5. (SDD) Re-dispatch the reviewer subagent to confirm all issues resolved
+     — do NOT proceed to the next stage until reviewer approves
 ```
 
 ## When To Push Back
@@ -131,3 +156,15 @@ You understand 1,2,3,6. Unclear on 4,5.
 ## GitHub Thread Replies
 
 When replying to inline review comments on GitHub, reply in the comment thread (`gh api repos/{owner}/{repo}/pulls/{pr}/comments/{id}/replies`), not as a top-level PR comment.
+
+## Integration
+
+**Called by:**
+- `sdd-superpowers:sdd-execute` — when spec compliance or code quality review returns issues
+- `sdd-superpowers:subagent-driven-development` — when per-task review loop finds failures
+
+**After implementing fixes:**
+- Re-dispatch the reviewer subagent (`sdd-superpowers:requesting-code-review`) to verify
+- Only proceed to next stage once reviewer approves (✅)
+- If spec compliance passes, proceed to code quality review
+- If code quality passes, mark task complete in TodoWrite
