@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2026-04-19
+
+### Changed
+
+- **`sdd-update` renamed to `sdd-spec-update`** — the new name clarifies this skill is specifically about versioning and propagating *spec* changes, not general project updates; all references updated across `sdd-workflow`, `sdd-execute`, `README.md`, and `CLAUDE.md`
+- **Skill invocation hierarchy clarified** — `test-driven-development` is now correctly documented as an implementer-subagent skill (invoked inside `subagent-driven-development`), not a controller-level skill; previously it was listed alongside `subagent-driven-development` at the same level in `sdd-workflow`, `sdd-execute`, and `routing.md`
+- **`subagent-driven-development` When To Use diagram fixed** — `sdd-execute` was incorrectly shown as a peer alternative; corrected to show `sdd-execute` as the parent caller that invokes this skill
+- **`sdd-workflow` quick reference** — reordered and relabeled: `subagent-driven-development` now precedes `test-driven-development`, with TDD row labeled "Each implementer subagent (dispatched from subagent-driven-development)"
+- **`sdd-execute` integration table** — removed `test-driven-development` from controller-level sub-skills; added note that TDD is mandated via `subagent-driven-development` implementer subagents
+- **`routing.md` mandatory conditions** — added `test-driven-development` mandatory condition clarifying it is invoked by implementer subagents, not the controller
+- **`README.md` Bundled Support Skills** — hierarchy note added: `sdd-execute → subagent-driven-development → implementer subagents → test-driven-development`
+
+### Migration
+
+Users upgrading from v2.4.0: replace all invocations of `sdd-superpowers:sdd-update` with `sdd-superpowers:sdd-spec-update`.
+
 ## [2.4.0] - 2026-04-19
 
 ### Changed
