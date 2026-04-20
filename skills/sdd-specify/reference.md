@@ -90,9 +90,8 @@ Generate `docs/specs/<NNN>-<feature-slug>/spec.md` using this template:
 **So that** <I achieve some goal>
 
 **Acceptance criteria:**
-- [ ] <Specific, testable outcome>
-- [ ] <Specific, testable outcome>
-- [ ] <Specific, testable outcome>
+- [ ] **AC-1.1** Given <precondition / system state> When <user action or event> Then <observable, verifiable outcome>
+- [ ] **AC-1.2** Given <precondition> When <action> Then <outcome>
 
 ### Story 2: <Name>
 ...
@@ -138,6 +137,28 @@ Generate `docs/specs/<NNN>-<feature-slug>/spec.md` using this template:
 - <Feature that was discussed but explicitly deferred>
 ```
 
+## BDD Acceptance Criteria Rules
+
+Each acceptance criterion must follow the `Given / When / Then` format:
+
+- **Given** — the precondition or system state before the action
+- **When** — the user action, API call, or event that triggers the behavior
+- **Then** — the observable, verifiable outcome (what a test would assert)
+
+AC IDs follow `AC-<story_number>.<criterion_sequence>` (e.g., Story 1 → `AC-1.1`, `AC-1.2`; Story 2 → `AC-2.1`).
+
+**Valid example:**
+- [ ] **AC-1.1** Given a user is on the login page with valid credentials When they submit the login form Then they are redirected to the dashboard and a session token is set
+
+**Anti-patterns (fix before approval):**
+
+| Anti-pattern | Problem | Correction |
+|---|---|---|
+| "The system handles errors correctly" | No Given, no When, unobservable Then | Add all three clauses; name the specific error and expected response |
+| "Given a user When they click Then it works" | Then is not verifiable | Replace "it works" with a concrete, assertable outcome |
+| "Given \<state\> When \<action\> Then the user is happy" | Non-observable outcome | Replace with a measurable UI change, response code, or data state |
+| Criterion with only Then ("The page loads in under 2s") | Missing Given and When | Specify starting state and triggering action |
+
 ## Step 5: Self-Review the Spec
 
 After writing, review the spec yourself (do NOT delegate this):
@@ -149,6 +170,8 @@ After writing, review the spec yourself (do NOT delegate this):
 **Abstraction check:** Does any requirement mention implementation technology (React, PostgreSQL, REST)? If so, move it to Open Questions — specs describe WHAT, not HOW.
 
 **Testability check:** Can each acceptance criterion be verified with a concrete test? If not, rewrite it.
+
+**BDD completeness:** Does every acceptance criterion have all three clauses (Given, When, Then) and an `AC-N.M` ID? If not, rewrite before approval.
 
 Fix issues inline. Do not move on until the spec passes this review.
 
