@@ -5,7 +5,7 @@
       "name": "sdd-superpowers",
       "source": "./",
       "description": "Specification-Driven Development (SDD) for Claude Code: write specs first, generate code from them. 9-skill workflow covering brainstorm → specify → research → plan → tasks → execute → update → review.",
-      "version": "2.5.0"
+      "version": "2.6.0"
     }
   ],
   "owner": {
