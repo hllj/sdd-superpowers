@@ -145,7 +145,7 @@ Generate `docs/specs/<NNN>-<feature-slug>/plan.md`:
 
 ### 0.1 Write Contract Tests
 
-- [ ] Write contract test for <API endpoint/event>: verify request shape, response shape, error codes
+- [ ] Write contract test for <API endpoint/event>: verify request shape, response shape, error codes (targets AC-N.M)
 - [ ] Run contract tests — confirm they FAIL (feature not implemented yet)
 - [ ] Commit: `test: add contract tests for <feature>`
 
@@ -159,7 +159,7 @@ Generate `docs/specs/<NNN>-<feature-slug>/plan.md`:
 
 ## Phase 1: <First Component>
 
-**Implements:** FR-1, FR-2
+**Implements:** FR-1, FR-2 | **Satisfies:** AC-1.1, AC-1.2
 **Files:** `src/path/file.ts`, `tests/path/test.ts`
 
 ### 1.1 <Specific Unit>
@@ -176,6 +176,7 @@ Generate `docs/specs/<NNN>-<feature-slug>/plan.md`:
 
 ## Phase N: Integration Verification
 
+**Implements:** All FRs | **Satisfies:** All ACs
 - [ ] Run full test suite: `<exact command>`
 - [ ] Verify all acceptance criteria from spec manually
 - [ ] Commit: `feat: complete <feature name>`
@@ -191,7 +192,7 @@ Generate `docs/specs/<NNN>-<feature-slug>/plan.md`:
 
 After writing all documents, check the plan against the spec:
 
-**Spec coverage:** For each functional requirement in the spec, can you point to a specific phase/task in the plan that implements it? List gaps.
+**Spec coverage:** For each FR in the spec, can you point to a specific phase that implements it? For each acceptance criterion (`AC-N.M`) in the spec, can you point to a phase that satisfies it? List any unmapped FRs or ACs as gaps — they must be covered before planning is complete.
 
 **Traceability check:** Does every technical decision have a spec requirement driving it? Flag decisions without spec backing.
 
@@ -227,6 +228,10 @@ Before claiming the plan is ready, confirm:
 > 3. Run `sdd-superpowers:sdd-execute` to implement with subagent dispatch and two-stage review"
 
 ## Plan Quality Rules
+
+**AC traceability in phase headers:**
+Every phase header must include a `| **Satisfies:** AC-N.M, AC-P.Q` clause listing the spec acceptance criteria it delivers. Use the same `AC-N.M` IDs from `spec.md`. Example:
+`**Implements:** FR-1, FR-2 | **Satisfies:** AC-1.1, AC-2.3`
 
 **Every step is one action (2-5 min):**
 - "Write the failing test" — one step

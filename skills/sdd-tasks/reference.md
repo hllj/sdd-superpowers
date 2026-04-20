@@ -98,17 +98,17 @@ Tasks in this group can run in parallel.
 *All prior phases must be complete.*
 
 - [ ] **TNNN** Run full test suite: `<command>` — expect: ALL PASS
-- [ ] **TNNN** Verify acceptance criterion 1: <exact verification step>
+- [ ] **TNNN** Verify AC-1.1: Given <precondition> When <action> Then confirm <outcome> — run `<exact command or UI step>`
 - [ ] **TNNN** Final commit: `git add . && git commit -m "feat: complete <feature>"`
 
 ---
 
 ## Task Summary
 
-| Range | Phase | Can Parallelize? |
-|-------|-------|-----------------|
-| T001–T002 | Setup & Contracts | Yes (within group) |
-| T003–T007 | <Phase 1> | No (sequential) |
+| Range | Phase | Can Parallelize? | Spec ACs Covered |
+|-------|-------|-----------------|-----------------|
+| T001–T002 | Setup & Contracts | Yes (within group) | — |
+| T003–T007 | <Phase 1> | No (sequential) | AC-1.1, AC-1.2 |
 
 **Total tasks:** <N>
 **Estimated parallel speedup:** <X>x (Y tasks parallelizable)
@@ -127,6 +127,14 @@ Check before presenting:
 **Dependency ordering:** Could any task fail because a prior task didn't produce the right output? If so, reorder.
 
 **Parallelization safety:** Recheck every `[P]` task — does it truly touch different files than all concurrent tasks?
+
+**Verification task format:** Every task that verifies an acceptance criterion must:
+- Cite the AC ID from spec.md (e.g., `AC-1.1`)
+- Reproduce the Given/When/Then text from the spec criterion inline
+- Name the exact command or UI steps to confirm the outcome
+
+Example:
+- [ ] **T012** Verify AC-2.1: Given the user has no active session When they visit `/dashboard` Then confirm they are redirected to `/login` — run `curl -I http://localhost:3000/dashboard` and assert `Location: /login` in response headers
 
 ## Step 5: Branch Creation and Doc-First Commit
 
