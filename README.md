@@ -87,6 +87,29 @@ sdd-review ───────────────────► Coverage
 finishing-a-development-branch ──► merge / PR / keep / discard
 ```
 
+## Hooks
+
+SDD Superpowers ships a set of Claude Code hooks — shell scripts that run automatically at specific lifecycle events. They are invisible infrastructure: when everything goes right, you don't notice them. Their job is to enforce the Four Hard Gates and keep project artifacts in sync without requiring manual discipline.
+
+All hooks are registered in `hooks/hooks.json` and are silent outside SDD projects (directories without a `docs/specs/` tree).
+
+### Why hooks instead of skill instructions?
+
+Skills run only when Claude is asked to invoke them. Hooks run unconditionally, before or after every relevant tool call. This means the gates and reminders cannot be skipped — not by a distracted session, not by a subagent, not by forgetting to invoke the right skill.
+
+### Hook reference
+
+| Event | Script | What it does | Why it exists |
+|-------|--------|-------------|---------------|
+| `SessionStart` | `session-start.sh` | Injects `memory/constitution.md`, `memory/MEMORY.md`, the active spec (first 50 lines), and all open tasks into every session's context | Claude would otherwise re-derive project conventions from scratch each session; this ensures it always starts with accurate project state |
+| `PreToolUse` → Write on `plan.md` | `pre-write-plan-gate.sh` | Blocks writing `plan.md` unless a `spec.md` exists in the same folder **and** its status is `Approved` | Enforces the hard gate: **NO PLAN without an approved spec** |
+| `PreToolUse` → Write on `tasks.md` | `pre-write-tasks-gate.sh` | Blocks writing `tasks.md` unless `plan.md` exists in the same folder | Enforces the hard gate: **NO TASKS without a plan** |
+| `PreToolUse` → Write or Edit (any file) | `pre-write-edit-state.sh` | Records `had_writes: true` in a per-session temp file | Gives `stop.sh` a signal to emit end-of-session reminders only when files were actually changed — stays silent on read-only sessions |
+| `PostToolUse` → Write on `memory/*.md` | `post-write-memory-validate.sh` | Checks that a newly written memory file has valid YAML frontmatter (`name`, `description`, `metadata.type`) and is indexed in `memory/MEMORY.md` | Memory files missing frontmatter or index entries are invisible to future sessions; this catches structural errors immediately |
+| `PostToolUse` → Write or Edit on `tasks.md` | `post-write-tasks-check.sh` | After any change to `tasks.md`, checks whether all task checkboxes are `[x]` (ignoring content inside code blocks). If all are done, injects a reminder to add `[DONE]` markers to `plan.md` phase headings and invoke `sdd-review` | `tasks.md` and `plan.md` drift apart without this — the hook keeps them in sync automatically |
+| `SubagentStart` | `subagent-start.sh` | Injects the active spec title, path, and objective section into every subagent's context | Subagents dispatched by `sdd-execute` start cold; without this they have no awareness of what feature they're implementing |
+| `Stop` | `stop.sh` | At session end, if any writes occurred this session, emits a checklist reminder: save new learnings to `memory/`, run `verification-before-completion` | Prevents the common failure mode of ending a session without persisting decisions or running final verification |
+
 ## Quick Start
 
 ```bash
