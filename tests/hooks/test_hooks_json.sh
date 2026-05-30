@@ -27,10 +27,6 @@ done < <(jq -r '.. | objects | .command? // empty' "$HOOKS_JSON" \
 
 # All hooks use type: command
 TYPES=$(jq -r '.. | objects | .type? // empty' "$HOOKS_JSON" | sort -u)
-assert_eq() {
-  if [ "$1" = "$2" ]; then PASS=$((PASS+1)); echo "  PASS: $3"
-  else FAIL=$((FAIL+1)); echo "  FAIL: $3 — expected '$2', got '$1'"; fi
-}
 assert_eq "$TYPES" "command" "FR-10: all hooks use type: command"
 
 summarize

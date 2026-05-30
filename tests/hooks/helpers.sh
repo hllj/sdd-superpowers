@@ -51,6 +51,15 @@ assert_json_field() {
   fi
 }
 
+assert_eq() {
+  local actual="$1" expected="$2" label="$3"
+  if [ "$actual" = "$expected" ]; then
+    PASS=$((PASS + 1)); echo "  PASS: $label"
+  else
+    FAIL=$((FAIL + 1)); echo "  FAIL: $label — expected '$expected', got '$actual'"
+  fi
+}
+
 summarize() {
   echo ""
   echo "Results: $PASS passed, $FAIL failed"

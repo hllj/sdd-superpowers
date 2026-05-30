@@ -25,10 +25,13 @@ if ! grep -q '^---' "$FILE_PATH"; then
   add_issue "Missing YAML frontmatter. Add --- delimiters and required fields: name, description, metadata.type"
 else
   FRONTMATTER=$(awk 'BEGIN{p=0} /^---/{p++; if(p==2)exit; next} p==1{print}' "$FILE_PATH")
-  echo "$FRONTMATTER" | grep -q '^name:' || add_issue "Missing 'name' field in frontmatter"
-  echo "$FRONTMATTER" | grep -q '^description:' || add_issue "Missing 'description' field in frontmatter"
+  FNAME=$(basename "$FILE_PATH")
+  echo "$FRONTMATTER" | grep -q '^name:' || \
+    add_issue "memory/${FNAME} is missing the 'name' field in frontmatter"
+  echo "$FRONTMATTER" | grep -q '^description:' || \
+    add_issue "memory/${FNAME} is missing the 'description' field in frontmatter"
   echo "$FRONTMATTER" | grep -q 'type:' || \
-    add_issue "Missing 'metadata.type' field in frontmatter (under metadata:)"
+    add_issue "memory/${FNAME} is missing the 'metadata.type' field in frontmatter (under metadata:)"
 
   NAME_SLUG=$(echo "$FRONTMATTER" | grep '^name:' | \
     sed "s/^name:[[:space:]]*//" | tr -d '"'"'")

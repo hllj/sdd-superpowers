@@ -33,6 +33,7 @@ if [ ! -f "${SPEC_DIR}/spec.md" ]; then
   deny "SDD Gate: spec.md not found in ${SPEC_DIR}. Run sdd-specify first."
 fi
 
+# SDD spec templates use Markdown bold: **Status:** Approved
 if ! grep -qE '^\*\*Status:\*\* Approved' "${SPEC_DIR}/spec.md" 2>/dev/null; then
   deny "SDD Gate: spec.md exists but is not approved. Set Status: Approved in spec.md before planning."
 fi

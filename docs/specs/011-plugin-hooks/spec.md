@@ -60,7 +60,7 @@ The SDD workflow enforces its four hard gates and discipline rules entirely thro
 
 **Acceptance criteria:**
 
-- [ ] **AC-2.1** Given a `Write` call targets a path matching `docs/specs/*/plan.md` When no `spec.md` exists in the same spec directory Then the write is denied with the message: `"SDD Gate: spec.md not found in docs/specs/NNN-*/. Run sdd-specify first."`
+- [ ] **AC-2.1** Given a `Write` call targets a path matching `docs/specs/*/plan.md` When no `spec.md` exists in the same spec directory Then the write is denied with a message containing the actual spec directory path and `"Run sdd-specify first."`
 - [ ] **AC-2.2** Given a `Write` call targets a path matching `docs/specs/*/plan.md` When `spec.md` exists but does not contain `Status: Approved` Then the write is denied with the message: `"SDD Gate: spec.md exists but is not approved. Set Status: Approved in spec.md before planning."`
 - [ ] **AC-2.3** Given a `Write` call targets a path matching `docs/specs/*/plan.md` When `spec.md` exists and contains `Status: Approved` Then the write is allowed and no message is emitted
 
@@ -72,7 +72,7 @@ The SDD workflow enforces its four hard gates and discipline rules entirely thro
 
 **Acceptance criteria:**
 
-- [ ] **AC-3.1** Given a `Write` call targets a path matching `docs/specs/*/tasks.md` When no `plan.md` exists in the same spec directory Then the write is denied with the message: `"SDD Gate: plan.md not found in docs/specs/NNN-*/. Run sdd-plan first."`
+- [ ] **AC-3.1** Given a `Write` call targets a path matching `docs/specs/*/tasks.md` When no `plan.md` exists in the same spec directory Then the write is denied with a message containing the actual spec directory path and `"Run sdd-plan first."`
 - [ ] **AC-3.2** Given a `Write` call targets a path matching `docs/specs/*/tasks.md` When `plan.md` exists in the same spec directory Then the write is allowed and no message is emitted
 - [ ] **AC-3.3** Given a `Write` call targets any path **not** matching `docs/specs/*/tasks.md` When the gate hook fires Then the hook exits silently without blocking
 
@@ -280,7 +280,7 @@ Hooks must ship as part of the plugin and activate automatically when the plugin
 | Git unavailable when detecting active spec | Falls back to most-recently-modified spec directory; no error output |
 | No spec directory matches current branch and fallback finds none | Hook exits 0 silently; no spec context injected |
 | Plan gate fires but `spec.md` is in wrong directory | Denial message names the expected path and corrective skill |
-| Memory validation finds missing `name` field | `additionalContext` states exactly: `"memory/[filename].md is missing the 'name' field in frontmatter"` |
+| Memory validation finds missing `name` field | `additionalContext` states: `"memory/[filename].md is missing the 'name' field in frontmatter"` (actual filename substituted) |
 | Memory file exists but `MEMORY.md` index is missing | `additionalContext` instructs Claude to create `memory/MEMORY.md` and add the entry |
 | Session state file write fails (permissions) | Stop hook reads missing state file as `had_writes: false`; session ends without reminder |
 | Hook script crashes with unexpected error (exit 1) | Claude Code session continues unblocked; error shown in transcript but does not stop work |
