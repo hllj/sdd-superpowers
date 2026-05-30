@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-05-30
+
+### Added
+
+- **Canonical template files** — dedicated `template.md` files added for all SDD skills (`sdd-specify`, `sdd-plan`, `sdd-research`, `sdd-tasks`, `sdd-brainstorm`) plus `contracts-api-template.md` and `data-model-template.md` for `sdd-plan`; `reference.md` files updated to link to these templates instead of embedding inline content (spec 009)
+- **Phrase-matched trigger language in `sdd-workflow`** — SKILL.md trigger descriptions rewritten with concrete natural-language examples so Claude reliably routes phrases like "let's think about..." or "build me a..." to the correct SDD skill; new `Trigger Language` section added to `routing.md` with phrase-to-skill mapping (spec 010)
+- **Action-based routing in `sdd-workflow` routing.md** — routing rules now distinguish between fuzzy-idea verbs (explore, think, brainstorm) and clear-idea verbs (build, create, implement) so the model reaches the right skill on first invocation without disambiguation turns (spec 010)
+
+### Changed
+
+- **`sdd-workflow` Common Mistakes** — added: invoking the wrong skill because the trigger phrase was ambiguous; updated routing guidance to anchor on the phrase pattern, not the technical category (spec 010)
+- **`requesting-code-review` trigger scope** — clarified that the agent-action trigger (code just written by a subagent) applies specifically within `sdd-execute`; general `review this` invocations remain unchanged (spec 010)
+
+---
+
 ## [2.6.0] - 2026-04-20
 
 ### Changed
@@ -238,6 +253,7 @@ docs/specs/NNN-feature/
 skills/          # All SDD and bundled Superpowers skills
 ```
 
+[2.7.0]: https://github.com/hllj/sdd-superpowers/compare/v2.6.0...v2.7.0
 [2.6.0]: https://github.com/hllj/sdd-superpowers/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/hllj/sdd-superpowers/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/hllj/sdd-superpowers/compare/v2.3.0...v2.4.0
