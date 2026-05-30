@@ -5,6 +5,9 @@ INPUT=$(cat)
 CWD=$(echo "$INPUT" | jq -r '.cwd // empty')
 CWD="${CWD:-$PWD}"
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+if [[ "$FILE_PATH" != /* ]]; then
+  FILE_PATH="${CWD}/${FILE_PATH}"
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "${SCRIPT_DIR}/lib/detect-active-spec.sh"
