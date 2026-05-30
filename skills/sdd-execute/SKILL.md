@@ -39,8 +39,8 @@ Implementer status handling:
 
 | Status | Action |
 |--------|--------|
-| DONE | Proceed to spec-compliance review |
-| DONE_WITH_CONCERNS | Correctness concern → fix first; observational → proceed |
+| DONE | Mark task `[x]` in `tasks.md`, then proceed to spec-compliance review |
+| DONE_WITH_CONCERNS | Mark task `[x]` in `tasks.md`; if correctness concern fix first; if observational proceed |
 | NEEDS_CONTEXT | Provide context, re-dispatch |
 | BLOCKED | Assess: context / model upgrade / split task / escalate |
 
