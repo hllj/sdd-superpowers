@@ -21,9 +21,9 @@ esac
 
 [ -f "$FILE_PATH" ] || exit 0
 
-grep -q '\[ \]' "$FILE_PATH" 2>/dev/null && exit 0
-
-grep -qE '\[[ x]\]' "$FILE_PATH" 2>/dev/null || exit 0
+CLEANED_CONTENT=$(sed '/^[[:space:]]*```/,/^[[:space:]]*```/d' "$FILE_PATH")
+echo "$CLEANED_CONTENT" | grep -qE '^[[:space:]]*[-*+][[:space:]]+\[ \]' && exit 0
+echo "$CLEANED_CONTENT" | grep -qE '^[[:space:]]*[-*+][[:space:]]+\[[ xX]\]' || exit 0
 
 jq -n '{
   hookSpecificOutput: {

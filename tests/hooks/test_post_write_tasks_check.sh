@@ -64,5 +64,19 @@ INPUT=$(make_input "$TMP" "$TASKS" "Edit")
 OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
 assert_contains "$OUTPUT" "additionalContext" "AC-2.1: fires on Edit tool too"
 
+# AC-2.2b: [ ] inside code block with all real tasks done → fires (not silenced by code-block content)
+cat > "$TASKS" <<'EOF'
+- [x] task 1
+- [x] task 2
+
+```bash
+echo "- [ ] example"
+- [ ] inside code block
+```
+EOF
+INPUT=$(make_input "$TMP" "$TASKS" "Write")
+OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_contains "$OUTPUT" "additionalContext" "AC-2.2b: [ ] in code block does not silence hook"
+
 rm -rf "$TMP"
 summarize
