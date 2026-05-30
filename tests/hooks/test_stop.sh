@@ -50,6 +50,18 @@ else
   PASS=$((PASS + 1)); echo "  PASS: AC-6.3: state file removed after Stop"
 fi
 
+# AC-4.3: output uses top-level systemMessage, not hookSpecificOutput
+SESSION_ID_43="${SESSION_ID}-ac43"
+STATE_FILE_43="${TMPDIR:-/tmp}/sdd-state-${SESSION_ID_43}.json"
+INPUT_W43=$(make_state_input "$TMP" "$SESSION_ID_43" "Write")
+CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$STATE_SETTER" <<< "$INPUT_W43" > /dev/null
+INPUT43=$(make_stop_input "$TMP" "$SESSION_ID_43")
+OUTPUT43=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$STOP_SCRIPT" <<< "$INPUT43")
+HAS_SYS=$(echo "$OUTPUT43" | jq 'has("systemMessage")' 2>/dev/null || echo "false")
+assert_eq "$HAS_SYS" "true" "AC-4.3: output JSON has top-level systemMessage key"
+HAS_HOOK=$(echo "$OUTPUT43" | jq 'has("hookSpecificOutput")' 2>/dev/null || echo "false")
+assert_eq "$HAS_HOOK" "false" "AC-4.3: output JSON has no hookSpecificOutput key"
+
 # FR-8: State setter fires on Edit too
 SESSION_ID2="${SESSION_ID}-edit"
 STATE_FILE2="${TMPDIR:-/tmp}/sdd-state-${SESSION_ID2}.json"
