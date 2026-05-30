@@ -27,3 +27,5 @@ if [ ! -f "${SPEC_DIR}/plan.md" ]; then
     }
   }'
 fi
+
+exit 0
