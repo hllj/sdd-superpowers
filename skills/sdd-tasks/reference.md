@@ -52,71 +52,13 @@ A task is NOT safe to parallelize when:
 
 Generate `docs/specs/<NNN>-<feature-slug>/tasks.md`:
 
-```markdown
-# Tasks: <Feature Name>
-
-**Plan:** docs/specs/<NNN>-<feature-slug>/plan.md
-**Generated:** YYYY-MM-DD
-
-> **For agentic workers:** Execute tasks in order. `[P]` tasks within the same parallel group can run concurrently. Never start an implementation task without the prior test task completed and confirmed red.
-
----
-
-## Parallel Group 0: Setup and Contracts
-
-Tasks in this group can run in parallel.
-
-- [ ] **T001** `[P]` Create directory structure: `mkdir -p src/<path> tests/<path>`
-- [ ] **T002** `[P]` Write contract test for `POST /endpoint`:
-  ```<language>
-  <complete test code>
-  ```
-  Run: `<command>` — expect: FAIL (endpoint not implemented)
-
----
-
-## Sequential: Phase 1 — <Component Name>
-
-*Complete T001–T002 before starting this phase.*
-
-- [ ] **T003** Write failing unit test for `<function/class>`:
-  ```<language>
-  <complete test code>
-  ```
-- [ ] **T004** Verify T003 fails: run `<exact command>` — expect: `FAIL <reason>`
-- [ ] **T005** Implement `<function/class>`:
-  ```<language>
-  <complete implementation code>
-  ```
-- [ ] **T006** Verify T003 passes: run `<exact command>` — expect: `PASS`
-- [ ] **T007** Commit: `git add <files> && git commit -m "feat: <description>"`
-
----
-
-## Sequential: Phase N — Integration
-
-*All prior phases must be complete.*
-
-- [ ] **TNNN** Run full test suite: `<command>` — expect: ALL PASS
-- [ ] **TNNN** Verify AC-1.1: Given <precondition> When <action> Then confirm <outcome> — run `<exact command or UI step>`
-- [ ] **TNNN** Final commit: `git add . && git commit -m "feat: complete <feature>"`
-
----
-
-## Task Summary
-
-| Range | Phase | Can Parallelize? | Spec ACs Covered |
-|-------|-------|-----------------|-----------------|
-| T001–T002 | Setup & Contracts | Yes (within group) | — |
-| T003–T007 | <Phase 1> | No (sequential) | AC-1.1, AC-1.2 |
-
-**Total tasks:** <N>
-**Estimated parallel speedup:** <X>x (Y tasks parallelizable)
-```
+See [template.md](template.md) for the canonical tasks.md structure. Fill in every section; every task must show exact code or commands.
 
 ## Step 4: Validate the Task List
 
 Check before presenting:
+
+**Structural compliance:** Does the generated `tasks.md` contain all required sections from `template.md` in order (header metadata → Parallel Group 0 → Sequential phase sections → Task Summary table)? Fix any missing or reordered sections before continuing.
 
 **Red-before-green:** For every implementation task, is there a preceding "write failing test" task AND a "verify fails" task? No exceptions.
 

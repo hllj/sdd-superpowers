@@ -95,34 +95,11 @@ After user approves the design:
 
 1. Scan `docs/specs/` for the next available feature number (NNN)
 2. Create directory: `docs/specs/NNN-<feature-slug>/`
-3. Write `docs/specs/NNN-<feature-slug>/design.md` with this exact structure:
+3. Write `docs/specs/NNN-<feature-slug>/design.md` using:
 
-```markdown
-# Design: <Feature Name>
+See [template.md](template.md) for the canonical design.md structure. Fill in every section.
 
-**Date:** YYYY-MM-DD
-**Feature:** NNN-<feature-slug>
-
-## Problem
-
-<What problem this solves and who experiences it.>
-
-## Chosen Approach
-
-<The approach selected from the options explored, written out concretely.>
-
-## Trade-offs & Rationale
-
-<Why this approach was chosen over the alternatives. What was given up.>
-
-## Key Design Decisions
-
-<Specific decisions made during brainstorming that constrain implementation.>
-
-## Out of Scope
-
-<What was explicitly discussed and excluded.>
-```
+**Structural compliance check (before dispatching spec reviewer):** Does the written `design.md` contain all required sections from `template.md` in order (header metadata → Problem → Chosen Approach → Trade-offs & Rationale → Key Design Decisions → Out of Scope)? Fix any missing or reordered sections before dispatching the spec-document-reviewer subagent.
 
 ## Spec Review Loop
 
