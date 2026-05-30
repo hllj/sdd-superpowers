@@ -118,7 +118,7 @@ The following tables map exact user phrases and agent-action signals to bundled 
 |-------------------|--------|
 | Writes any implementation code (new function, class, fix, modification) | `sdd-superpowers:test-driven-development` |
 | Proposes or applies any fix for a failure or unexpected behavior | `sdd-superpowers:systematic-debugging` |
-| Moves to the next implementation phase | `sdd-superpowers:requesting-code-review` |
+| Completes a phase within `sdd-superpowers:sdd-execute` and is about to start the next | `sdd-superpowers:requesting-code-review` |
 | Implements any change from review feedback | `sdd-superpowers:receiving-code-review` |
 
 ---
