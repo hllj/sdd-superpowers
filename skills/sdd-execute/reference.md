@@ -47,12 +47,28 @@ Provide the subagent with:
 
 | Status | Action |
 |--------|--------|
-| DONE | Proceed to spec-compliance review |
-| DONE_WITH_CONCERNS | Read concerns; if about correctness, address before review; if observational, proceed |
+| DONE | **Mark `[x]` in tasks.md (step 3b-1), then** proceed to spec-compliance review |
+| DONE_WITH_CONCERNS | **Mark `[x]` in tasks.md (step 3b-1);** if correctness concern, address before review; if observational, proceed |
 | NEEDS_CONTEXT | Provide missing context, re-dispatch same task |
 | BLOCKED | Assess: context problem → provide context; wrong model → upgrade; task too large → split; plan wrong → escalate to human |
 
 Never ignore BLOCKED. Never force retry without changing something.
+
+**3b-1. Mark task complete in tasks.md**
+
+Immediately after a subagent returns `DONE` or `DONE_WITH_CONCERNS` — before spec-compliance review — edit `tasks.md`:
+
+Find the line for the task that just completed. Edit its checkbox from `[ ]` to `[x]`.
+
+```
+- [ ] Task N: Description   →   - [x] Task N: Description
+```
+
+Constraints:
+- Edit only the one task line that just completed
+- Do not modify any other task lines
+- Do not mark a task `[x]` speculatively before the subagent result is known
+- If the subagent returns `NEEDS_CONTEXT` or `BLOCKED`, leave the line as `[ ]`
 
 **3c. Spec-compliance review**
 
