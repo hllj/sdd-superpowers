@@ -76,15 +76,15 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | **Change or addition to an approved spec** | `sdd-superpowers:sdd-spec-update` |
 | **All tasks complete** (post-implementation) | `sdd-superpowers:sdd-review` ← required before merge |
 | Spec completeness check (pre-plan) | `sdd-superpowers:sdd-review` |
-| Task fails | `sdd-superpowers:systematic-debugging` |
+| Test fails, error appears, unexpected behavior, OR before proposing any fix | `sdd-superpowers:systematic-debugging` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | Merge decision | `sdd-superpowers:finishing-a-development-branch` |
 | Any git operation (branch, commit, convention) | `sdd-superpowers:using-git` |
-| Phase boundary during execution | `sdd-superpowers:requesting-code-review` |
-| Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
+| User says 'review this'/'can you review', OR at any phase boundary | `sdd-superpowers:requesting-code-review` |
+| Review feedback received (from human or reviewer subagent) — before implementing any change | `sdd-superpowers:receiving-code-review` |
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
-| Each implementer subagent (dispatched from subagent-driven-development) | `sdd-superpowers:test-driven-development` |
+| Before writing any implementation code — subagent or direct | `sdd-superpowers:test-driven-development` |
 
 ```
 NO PLAN without an approved spec
@@ -109,5 +109,9 @@ The skill itself tells you which type it is.
 - Claiming done without evidence — `sdd-superpowers:verification-before-completion`
 - Skipping `sdd-superpowers:sdd-review` after implementation — it is a required step before `finishing-a-development-branch`
 - Invoking this skill inside a subagent task — subagents skip this skill entirely
+- Writing implementation code before invoking `sdd-superpowers:test-driven-development` — "I'll write the test after" is the rationalization
+- Responding to "review this" without invoking `sdd-superpowers:requesting-code-review` — the skill dispatches a structured reviewer, not an ad-hoc read
+- Implementing review feedback without invoking `sdd-superpowers:receiving-code-review` — the skill enforces verify-before-implement
+- Proposing a fix without first invoking `sdd-superpowers:systematic-debugging` — symptom fix without root cause = regression risk
 
 Full routing rules and red flags: See [routing.md](routing.md)

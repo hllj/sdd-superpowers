@@ -100,6 +100,29 @@ When the idea contains a concrete user action, clear outcome, and no competing a
 
 ---
 
+## Trigger Language
+
+The following tables map exact user phrases and agent-action signals to bundled skills. These supplement the Skill Map above with phrase-level specificity — use when the situation description in the Skill Map is insufficient.
+
+### User-language triggers
+
+| If the user says… | Invoke |
+|-------------------|--------|
+| "review this", "can you review", "take a look", "LGTM?", "what do you think of this code" | `sdd-superpowers:requesting-code-review` |
+| Pastes review feedback, "the reviewer said", "based on this feedback", "fixing review comments" | `sdd-superpowers:receiving-code-review` |
+| "it's not working", "getting an error", "this fails", "weird behavior", "why is X happening" | `sdd-superpowers:systematic-debugging` |
+
+### Agent-action triggers
+
+| Before the agent… | Invoke |
+|-------------------|--------|
+| Writes any implementation code (new function, class, fix, modification) | `sdd-superpowers:test-driven-development` |
+| Proposes or applies any fix for a failure or unexpected behavior | `sdd-superpowers:systematic-debugging` |
+| Completes a phase within `sdd-superpowers:sdd-execute` and is about to start the next | `sdd-superpowers:requesting-code-review` |
+| Implements any change from review feedback | `sdd-superpowers:receiving-code-review` |
+
+---
+
 ## When Each Skill Is Mandatory
 
 **`sdd-superpowers:sdd-brainstorm` is mandatory when:**
