@@ -21,8 +21,8 @@ append_section() {
 ${content}"
 }
 
-if [ -f "${CWD}/memory/constitution.md" ]; then
-  append_section "memory/constitution.md" "$(cat "${CWD}/memory/constitution.md")"
+if [ -f "${CWD}/memory/foundation.md" ]; then
+  append_section "memory/foundation.md" "$(cat "${CWD}/memory/foundation.md")"
 fi
 
 if [ -f "${CWD}/memory/MEMORY.md" ]; then
