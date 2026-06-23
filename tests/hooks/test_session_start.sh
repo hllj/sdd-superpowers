@@ -9,7 +9,7 @@ echo "--- test_session_start.sh ---"
 TMP=$(mktemp -d)
 mkdir -p "$TMP/docs/specs/011-plugin-hooks"
 mkdir -p "$TMP/memory"
-echo "# Constitution content" > "$TMP/memory/constitution.md"
+echo "# Foundation content" > "$TMP/memory/foundation.md"
 echo "- [Memory](test.md)" > "$TMP/memory/MEMORY.md"
 cat > "$TMP/docs/specs/011-plugin-hooks/spec.md" <<'EOF'
 # Feature 011: Plugin Hooks
@@ -28,7 +28,7 @@ INPUT=$(jq -n --arg cwd "$TMP" \
 
 # AC-1.1: constitution and MEMORY.md injected
 OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" CWD="$TMP" bash "$SCRIPT" <<< "$INPUT")
-assert_contains "$OUTPUT" "Constitution content" "AC-1.1: constitution.md injected"
+assert_contains "$OUTPUT" "Foundation content" "AC-1.1: foundation.md injected"
 assert_contains "$OUTPUT" "Memory" "AC-1.1: MEMORY.md injected"
 
 # AC-1.2: active spec summary injected (mock git to match branch)
