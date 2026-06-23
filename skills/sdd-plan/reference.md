@@ -2,6 +2,14 @@
 
 > Complete planning procedure, templates, and quality rules. See [SKILL.md](SKILL.md) for the summary.
 
+## Step 0: Load Steering Context
+
+Scan `memory/steering/` for `.md` files whose `loaded-by` frontmatter includes `sdd-plan`. Read each matched file and incorporate its content as context before producing any user-facing output. Loading is silent — no announcement to the user.
+
+If `memory/steering/` does not exist, or no files contain `sdd-plan` in `loaded-by`, proceed without change.
+
+Rescan on every invocation — custom files added after init are discovered automatically.
+
 ## Prerequisites
 
 Before planning:

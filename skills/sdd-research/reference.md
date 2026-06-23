@@ -2,6 +2,14 @@
 
 > Complete investigation procedure, research.md template, and quality standards. See [SKILL.md](SKILL.md) for the summary.
 
+## Step 0: Load Steering Context
+
+Scan `memory/steering/` for `.md` files whose `loaded-by` frontmatter includes `sdd-research`. Read each matched file and incorporate its content as context before producing any user-facing output. Loading is silent — no announcement to the user.
+
+If `memory/steering/` does not exist, or no files contain `sdd-research` in `loaded-by`, proceed without change.
+
+Rescan on every invocation — custom files added after init are discovered automatically.
+
 ## Step 1: Load the Spec
 
 Read `docs/specs/<NNN>-<feature-slug>/spec.md`. Identify:
