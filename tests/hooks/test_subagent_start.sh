@@ -36,7 +36,7 @@ OUTPUT_EMPTY=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" CWD="$TMP_EMPTY" \
 assert_empty "$OUTPUT_EMPTY" "AC-5.2: silent when no active spec"
 
 # Must-not: no full memory context
-if echo "$OUTPUT" | grep -qi "constitution"; then
+if echo "$OUTPUT" | grep -qi "foundation\|constitution"; then
   FAIL=$((FAIL + 1)); echo "  FAIL: FR-7 must-not: memory context injected in subagent"
 else
   PASS=$((PASS + 1)); echo "  PASS: FR-7 must-not: no memory context in subagent"
