@@ -7,7 +7,7 @@ description: Use when starting a new project that has no CLAUDE.md and no docs/s
 
 ## Overview
 
-Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `memory/constitution.md`, auto-generates steering files in `memory/steering/`, and scaffolds `docs/specs/`, `CLAUDE.md`, and `docs/git-convention.md`. No feature work begins before the constitution is approved.
+Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `memory/foundation.md`, auto-generates steering files in `memory/steering/`, and scaffolds `docs/specs/`, `CLAUDE.md`, and `docs/git-convention.md`. No feature work begins before the foundation file is approved.
 
 ## When to Use
 
@@ -21,7 +21,7 @@ Files created by sdd-init:
 
 | File | Purpose |
 |------|---------|
-| `memory/constitution.md` | Mission Charter — mission statement + 3–5 project-specific principles |
+| `memory/foundation.md` | Foundation file — mission statement + 3–5 project-specific principles |
 | `memory/steering/tech-stack.md` | Tech stack context — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review |
 | `memory/steering/test-strategy.md` | Test philosophy — loaded by sdd-plan, sdd-execute, sdd-review |
 | `memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
@@ -34,15 +34,15 @@ Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-con
 
 ## Process Summary
 
-1. Detect project context (subagent, silent) + check for existing constitution
+1. Detect project context (subagent, silent) + check for existing foundation file
 2. Mission Charter: 4 questions via structured UI (Q1 mission, Q2 non-negotiables, Q3 failure modes, Q4 amendment) — Q3 skipped if `--fast`
-3. Draft constitution from answers → user approval gate → write `memory/constitution.md`
+3. Draft foundation from answers → user approval gate → write `memory/foundation.md`
 4. Auto-generate 4 steering files from detected context → write `memory/steering/*.md`
 5. Create scaffold files (CLAUDE.md, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
 6. Initial commit → hand off to `sdd-superpowers:sdd-workflow`
 
 <HARD-GATE>
-Do NOT create any feature specs, plans, or code until the constitution is approved and the scaffold is written.
+Do NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written.
 </HARD-GATE>
 
 See [reference.md](reference.md) for the full initialisation procedure, Mission Charter ceremony, steering file templates, scaffold templates, and error scenarios.
