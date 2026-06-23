@@ -16,6 +16,10 @@ case "$FILE_PATH" in
   *) exit 0 ;;
 esac
 
+case "$FILE_PATH" in
+  */memory/foundation.md|*/memory/MEMORY.md|*/memory/steering/*.md) exit 0 ;;
+esac
+
 [ -f "$FILE_PATH" ] || exit 0
 
 ISSUES=""
