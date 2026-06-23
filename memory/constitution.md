@@ -1,67 +1,29 @@
-# Project Constitution
+# SDD Superpowers Constitution
 
-> These principles are immutable. Every implementation plan must pass gates derived from them.
-> To amend, follow Section 4.2.
+> Loaded every session. To amend, follow the Amendment Process below.
 
----
+## Mission
 
-## Article I: Library-First Principle
+SDD Superpowers exists to make Specification-Driven Development the default workflow
+for any developer using Claude Code — enforcing discipline through skills and gates
+so specs remain the source of truth and code is their generated expression.
 
-Every skill in this project MUST be a self-contained, independently invocable unit. No functionality shall be embedded only within another skill's flow without first being abstracted into its own named skill with clear intent boundaries and minimal dependencies on other skills.
+## Principles
 
----
+1. Every change — to skills, code, or principles — begins with an approved specification.
+2. Every task has a prior failing test before any implementation code is written.
+3. No completion is claimed without fresh verification evidence.
+4. Gates are enforced unconditionally: they apply under time pressure and cannot be bypassed.
 
-## Article II: CLI Interface Mandate
+## Operational Context
 
-All skills MUST declare their trigger condition, inputs, and expected outputs in a structured `SKILL.md` header so they are inspectable and auditable without execution.
+Steering files in `memory/steering/` carry project-specific operational context
+(tech stack, test strategy, conventions, team practices). Each file's `loaded-by`
+frontmatter lists which skills silently incorporate it during that skill's session.
+Edit steering files freely — they are not subject to the amendment process.
 
----
+## Amendment Process
 
-## Article III: Test-First Imperative
-
-This is NON-NEGOTIABLE: All skill creation and modification MUST follow a verification-first approach. No skill content shall be written before: (1) the trigger condition and success criteria are defined, (2) a quickstart or smoke-test scenario exists, (3) the skill has been validated against at least one real use case. Every skill change must be traceable to a spec requirement.
-
----
-
-## Article IV: Writing-Skills Compliance
-
-All new skills MUST follow the structured best practices defined in the `sdd-superpowers:writing-skills` meta skill. Before creating any new skill, invoke `writing-skills` and follow its instructions exactly.
-
----
-
-## Article V: Feedback-Driven Spec Updates
-
-Failed skill invocations must update the relevant spec before a fix is planned, and only when the user explicitly mentions the failure.
-
----
-
-## Article VI: Spec Review Gate
-
-Always ask the user to review and approve the spec before any planning, task generation, or implementation begins. No downstream step proceeds without explicit user approval.
-
----
-
-## Article VII: Simplicity Gate
-
-Maximum 3 major sections for any initial skill implementation. No future-proofing — build only what the current spec requires. Any additional complexity (new sections, sub-skills, reference files) requires documented justification in the plan. Adding a new skill dependency requires explicit rationale tied to a spec requirement.
-
----
-
-## Article VIII: Anti-Abstraction Gate
-
-Use direct skill invocation rather than wrapping skills inside other skills unnecessarily. Maintain a single, canonical flow per skill — no parallel or redundant instruction chains. Every reference file, sub-skill, or helper must be justified by a concrete spec requirement, not anticipated future need.
-
----
-
-## Article IX: Integration-First Testing
-
-Skills MUST be validated against real invocation scenarios before being marked complete. Prefer testing with actual user requests over synthetic examples. Smoke-test scenarios in `quickstart.md` are mandatory before any skill is considered done. Do not mark a skill complete based on reading alone — it must be invoked and observed.
-
----
-
-## Section 4.2: Amendment Process
-
-Modifications to this constitution require:
-- Explicit documentation of the rationale for change
-- Review and approval by project maintainers
-- Backwards compatibility assessment
+Any change to a principle requires: written rationale documenting why the change is
+needed, explicit team approval, and a backwards-compatibility check confirming that
+existing specifications still hold under the amended principle.
