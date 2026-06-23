@@ -15,7 +15,7 @@ Tell the user:
 
 ## Step 1.5: Explore Project Context
 
-Before presenting any Articles, gather context about the project to personalise defaults.
+Before the Mission Charter ceremony, gather context about the project to personalise question examples and pre-fill steering files.
 
 Dispatch a codebase exploration subagent with these instructions:
 
@@ -28,18 +28,18 @@ Dispatch a codebase exploration subagent with these instructions:
 >
 > If no files are found, respond: 'Empty project — no context detected.'"
 
-Use the returned Project Profile to tailor the default text for each Article before presenting it:
+Use the returned Project Profile to personalise the Mission Charter ceremony:
 
-| Article | How to personalise |
-|---------|-------------------|
-| I | If existing library structure detected → "This project already has library structure; maintain it." If monolith → emphasise the library-first split. |
-| II | Use language-appropriate CLI tools in examples (Python → click/argparse, Node → commander, Go → cobra, Rust → clap). |
-| III | Reference the detected test framework in examples (pytest, Jest, go test, RSpec, etc.). |
-| VII | If the project is already large → note "applies to all new features added from this point." |
-| IX | Tailor database/service examples to detected stack (PostgreSQL, MongoDB, Redis, etc. if inferable). |
-| IV–VI | Stubs remain as `[NEEDS CLARIFICATION]` regardless of project context. |
+| Question | How to personalise |
+|----------|--------------------|
+| Q1 — Mission | If README contains a clear purpose statement, surface it as a suggested starting point for the user to edit |
+| Q2 — Non-negotiables | Include language-appropriate examples (Python → "we always use type hints"; Node → "we always pin dependencies") |
+| Q3 — Failure Modes | Include stack-appropriate examples (e.g., if database detected → "prod migrations break without staging tests") |
+| Q4 — Amendment | No personalisation needed — default options apply universally |
 
-If the project is empty or exploration returns no useful signal: use the generic defaults as written below.
+The Project Profile is also used in Step 5.2 to pre-fill steering file content.
+
+If the project is empty or exploration returns no useful signal: use the generic question examples as written in Step 2.
 
 ### Constitution Existence Check
 
@@ -145,13 +145,9 @@ Edit steering files freely — they are not subject to the amendment process.
 
 Create files in this order. Announce each file before creating it.
 
-### Step 5.1 Create memory/constitution.md
+### Step 5.1 Confirm memory/constitution.md
 
-Announce: "Creating `memory/constitution.md` with your approved Mission Charter."
-
-Create `memory/` directory if it does not exist.
-
-Write `memory/constitution.md` using the approved draft from Step 3.
+Confirm that `memory/constitution.md` was written in Step 3. If Phase 1 was bypassed (constitution already existed), skip this step entirely — proceed to Step 5.2.
 
 ### Step 5.2 Generate Steering Files
 
@@ -377,7 +373,7 @@ If the user exits the flow at any point before Step 5 begins:
 
 | Scenario | Handling |
 |----------|----------|
-| User aborts during Article review | No files written; show abort message |
+| User aborts during Mission Charter ceremony (before constitution approval) | No files written; show abort message |
 | `memory/constitution.md` exists but `docs/specs/` does not | Skip Step 5.1 only; continue with Steps 5.2–5.6 as normal; warn: "constitution already exists — creating steering files, docs/specs/, and configuring CLAUDE.md only" |
 | `CLAUDE.md` exists but has no SDD content | Append SDD section after showing diff and getting approval |
 | User skips git convention Q&A (presses Ctrl-C during Step 5.4) | Write no files for Step 5.4; warn: "git-convention.md not created — git-touching skills will prompt you to create it on first use." Proceed with the rest of the scaffold. |
