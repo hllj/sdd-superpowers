@@ -1,12 +1,12 @@
 ---
 name: project-constitution-format
-description: memory/constitution.md uses Mission Charter format (not nine-article), and the PostToolUse:Write hook incorrectly flags it for missing frontmatter
+description: memory/foundation.md is the Tier 0 project identity file — no frontmatter required; hook whitelist exempts it from validation
 metadata:
   type: project
 ---
 
-`memory/constitution.md` now uses the Mission Charter format introduced in feature 013 (sdd-init-redesign). It has sections: Mission, Principles, Operational Context, Amendment Process — no YAML frontmatter.
+`memory/foundation.md` is the project foundation file introduced in feature 014 (tiered-memory-architecture). It holds Mission, Principles, Operational Context pointer, and Amendment Process — no YAML frontmatter.
 
-**Why:** The PostToolUse:Write hook validates all files written to `memory/` as memory entries and requires YAML frontmatter. The constitution is not a memory entry; it is a project foundation file with its own schema.
+**Why:** The PostToolUse:Write hook validates all files written to `memory/` as memory entries and required YAML frontmatter. `foundation.md` is not a memory entry; it is the Tier 0 project identity file. Feature 014 added a hook whitelist that exempts `foundation.md`, `MEMORY.md`, and `steering/*.md` from frontmatter validation — the hook is now silent for these files.
 
-**How to apply:** When the hook fires on a write to `memory/constitution.md` and complains about missing frontmatter — ignore the warning. If updating the hook, whitelist `constitution.md`, `MEMORY.md`, and `memory/steering/*.md` from the frontmatter validation rule.
+**How to apply:** No action needed. The whitelist handles it automatically. If the hook fires on `foundation.md` in a project that has not yet applied feature 014's hook update, the old guidance applies: ignore the warning.

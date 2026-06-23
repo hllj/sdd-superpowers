@@ -1,4 +1,4 @@
-# SDD Superpowers Constitution
+# SDD Superpowers Foundation
 
 > Loaded every session. To amend, follow the Amendment Process below.
 
