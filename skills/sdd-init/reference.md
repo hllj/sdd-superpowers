@@ -2,7 +2,7 @@
 
 > This file contains the complete step-by-step procedure for `sdd-superpowers:sdd-init`. See [SKILL.md](SKILL.md) for the summary.
 
-**Announce at start:** "I'm using sdd-init to set up the Constitutional Foundation for this new SDD project."
+**Announce at start:** "I'm using sdd-init to set up the project foundation for this new SDD project."
 
 <HARD-GATE>
 Do NOT create any feature specs, plans, or code until the constitution is approved and the scaffold is written. This skill produces ONLY the project foundation.
@@ -11,7 +11,7 @@ Do NOT create any feature specs, plans, or code until the constitution is approv
 ## Step 1: Announce and Orient
 
 Tell the user:
-> "Before we begin feature work, I'll walk you through the Nine Articles of your project constitution — a set of architectural principles that will govern every implementation plan. We'll go through them one at a time. For each article, you can: accept the default, provide custom text, or mark it as not applicable. Nothing is written until you approve the final result."
+> "Before we begin feature work, I'll walk you through the Mission Charter — four questions that capture your project's purpose and principles. Nothing is written until you approve the final result."
 
 ## Step 1.5: Explore Project Context
 
@@ -41,263 +41,250 @@ Use the returned Project Profile to tailor the default text for each Article bef
 
 If the project is empty or exploration returns no useful signal: use the generic defaults as written below.
 
----
+### Constitution Existence Check
 
-## Step 2: Nine Articles Interactive Review
+After the exploration subagent returns, check `memory/constitution.md`:
 
-Present **one Article per conversational turn**. Wait for the user's response before proceeding to the next. For each Article:
-1. Show the Article number and name
-2. State in one sentence what this Article governs
-3. Show the default text (or stub for IV–VI)
-4. Ask: "Accept this default, provide custom text, or mark it as not applicable?"
-5. Record the response — do NOT write files yet
-
----
-
-### Article I: Library-First Principle
-
-*Governs: How features are structured — every feature must be a standalone library before becoming application code.*
-
-**Default:**
-> Every feature in this project MUST begin its existence as a standalone library. No feature shall be implemented directly within application code without first being abstracted into a reusable library component with clear boundaries and minimal dependencies.
+- **If `memory/constitution.md` does not exist:** proceed to Step 2 normally.
+- **If `memory/constitution.md` exists and contains `## Article I`:**
+  Announce: "An existing nine-article constitution was found at `memory/constitution.md`. Migration to the new mission-charter format is not yet supported. To start fresh: rename or delete the existing file, then re-invoke `sdd-init`. No files will be written."
+  **STOP — do not proceed to Step 2 or any scaffold step.**
+- **If `memory/constitution.md` exists and does NOT contain `## Article I`:**
+  Announce: "A constitution already exists at `memory/constitution.md`. Skipping Phase 1 — proceeding to steering file scaffold."
+  Jump to Step 5.2 (steering file generation).
 
 ---
 
-### Article II: CLI Interface Mandate
+## Step 2: Mission Charter Ceremony
 
-*Governs: How libraries expose functionality — all libraries must be operable via text-based CLI for observability and testability.*
+**If invoked with `--fast` flag:** skip Q3. Ask Q1, Q2, Q4 only.
 
-**Default:**
-> All libraries MUST expose their functionality through a command-line interface. CLI interfaces must: accept text as input (via stdin, arguments, or files), produce text as output (via stdout), and support JSON format for structured data exchange. This enforces observability and testability.
+Present each question using the AskUserQuestion structured UI tool — not plain prose. One question per turn. Wait for a response before presenting the next.
 
----
+### Q1 — Project Mission
 
-### Article III: Test-First Imperative
+Present as structured question:
+- Header: "Project Mission"
+- Question: "In one or two sentences: what does this project exist to do, and who does it serve?"
 
-*Governs: The mandatory order of implementation — failing tests must exist before any implementation code is written.*
+### Q2 — Non-negotiables
 
-**Default:**
-> This is NON-NEGOTIABLE: All implementation MUST follow strict Test-Driven Development. No implementation code shall be written before: (1) tests are written, (2) tests are validated and approved, (3) tests are confirmed to FAIL (Red phase). Every implementation step in every plan must be preceded by a failing test step.
+Present as structured question:
+- Header: "Non-negotiables"
+- Question: "What are 1–3 things your team will never compromise on? (e.g. 'we never ship without a test', 'CLI-first always', 'no external dependencies without a spike')"
 
----
+### Q3 — What Failure Looks Like (skip if --fast)
 
-### Article IV: [NEEDS CLARIFICATION]
+Present as structured question:
+- Header: "Failure Modes"
+- Question: "What does a bad outcome look like for this project? (e.g. 'feature works locally but breaks in prod', 'specs drift from code', 'every PR needs a rewrite')"
 
-*Governs: [To be defined by you — suggested topic: how research and technical context should be gathered before implementation begins.]*
+### Q4 — Amendment Process
 
-**Default stub:**
-> [NEEDS CLARIFICATION: Define your fourth architectural principle here. Consider: how should research and technical context be gathered before implementation? (e.g. "All features with external dependencies require a research.md before planning begins")]
+Present as structured question:
+- Header: "Amendment Process"
+- Question: "How should these principles change over time?"
+- Options:
+  - "Document rationale → explicit team approval → backwards-compatibility check (Recommended)"
+  - "Custom (I'll describe it)"
 
----
+If the user selects "Custom": ask a follow-up open-text question for their amendment process.
 
-### Article V: [NEEDS CLARIFICATION]
+### Draft Constitution
 
-*Governs: [To be defined by you — suggested topic: how production feedback and operational learnings should feed back into specifications.]*
+After collecting all answers:
 
-**Default stub:**
-> [NEEDS CLARIFICATION: Define your fifth architectural principle here. Consider: how should production feedback and operational learnings feed back into specifications? (e.g. "Production incidents must update the relevant spec before a fix is planned")]
+1. Synthesize into a draft:
+   - **Mission:** from Q1
+   - **Principles:** from Q2 stated as positive invariants. If NOT `--fast`, also invert Q3 failure modes into positive invariants and merge. Total: 3–5 principles.
+   - **Operational Context:** fixed pointer block (see Step 5.1 template)
+   - **Amendment Process:** from Q4
 
----
+2. Present the full draft to the user.
 
-### Article VI: [NEEDS CLARIFICATION]
+3. Ask: "Does this capture your project's principles accurately? Say yes to write it, or describe what to change."
 
-*Governs: [To be defined by you — suggested topic: how multiple implementation approaches or exploratory branches should be handled.]*
+4. If changes requested: revise and re-present without re-asking questions. Repeat until approved.
 
-**Default stub:**
-> [NEEDS CLARIFICATION: Define your sixth architectural principle here. Consider: how should exploration and branching be handled? (e.g. "Multiple implementation approaches may be generated from the same spec for comparison before committing")]
+5. On approval: proceed to Step 3.
 
----
+**Must not** include SDD methodology rules (Library-First, TDD, CLI Mandate, Simplicity Gate, Anti-Abstraction, Integration-First) in the constitution.
 
-### Article VII: Simplicity Gate
+## Step 3: Write memory/constitution.md
 
-*Governs: Complexity budget — limits initial implementation to 3 components and requires justification for any additions.*
+Announce: "Writing `memory/constitution.md`."
 
-**Default:**
-> Maximum 3 major components for any initial implementation. No future-proofing — build only what the current spec requires. Any additional complexity requires documented justification in the plan's Complexity Tracking section. Adding a new dependency requires explicit rationale tied to a spec requirement.
+Create `memory/` directory if it does not exist.
 
----
+Write `memory/constitution.md` using the approved draft. The file must contain exactly these sections in this order:
 
-### Article VIII: Anti-Abstraction Gate
+```markdown
+# [Project Name] Constitution
 
-*Governs: Abstraction discipline — prohibits unnecessary wrapper layers and requires a single canonical model representation.*
+> Loaded every session. To amend, follow the Amendment Process below.
 
-**Default:**
-> Use framework features directly rather than wrapping them. Maintain a single, canonical model representation — no parallel DTO/entity/view-model chains. Every abstraction layer must be justified by a concrete spec requirement, not anticipated future need.
+## Mission
+[Synthesized from Q1]
 
----
+## Principles
+1. [Derived from Q2 + Q3 — stated as a positive invariant]
+2. [...]
+3. [...]
 
-### Article IX: Integration-First Testing
+## Operational Context
+Steering files in `memory/steering/` carry project-specific operational context
+(tech stack, test strategy, conventions, team practices). Each file's `loaded-by`
+frontmatter lists which skills silently incorporate it during that skill's session.
+Edit steering files freely — they are not subject to the amendment process.
 
-*Governs: Test environment fidelity — real databases and services over mocks, contract tests before implementation.*
-
-**Default:**
-> Tests MUST use realistic environments: prefer real databases over mocks, use actual service instances over stubs. Contract tests are mandatory before any implementation code. Integration tests take precedence over isolated unit tests. Mock only what cannot be made real within the test environment.
-
----
-
-## Step 3: Confirm Amendment Process
-
-After all Nine Articles are reviewed, present Section 4.2:
-
-> **Section 4.2 — Amendment Process**
-> Modifications to this constitution require:
-> - Explicit documentation of the rationale for change
-> - Review and approval by project maintainers
-> - Backwards compatibility assessment
-
-Ask: "Does this amendment process work for your project, or would you like to adjust it?"
-
-## Step 4: Final Approval Gate
-
-Present a summary of all Nine Articles as the user approved them, then ask:
-
-> "Here is your constitution as approved. Shall I write it to `memory/constitution.md` and create the project scaffold?"
-
-**Do NOT proceed to Step 5 until the user explicitly says yes.**
-
-If the user says no or requests changes: return to Step 2 for the relevant articles.
+## Amendment Process
+[From Q4]
+```
 
 ## Step 5: Scaffold Creation
 
 Create files in this order. Announce each file before creating it.
 
-### 5.1 Create memory/constitution.md
+### Step 5.1 Create memory/constitution.md
 
-Announce: "Creating `memory/constitution.md` with your approved Nine Articles."
+Announce: "Creating `memory/constitution.md` with your approved Mission Charter."
 
 Create `memory/` directory if it does not exist.
 
-Write `memory/constitution.md`:
+Write `memory/constitution.md` using the approved draft from Step 3.
 
-```markdown
-# Project Constitution
+### Step 5.2 Generate Steering Files
 
-> These principles are immutable. Every implementation plan must pass gates derived from them.
-> To amend, follow Section 4.2.
+Announce: "Generating steering files from your project context. Edit these to match reality."
 
----
+Use the Project Profile from Step 1.5 to pre-fill each file. If the profile has no signal for a field, write `[Edit to match reality]` as the placeholder. Create `memory/steering/` if it does not exist.
 
-## Article I: Library-First Principle
+Write all four files:
 
-{{approved text}}
+**`memory/steering/tech-stack.md`**
 
 ---
-
-## Article II: CLI Interface Mandate
-
-{{approved text}}
-
+scope: tech-stack
+loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review
 ---
 
-## Article III: Test-First Imperative
+# Tech Stack
 
-{{approved text}}
+## Languages
+[Detected: {{language}} — edit to match reality]
 
----
+## Frameworks
+[Detected: {{framework}} — edit to match reality]
 
-## Article IV: {{approved name or [NEEDS CLARIFICATION]}}
+## Infrastructure
+[Detected: {{infra}} — edit to match reality]
 
-{{approved text or [NEEDS CLARIFICATION] stub}}
+## Package Manager
+[Detected: {{pkg_manager}} — edit to match reality]
 
----
 
-## Article V: {{approved name or [NEEDS CLARIFICATION]}}
-
-{{approved text or [NEEDS CLARIFICATION] stub}}
-
----
-
-## Article VI: {{approved name or [NEEDS CLARIFICATION]}}
-
-{{approved text or [NEEDS CLARIFICATION] stub}}
+**`memory/steering/test-strategy.md`**
 
 ---
-
-## Article VII: Simplicity Gate
-
-{{approved text}}
-
+scope: test-strategy
+loaded-by: sdd-plan, sdd-execute, sdd-review
 ---
 
-## Article VIII: Anti-Abstraction Gate
+# Test Strategy
 
-{{approved text}}
+## Test Framework
+[Detected: {{test_framework}} — edit to match reality]
+
+## Test Levels
+- Unit tests: [describe scope]
+- Integration tests: [describe scope]
+- E2E tests: [describe scope or N/A]
+
+## Coverage Expectations
+[e.g., ≥80% line coverage on business logic; 100% on critical paths]
+
+## Mocking Policy
+[e.g., Real databases in integration tests; mock only external HTTP calls]
+
+
+**`memory/steering/conventions.md`**
 
 ---
-
-## Article IX: Integration-First Testing
-
-{{approved text}}
-
+scope: conventions
+loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-review
 ---
 
-## Section 4.2: Amendment Process
+# Conventions
 
-{{approved amendment process text}}
-```
+## File Naming
+[Detected: {{file_naming}} — edit to match reality]
 
-### 5.2 Create docs/specs/.gitkeep
+## Directory Structure
+[Detected: {{dir_structure}} — edit to match reality]
+
+## Code Style
+[Detected: {{code_style}} — edit to match reality]
+
+## Architectural Patterns
+[e.g., repository pattern for data access, composition over inheritance — edit to match reality]
+
+
+**`memory/steering/team-practices.md`**
+
+---
+scope: team-practices
+loaded-by: sdd-plan, sdd-review, using-git
+---
+
+# Team Practices
+
+## Branching
+[From docs/git-convention.md if detected — edit to match reality]
+
+## Code Review
+[e.g., 1 approver required, 24h turnaround target — edit to match reality]
+
+## Release Process
+[e.g., tag on main, semantic versioning — edit to match reality]
+
+
+After writing all four files, show a one-line summary per file:
+> "Steering files created in `memory/steering/`:
+> - `tech-stack.md` — pre-filled with detected stack
+> - `test-strategy.md` — pre-filled with detected test framework
+> - `conventions.md` — pre-filled with detected structure
+> - `team-practices.md` — pre-filled from git convention
+>
+> Edit these files to match reality — they are loaded automatically by skills when relevant."
+
+**Abort handling:** If interrupted mid-generation, files already written are kept. No rollback. Warn: "Steering files partially created — edit `memory/steering/` to complete them."
+
+### Step 5.3 Create docs/specs/.gitkeep
 
 Announce: "Creating `docs/specs/` directory for feature specifications."
 
 Create `docs/specs/.gitkeep` (empty file so the directory is tracked by git).
 
-### 5.3 Create or update CLAUDE.md
+### Step 5.4 Create or update CLAUDE.md
 
-**If `CLAUDE.md` does not exist:**
-Announce: "Creating `CLAUDE.md` with SDD workflow instructions."
+**Detection order:**
+1. If `CLAUDE.md` does not exist → create it (see template below)
+2. If `CLAUDE.md` exists and contains `## Project Foundation` → skip (already initialised)
+3. If `CLAUDE.md` exists and contains `## SDD Workflow` but not `## Project Foundation` → append the `## Project Foundation` block; show the user exactly what will be appended and get approval before writing
+4. If `CLAUDE.md` exists with neither marker → append the `## Project Foundation` block after showing diff and getting approval
 
-Write `CLAUDE.md` with:
-- Project name (infer from directory name; ask user if ambiguous)
-- Reference to `memory/constitution.md` as the architectural authority
-- The SDD skill map (condensed):
+**`## Project Foundation` block to write or append:**
 
 ```markdown
-# <Project Name>
+## Project Foundation
 
-## Project Context
-
-Read these sources at the start of every conversation to understand the current state of the project:
-
-| Source | What it contains |
-|--------|-----------------|
-| `memory/constitution.md` | Nine Articles — immutable architectural principles |
-| `memory/MEMORY.md` | Index of all persistent memory files (user preferences, decisions, feedback) |
-| `docs/git-convention.md` | Branch naming regex, commit format, allowed types |
-| `docs/specs/` | All feature specs, plans, and task lists — check here before starting any new feature |
-
-## Architecture
-
-Governed by [Project Constitution](memory/constitution.md). All implementation plans must pass gates derived from the Nine Articles. Constitution amendments require explicit approval per Section 4.2.
-
-## SDD Workflow
-
-| Situation | Skill |
-|-----------|-------|
-| Fuzzy idea | `sdd-superpowers:sdd-brainstorm` |
-| Clear idea | `sdd-superpowers:sdd-specify` |
-| Tech investigation needed | `sdd-superpowers:sdd-research` |
-| Spec approved | `sdd-superpowers:sdd-plan` |
-| Plan approved | `sdd-superpowers:sdd-tasks` |
-| Tasks ready | `sdd-superpowers:sdd-execute` |
-| Verify spec alignment | `sdd-superpowers:sdd-review` |
-
-**Hard Gates:**
-- NO PLAN without an approved spec
-- NO TASKS without a plan
-- NO CODE without a prior failing test
-- NO COMPLETION CLAIM without fresh verification evidence
+Before any feature work, read:
+- `memory/constitution.md` — Mission and principles. Loaded every session.
+- `memory/steering/` — Operational context. Loaded by skills when relevant.
+  Each file's `loaded-by` frontmatter shows which skills incorporate it silently.
 ```
 
-**If `CLAUDE.md` already exists and already contains SDD workflow content** (look for `## SDD Workflow` or `Hard Gates` markers):
-Announce: "CLAUDE.md already contains SDD workflow content. Skipping this step."
-Skip — do not append duplicate content.
-
-**If `CLAUDE.md` already exists but has no SDD content:**
-Announce: "I'd like to append SDD workflow instructions to your existing `CLAUDE.md`. Here is what I will add:" — show the exact text to be appended.
-Get explicit approval before appending.
-
-### Step 5.4 Create docs/git-convention.md
+### Step 5.5 Create docs/git-convention.md
 
 Announce: "Setting up your git convention. I'll ask four quick questions."
 
@@ -356,13 +343,13 @@ To change these settings, edit this file directly.
 
 **Must not:** proceed to Step 6 without this file written.
 
-### Step 5.5 Initial Commit
+### Step 5.6 Initial Commit
 
 After all scaffold files are written, stage and commit the foundation:
 
 ```bash
-git add memory/constitution.md docs/specs/.gitkeep CLAUDE.md docs/git-convention.md
-git commit -m "chore: initial SDD scaffold with constitutional foundation and git convention"
+git add memory/constitution.md memory/steering/ docs/specs/.gitkeep CLAUDE.md docs/git-convention.md
+git commit -m "chore: initial SDD scaffold with mission charter, steering files, and git convention"
 ```
 
 ## Step 6: Handoff
@@ -370,7 +357,7 @@ git commit -m "chore: initial SDD scaffold with constitutional foundation and gi
 After all scaffold files are created, report using "Created" for new files, "Updated" for files that were appended to, and "Skipped" for files that already had SDD content:
 
 > "Constitutional Foundation complete.
-> - `memory/constitution.md` — [Created/Updated] Nine Articles governing all implementation plans
+> - `memory/constitution.md` — [Created/Updated] Mission Charter governing all implementation plans
 > - `docs/specs/` — [Created] ready for feature specifications
 > - `CLAUDE.md` — [Created/Updated/Skipped] SDD workflow instructions
 >
@@ -384,13 +371,13 @@ If the user exits the flow at any point before Step 5 begins:
 - Write NO files
 - Say: "Init aborted. No files were created. Run `sdd-superpowers:sdd-workflow` again to restart the constitutional setup."
 
-**Important:** Once Step 5 begins, write all three scaffold files in one uninterrupted sequence (constitution.md → .gitkeep → CLAUDE.md) without pausing for user input between files. This prevents partial scaffold state if the session is interrupted mid-write.
+**Important:** Once Step 5 begins, write all scaffold files in one uninterrupted sequence (constitution.md → steering files → .gitkeep → CLAUDE.md → git-convention.md) without pausing for user input between files. This prevents partial scaffold state if the session is interrupted mid-write.
 
 ## Error Scenarios
 
 | Scenario | Handling |
 |----------|----------|
 | User aborts during Article review | No files written; show abort message |
-| `memory/constitution.md` exists but `docs/specs/` does not | Skip Step 5.1 only; continue with Steps 5.2 and 5.3 as normal; warn: "constitution already exists — creating docs/specs/ and configuring CLAUDE.md only" |
+| `memory/constitution.md` exists but `docs/specs/` does not | Skip Step 5.1 only; continue with Steps 5.2–5.6 as normal; warn: "constitution already exists — creating steering files, docs/specs/, and configuring CLAUDE.md only" |
 | `CLAUDE.md` exists but has no SDD content | Append SDD section after showing diff and getting approval |
 | User skips git convention Q&A (presses Ctrl-C during Step 5.4) | Write no files for Step 5.4; warn: "git-convention.md not created — git-touching skills will prompt you to create it on first use." Proceed with the rest of the scaffold. |
