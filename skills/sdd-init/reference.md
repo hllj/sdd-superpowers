@@ -5,7 +5,7 @@
 **Announce at start:** "I'm using sdd-init to set up the project foundation for this new SDD project."
 
 <HARD-GATE>
-Do NOT create any feature specs, plans, or code until the constitution is approved and the scaffold is written. This skill produces ONLY the project foundation.
+Do NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written. This skill produces ONLY the project foundation.
 </HARD-GATE>
 
 ## Step 1: Announce and Orient
@@ -41,17 +41,23 @@ The Project Profile is also used in Step 5.2 to pre-fill steering file content.
 
 If the project is empty or exploration returns no useful signal: use the generic question examples as written in Step 2.
 
-### Constitution Existence Check
+### Foundation Existence Check
 
-After the exploration subagent returns, check `memory/constitution.md`:
+After the exploration subagent returns, check for existing foundation and legacy files:
 
-- **If `memory/constitution.md` does not exist:** proceed to Step 2 normally.
+- **If `memory/foundation.md` exists:**
+  Announce: "foundation.md already exists — project already initialized. No files will be written."
+  **STOP — do not proceed to Step 2 or any scaffold step.**
 - **If `memory/constitution.md` exists and contains `## Article I`:**
-  Announce: "An existing nine-article constitution was found at `memory/constitution.md`. Migration to the new mission-charter format is not yet supported. To start fresh: rename or delete the existing file, then re-invoke `sdd-init`. No files will be written."
+  Announce: "An existing nine-article constitution was found at `memory/constitution.md`. Run migration before re-initializing: rename `memory/constitution.md` → `memory/foundation.md`, then re-invoke `sdd-init`. No files will be written."
+  **STOP — do not proceed to Step 2 or any scaffold step.**
+- **If both `memory/constitution.md` → (legacy) and `memory/foundation.md` exist:**
+  Announce: "Conflicting state — both `memory/foundation.md` and the legacy `memory/constitution.md` → `memory/foundation.md` migration target exist. Resolve manually before re-invoking `sdd-init`. No files will be written."
   **STOP — do not proceed to Step 2 or any scaffold step.**
 - **If `memory/constitution.md` exists and does NOT contain `## Article I`:**
-  Announce: "A constitution already exists at `memory/constitution.md`. Skipping Phase 1 — proceeding to steering file scaffold."
-  Jump to Step 5.2 (steering file generation).
+  Announce: "A mission-charter constitution exists at `memory/constitution.md`. Rename it to `memory/foundation.md` to complete migration, then re-invoke `sdd-init`. No files will be written."
+  **STOP — do not proceed to Step 2 or any scaffold step.**
+- **If neither file exists:** proceed to Step 2 normally.
 
 ---
 
@@ -108,18 +114,18 @@ After collecting all answers:
 
 5. On approval: proceed to Step 3.
 
-**Must not** include SDD methodology rules (Library-First, TDD, CLI Mandate, Simplicity Gate, Anti-Abstraction, Integration-First) in the constitution.
+**Must not** include SDD methodology rules (Library-First, TDD, CLI Mandate, Simplicity Gate, Anti-Abstraction, Integration-First) in the foundation file.
 
-## Step 3: Write memory/constitution.md
+## Step 3: Write memory/foundation.md
 
-Announce: "Writing `memory/constitution.md`."
+Announce: "Writing `memory/foundation.md`."
 
 Create `memory/` directory if it does not exist.
 
-Write `memory/constitution.md` using the approved draft. The file must contain exactly these sections in this order:
+Write `memory/foundation.md` using the approved draft. The file must contain exactly these sections in this order:
 
 ```markdown
-# [Project Name] Constitution
+# [Project Name] Foundation
 
 > Loaded every session. To amend, follow the Amendment Process below.
 
@@ -145,9 +151,9 @@ Edit steering files freely — they are not subject to the amendment process.
 
 Create files in this order. Announce each file before creating it.
 
-### Step 5.1 Confirm memory/constitution.md
+### Step 5.1 Confirm memory/foundation.md
 
-Confirm that `memory/constitution.md` was written in Step 3. If Phase 1 was bypassed (constitution already existed), skip this step entirely — proceed to Step 5.2.
+Confirm that `memory/foundation.md` was written in Step 3. If Phase 1 was bypassed (foundation already existed), skip this step entirely — proceed to Step 5.2.
 
 ### Step 5.2 Generate Steering Files
 
@@ -264,18 +270,17 @@ Create `docs/specs/.gitkeep` (empty file so the directory is tracked by git).
 ### Step 5.4 Create or update CLAUDE.md
 
 **Detection order:**
-1. If `CLAUDE.md` does not exist → create it (see template below)
-2. If `CLAUDE.md` exists and contains `## Project Foundation` → skip (already initialised)
-3. If `CLAUDE.md` exists and contains `## SDD Workflow` but not `## Project Foundation` → append the `## Project Foundation` block; show the user exactly what will be appended and get approval before writing
-4. If `CLAUDE.md` exists with neither marker → append the `## Project Foundation` block after showing diff and getting approval
+1. If `CLAUDE.md` does not exist → write from `skills/sdd-init/templates/claude-md.md`, substituting `[Project Name]` with the project name detected in Step 1.5
+2. If `CLAUDE.md` first line is `<!-- sdd-init: generated -->` → skip (already initialised by sdd-init)
+3. If `CLAUDE.md` exists without the sentinel → append the `## Project Foundation` block below after showing the user what will be appended and getting approval
 
-**`## Project Foundation` block to write or append:**
+**`## Project Foundation` block to append (backward-compat path):**
 
 ```markdown
 ## Project Foundation
 
 Before any feature work, read:
-- `memory/constitution.md` — Mission and principles. Loaded every session.
+- `memory/foundation.md` — Mission and principles. Loaded every session.
 - `memory/steering/` — Operational context. Loaded by skills when relevant.
   Each file's `loaded-by` frontmatter shows which skills incorporate it silently.
 ```
@@ -344,7 +349,7 @@ To change these settings, edit this file directly.
 After all scaffold files are written, stage and commit the foundation:
 
 ```bash
-git add memory/constitution.md memory/steering/ docs/specs/.gitkeep CLAUDE.md docs/git-convention.md
+git add memory/foundation.md memory/steering/ docs/specs/.gitkeep CLAUDE.md docs/git-convention.md
 git commit -m "chore: initial SDD scaffold with mission charter, steering files, and git convention"
 ```
 
@@ -353,7 +358,7 @@ git commit -m "chore: initial SDD scaffold with mission charter, steering files,
 After all scaffold files are created, report using "Created" for new files, "Updated" for files that were appended to, and "Skipped" for files that already had SDD content:
 
 > "Constitutional Foundation complete.
-> - `memory/constitution.md` — [Created/Updated] Mission Charter governing all implementation plans
+> - `memory/foundation.md` — [Created/Updated] Foundation file: mission and principles loaded every session
 > - `docs/specs/` — [Created] ready for feature specifications
 > - `CLAUDE.md` — [Created/Updated/Skipped] SDD workflow instructions
 >
@@ -365,15 +370,15 @@ Then return control to `sdd-superpowers:sdd-workflow` to route the user's origin
 
 If the user exits the flow at any point before Step 5 begins:
 - Write NO files
-- Say: "Init aborted. No files were created. Run `sdd-superpowers:sdd-workflow` again to restart the constitutional setup."
+- Say: "Init aborted. No files were created. Run `sdd-superpowers:sdd-workflow` again to restart the foundation setup."
 
-**Important:** Once Step 5 begins, write all scaffold files in one uninterrupted sequence (constitution.md → steering files → .gitkeep → CLAUDE.md → git-convention.md) without pausing for user input between files. This prevents partial scaffold state if the session is interrupted mid-write.
+**Important:** Once Step 5 begins, write all scaffold files in one uninterrupted sequence (foundation.md → steering files → .gitkeep → CLAUDE.md → git-convention.md) without pausing for user input between files. This prevents partial scaffold state if the session is interrupted mid-write.
 
 ## Error Scenarios
 
 | Scenario | Handling |
 |----------|----------|
-| User aborts during Mission Charter ceremony (before constitution approval) | No files written; show abort message |
-| `memory/constitution.md` exists but `docs/specs/` does not | Skip Step 5.1 only; continue with Steps 5.2–5.6 as normal; warn: "constitution already exists — creating steering files, docs/specs/, and configuring CLAUDE.md only" |
+| User aborts during Mission Charter ceremony (before foundation approval) | No files written; show abort message |
+| `memory/foundation.md` exists but `docs/specs/` does not | Skip Step 5.1 only; continue with Steps 5.2–5.6 as normal; warn: "foundation already exists — creating steering files, docs/specs/, and configuring CLAUDE.md only" |
 | `CLAUDE.md` exists but has no SDD content | Append SDD section after showing diff and getting approval |
 | User skips git convention Q&A (presses Ctrl-C during Step 5.4) | Write no files for Step 5.4; warn: "git-convention.md not created — git-touching skills will prompt you to create it on first use." Proceed with the rest of the scaffold. |
