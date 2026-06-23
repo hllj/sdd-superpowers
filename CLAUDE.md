@@ -172,3 +172,10 @@ skills/
 5. "Use sdd-execute to implement it"
 6. "Use sdd-review to validate the implementation"
 ```
+
+## Project Foundation
+
+Before any feature work, read:
+- `memory/constitution.md` — Mission and principles. Loaded every session.
+- `memory/steering/` — Operational context. Loaded by skills when relevant.
+  Each file's `loaded-by` frontmatter shows which skills incorporate it silently.

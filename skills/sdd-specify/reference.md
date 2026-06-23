@@ -12,6 +12,14 @@ Where:
 
 Example: `docs/specs/003-user-authentication/spec.md`
 
+## Step 0: Load Steering Context
+
+Scan `memory/steering/` for `.md` files whose `loaded-by` frontmatter includes `sdd-specify`. Read each matched file and incorporate its content as context before producing any user-facing output. Loading is silent — no announcement to the user.
+
+If `memory/steering/` does not exist, or no files contain `sdd-specify` in `loaded-by`, proceed without change.
+
+Rescan on every invocation — custom files added after init are discovered automatically.
+
 ## Step 1: Scan Existing Specs and Detect Fast-Path
 
 Before anything else:
