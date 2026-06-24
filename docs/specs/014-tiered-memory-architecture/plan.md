@@ -59,7 +59,7 @@ All pre-implementation gates pass:
 
 ---
 
-## Phase 0: Failing Tests First
+## Phase 0: Failing Tests First [DONE]
 
 **Implements:** FR-6, FR-1 | **Satisfies:** AC-1.5, AC-3.2, AC-3.4 (test preconditions)
 **Files:** `tests/hooks/test_session_start.sh`, `tests/hooks/test_post_write_memory_validate.sh`, `tests/hooks/test_subagent_start.sh`
@@ -138,7 +138,7 @@ if echo "$OUTPUT" | grep -qi "foundation\|constitution"; then
 
 ---
 
-## Phase 1: SessionStart Hook — foundation.md Reference
+## Phase 1: SessionStart Hook — foundation.md Reference [DONE]
 
 **Implements:** FR-1 | **Satisfies:** AC-1.5, AC-3.2
 **Files:** `scripts/hooks/session-start.sh`
@@ -166,7 +166,7 @@ fi
 
 ---
 
-## Phase 2: PostToolUse:Write Hook — Whitelist
+## Phase 2: PostToolUse:Write Hook — Whitelist [DONE]
 
 **Implements:** FR-6 | **Satisfies:** AC-3.4
 **Files:** `scripts/hooks/post-write-memory-validate.sh`
@@ -209,7 +209,7 @@ esac
 
 ---
 
-## Phase 3: sdd-init CLAUDE.md Template
+## Phase 3: sdd-init CLAUDE.md Template [DONE]
 
 **Implements:** FR-3 | **Satisfies:** AC-2.1, AC-2.2, AC-2.5
 **Files:** `skills/sdd-init/templates/claude-md.md` (new)
@@ -245,7 +245,7 @@ Steering files in `memory/steering/` are loaded by skills when relevant.
 
 ---
 
-## Phase 4: sdd-init/reference.md — Seven Touch Points
+## Phase 4: sdd-init/reference.md — Seven Touch Points [DONE]
 
 **Implements:** FR-2, FR-3, FR-4 | **Satisfies:** AC-1.1, AC-1.2, AC-1.3, AC-1.4, AC-2.1, AC-2.2, AC-2.3, AC-2.4
 **Files:** `skills/sdd-init/reference.md`
@@ -406,7 +406,7 @@ with:
 
 ---
 
-## Phase 5: sdd-init/SKILL.md — Constitution References
+## Phase 5: sdd-init/SKILL.md — Constitution References [DONE]
 
 **Implements:** FR-4 | **Satisfies:** AC-3.6
 **Files:** `skills/sdd-init/SKILL.md`
@@ -428,7 +428,7 @@ Apply these replacements in `skills/sdd-init/SKILL.md`:
 
 ---
 
-## Phase 6: Repo Self-Migration
+## Phase 6: Repo Self-Migration [DONE]
 
 **Implements:** FR-1, FR-3, FR-5 | **Satisfies:** AC-3.1, AC-3.2, AC-3.3, AC-3.4, AC-3.5, AC-3.7
 **Files:** `memory/constitution.md` (delete), `memory/foundation.md` (create), `CLAUDE.md`, `docs/contributing.md` (create), `memory/project_constitution_format.md`
@@ -667,7 +667,7 @@ metadata:
 
 ---
 
-## Phase 7: Integration Verification
+## Phase 7: Integration Verification [DONE]
 
 **Implements:** All FRs | **Satisfies:** All ACs
 

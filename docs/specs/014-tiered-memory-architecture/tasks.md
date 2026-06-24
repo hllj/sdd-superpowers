@@ -501,13 +501,13 @@ Sub-groups A–F touch different files — run concurrently.
 
 *All Group 0 and Group 1 tasks must be complete before starting Phase 7.*
 
-- [ ] **T045** Run full hook test suite:
+- [x] **T045** Run full hook test suite:
   ```bash
   bash tests/hooks/run_all.sh
   ```
   Expected: 9 files pass, 0 fail (all test updates from Group 0 now green)
 
-- [ ] **T046** Quickstart Scenario A — session-start loads foundation.md:
+- [x] **T046** Quickstart Scenario A — session-start loads foundation.md:
   ```bash
   TMP=$(mktemp -d)
   mkdir -p "$TMP/docs/specs" "$TMP/memory"
@@ -520,7 +520,7 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   Expected: `PASS: foundation.md loaded`
 
-- [ ] **T047** Quickstart Scenario B — hook silent for foundation.md:
+- [x] **T047** Quickstart Scenario B — hook silent for foundation.md:
   ```bash
   TMP=$(mktemp -d)
   mkdir -p "$TMP/docs/specs" "$TMP/memory/steering"
@@ -533,7 +533,7 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   Expected: `PASS: hook silent for foundation.md`
 
-- [ ] **T048** Quickstart Scenario C — CLAUDE.md boot layer only:
+- [x] **T048** Quickstart Scenario C — CLAUDE.md boot layer only:
   ```bash
   head -1 CLAUDE.md
   grep -c "sdd-brainstorm ──" CLAUDE.md
@@ -541,14 +541,14 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   Expected: `<!-- sdd-init: generated -->` / `0` / match
 
-- [ ] **T049** Quickstart Scenario D — contributing.md has moved content:
+- [x] **T049** Quickstart Scenario D — contributing.md has moved content:
   ```bash
   grep "What Is SDD" docs/contributing.md
   grep "| \`sdd-workflow\`" docs/contributing.md
   ```
   Expected: both match
 
-- [ ] **T050** Final commit:
+- [x] **T050** Final commit:
   ```bash
   git add docs/specs/014-tiered-memory-architecture/
   git commit -m "feat: complete 014-tiered-memory-architecture — tiered memory, foundation.md, boot-layer CLAUDE.md"
