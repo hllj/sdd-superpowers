@@ -13,7 +13,7 @@ Sub-groups A, B, C touch different files — run concurrently.
 
 ### Group 0-A: test_session_start.sh (constitution → foundation)
 
-- [ ] **T001** `[P]` Edit `tests/hooks/test_session_start.sh` — change fixture and assertion.
+- [x] **T001** `[P]` Edit `tests/hooks/test_session_start.sh` — change fixture and assertion.
 
   Replace:
   ```bash
@@ -32,13 +32,13 @@ Sub-groups A, B, C touch different files — run concurrently.
   assert_contains "$OUTPUT" "Foundation content" "AC-1.1: foundation.md injected"
   ```
 
-- [ ] **T002** `[P]` Verify T001 is RED:
+- [x] **T002** `[P]` Verify T001 is RED:
   ```bash
   bash tests/hooks/test_session_start.sh
   ```
   Expected: AC-1.1 FAILS — "Foundation content" not found (hook still reads constitution.md which no longer exists in the fixture directory)
 
-- [ ] **T003** `[P]` Commit:
+- [x] **T003** `[P]` Commit:
   ```bash
   git add tests/hooks/test_session_start.sh
   git commit -m "test: update session_start fixture to foundation.md"
@@ -46,7 +46,7 @@ Sub-groups A, B, C touch different files — run concurrently.
 
 ### Group 0-B: test_post_write_memory_validate.sh (whitelist cases)
 
-- [ ] **T004** `[P]` Edit `tests/hooks/test_post_write_memory_validate.sh` — insert three whitelist test cases before `rm -rf "$TMP"`:
+- [x] **T004** `[P]` Edit `tests/hooks/test_post_write_memory_validate.sh` — insert three whitelist test cases before `rm -rf "$TMP"`:
 
   ```bash
   # FR-6 whitelist: foundation.md silenced
@@ -69,13 +69,13 @@ Sub-groups A, B, C touch different files — run concurrently.
   assert_empty "$OUTPUT" "FR-6 whitelist: silent for steering file"
   ```
 
-- [ ] **T005** `[P]` Verify T004 is RED:
+- [x] **T005** `[P]` Verify T004 is RED:
   ```bash
   bash tests/hooks/test_post_write_memory_validate.sh
   ```
   Expected: 3 new FAIL lines — "FR-6 whitelist: silent for foundation.md", "…MEMORY.md", "…steering file"
 
-- [ ] **T006** `[P]` Commit:
+- [x] **T006** `[P]` Commit:
   ```bash
   git add tests/hooks/test_post_write_memory_validate.sh
   git commit -m "test: add whitelist cases to post_write_memory_validate"
@@ -83,7 +83,7 @@ Sub-groups A, B, C touch different files — run concurrently.
 
 ### Group 0-C: test_subagent_start.sh (must-not future-proofing)
 
-- [ ] **T007** `[P]` Edit `tests/hooks/test_subagent_start.sh` — extend must-not grep pattern.
+- [x] **T007** `[P]` Edit `tests/hooks/test_subagent_start.sh` — extend must-not grep pattern.
 
   Replace:
   ```bash
@@ -94,13 +94,13 @@ Sub-groups A, B, C touch different files — run concurrently.
   if echo "$OUTPUT" | grep -qi "foundation\|constitution"; then
   ```
 
-- [ ] **T008** `[P]` Verify T007 still PASSES (subagent-start.sh loads neither file):
+- [x] **T008** `[P]` Verify T007 still PASSES (subagent-start.sh loads neither file):
   ```bash
   bash tests/hooks/test_subagent_start.sh
   ```
   Expected: 5 passed, 0 failed
 
-- [ ] **T009** `[P]` Commit:
+- [x] **T009** `[P]` Commit:
   ```bash
   git add tests/hooks/test_subagent_start.sh
   git commit -m "test: extend subagent_start must-not to cover foundation"
@@ -116,7 +116,7 @@ Sub-groups A–F touch different files — run concurrently.
 
 ### Group 1-A: session-start.sh hook (requires Group 0-A red)
 
-- [ ] **T010** `[P]` Edit `scripts/hooks/session-start.sh` — swap constitution.md → foundation.md.
+- [x] **T010** `[P]` Edit `scripts/hooks/session-start.sh` — swap constitution.md → foundation.md.
 
   Replace:
   ```bash
@@ -131,19 +131,19 @@ Sub-groups A–F touch different files — run concurrently.
   fi
   ```
 
-- [ ] **T011** `[P]` Verify AC-1.5 GREEN — Given foundation.md exists in SDD project When session starts Then it is injected:
+- [x] **T011** `[P]` Verify AC-1.5 GREEN — Given foundation.md exists in SDD project When session starts Then it is injected:
   ```bash
   bash tests/hooks/test_session_start.sh
   ```
   Expected: all assertions PASS including "Foundation content"
 
-- [ ] **T012** `[P]` Run full suite to confirm no regressions:
+- [x] **T012** `[P]` Run full suite to confirm no regressions:
   ```bash
   bash tests/hooks/run_all.sh
   ```
   Expected: 9 files pass, 0 fail
 
-- [ ] **T013** `[P]` Commit:
+- [x] **T013** `[P]` Commit:
   ```bash
   git add scripts/hooks/session-start.sh
   git commit -m "fix: session-start hook reads foundation.md instead of constitution.md"
@@ -151,7 +151,7 @@ Sub-groups A–F touch different files — run concurrently.
 
 ### Group 1-B: post-write-memory-validate.sh whitelist (requires Group 0-B red)
 
-- [ ] **T014** `[P]` Edit `scripts/hooks/post-write-memory-validate.sh` — insert whitelist case block after the existing path filter.
+- [x] **T014** `[P]` Edit `scripts/hooks/post-write-memory-validate.sh` — insert whitelist case block after the existing path filter.
 
   After:
   ```bash
@@ -167,19 +167,19 @@ Sub-groups A–F touch different files — run concurrently.
   esac
   ```
 
-- [ ] **T015** `[P]` Verify AC-3.4 GREEN — Given foundation.md written When hook fires Then silent:
+- [x] **T015** `[P]` Verify AC-3.4 GREEN — Given foundation.md written When hook fires Then silent:
   ```bash
   bash tests/hooks/test_post_write_memory_validate.sh
   ```
   Expected: all 7 assertions PASS (4 original + 3 whitelist)
 
-- [ ] **T016** `[P]` Run full suite:
+- [x] **T016** `[P]` Run full suite:
   ```bash
   bash tests/hooks/run_all.sh
   ```
   Expected: 9 files pass, 0 fail
 
-- [ ] **T017** `[P]` Commit:
+- [x] **T017** `[P]` Commit:
   ```bash
   git add scripts/hooks/post-write-memory-validate.sh
   git commit -m "feat: whitelist foundation.md, MEMORY.md, steering files in memory validation hook"
@@ -187,7 +187,7 @@ Sub-groups A–F touch different files — run concurrently.
 
 ### Group 1-C: sdd-init CLAUDE.md template (no Group 0 dependency)
 
-- [ ] **T018** `[P]` Create `skills/sdd-init/templates/` directory and write `skills/sdd-init/templates/claude-md.md` with this exact content:
+- [x] **T018** `[P]` Create `skills/sdd-init/templates/` directory and write `skills/sdd-init/templates/claude-md.md` with this exact content:
 
   ```markdown
   <!-- sdd-init: generated -->
@@ -209,25 +209,25 @@ Sub-groups A–F touch different files — run concurrently.
   - NO COMPLETION CLAIM without fresh verification evidence
   ```
 
-- [ ] **T019** `[P]` Verify AC-2.2 — sentinel is first line:
+- [x] **T019** `[P]` Verify AC-2.2 — sentinel is first line:
   ```bash
   head -1 skills/sdd-init/templates/claude-md.md
   ```
   Expected: `<!-- sdd-init: generated -->`
 
-- [ ] **T020** `[P]` Verify AC-2.5 — no skills table in template:
+- [x] **T020** `[P]` Verify AC-2.5 — no skills table in template:
   ```bash
   grep -c "| \`sdd-" skills/sdd-init/templates/claude-md.md
   ```
   Expected: `0`
 
-- [ ] **T021** `[P]` Verify hard gates present:
+- [x] **T021** `[P]` Verify hard gates present:
   ```bash
   grep -c "NO PLAN" skills/sdd-init/templates/claude-md.md
   ```
   Expected: `1`
 
-- [ ] **T022** `[P]` Commit:
+- [x] **T022** `[P]` Commit:
   ```bash
   git add skills/sdd-init/templates/
   git commit -m "feat: add CLAUDE.md boot-layer template for sdd-init"
@@ -235,7 +235,7 @@ Sub-groups A–F touch different files — run concurrently.
 
 ### Group 1-D: sdd-init/reference.md — 7 touch points (no Group 0 dependency)
 
-- [ ] **T023** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.1 — HARD-GATE text.
+- [x] **T023** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.1 — HARD-GATE text.
 
   Replace:
   ```
@@ -246,7 +246,7 @@ Sub-groups A–F touch different files — run concurrently.
   Do NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written.
   ```
 
-- [ ] **T024** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.2 — Foundation Existence Check (4 states).
+- [x] **T024** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.2 — Foundation Existence Check (4 states).
 
   Replace the entire `### Constitution Existence Check` block (from `### Constitution Existence Check` through `Jump to Step 5.2 (steering file generation).`) with:
 
@@ -270,7 +270,7 @@ Sub-groups A–F touch different files — run concurrently.
   - **If neither file exists:** proceed to Step 2 normally.
   ```
 
-- [ ] **T025** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.3 — Step 3 path and schema.
+- [x] **T025** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.3 — Step 3 path and schema.
 
   Replace section heading:
   - `## Step 3: Write memory/constitution.md` → `## Step 3: Write memory/foundation.md`
@@ -281,7 +281,7 @@ Sub-groups A–F touch different files — run concurrently.
   Replace file title in schema:
   - `# [Project Name] Constitution` → `# [Project Name] Foundation`
 
-- [ ] **T026** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.4 — Step 5.1 reference.
+- [x] **T026** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.4 — Step 5.1 reference.
 
   Replace:
   ```
@@ -292,7 +292,7 @@ Sub-groups A–F touch different files — run concurrently.
   Confirm that `memory/foundation.md` was written in Step 3.
   ```
 
-- [ ] **T027** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.5 — Step 5.4 sentinel detection.
+- [x] **T027** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.5 — Step 5.4 sentinel detection.
 
   Replace the entire `### Step 5.4 Create or update CLAUDE.md` section (detection order list + block content) with:
 
@@ -316,7 +316,7 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   ```
 
-- [ ] **T028** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.6 — Step 5.6 git add.
+- [x] **T028** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.6 — Step 5.6 git add.
 
   Replace:
   ```bash
@@ -327,7 +327,7 @@ Sub-groups A–F touch different files — run concurrently.
   git add memory/foundation.md memory/steering/ docs/specs/.gitkeep CLAUDE.md docs/git-convention.md
   ```
 
-- [ ] **T029** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.7 — Step 6 handoff.
+- [x] **T029** `[P]` Edit `skills/sdd-init/reference.md` touch point 4.7 — Step 6 handoff.
 
   Replace:
   ```
@@ -338,13 +338,13 @@ Sub-groups A–F touch different files — run concurrently.
   - `memory/foundation.md` — [Created/Updated] Foundation file: mission and principles loaded every session
   ```
 
-- [ ] **T030** `[P]` Verify AC-1.1–1.4 coverage — no spurious constitution references remain:
+- [x] **T030** `[P]` Verify AC-1.1–1.4 coverage — no spurious constitution references remain:
   ```bash
   grep -n "constitution" skills/sdd-init/reference.md | grep -v "Article I\|nine-article\|migration\|constitution\.md.*rename\|constitution\.md.*Rename"
   ```
   Expected: 0 lines (only legitimate Article I / migration references survive)
 
-- [ ] **T031** `[P]` Commit:
+- [x] **T031** `[P]` Commit:
   ```bash
   git add skills/sdd-init/reference.md
   git commit -m "feat: update sdd-init reference.md to generate foundation.md and use sentinel CLAUDE.md detection"
@@ -352,7 +352,7 @@ Sub-groups A–F touch different files — run concurrently.
 
 ### Group 1-E: sdd-init/SKILL.md (no Group 0 dependency)
 
-- [ ] **T032** `[P]` Edit `skills/sdd-init/SKILL.md` — apply 5 text replacements:
+- [x] **T032** `[P]` Edit `skills/sdd-init/SKILL.md` — apply 5 text replacements:
 
   | Old | New |
   |-----|-----|
@@ -362,13 +362,13 @@ Sub-groups A–F touch different files — run concurrently.
   | `Draft constitution from answers → user approval gate → write \`memory/constitution.md\`` | `Draft foundation from answers → user approval gate → write \`memory/foundation.md\`` |
   | `until the constitution is approved` | `until the foundation file is approved` |
 
-- [ ] **T033** `[P]` Verify AC-3.6 — no constitution references remain:
+- [x] **T033** `[P]` Verify AC-3.6 — no constitution references remain:
   ```bash
   grep -c "constitution" skills/sdd-init/SKILL.md
   ```
   Expected: `0`
 
-- [ ] **T034** `[P]` Commit:
+- [x] **T034** `[P]` Commit:
   ```bash
   git add skills/sdd-init/SKILL.md
   git commit -m "feat: update sdd-init SKILL.md to reference foundation.md"
@@ -376,7 +376,7 @@ Sub-groups A–F touch different files — run concurrently.
 
 ### Group 1-F: Repo self-migration (no Group 0 dependency)
 
-- [ ] **T035** `[P]` Write `memory/foundation.md` — copy content from `memory/constitution.md`, changing only the file title:
+- [x] **T035** `[P]` Write `memory/foundation.md` — copy content from `memory/constitution.md`, changing only the file title:
 
   Create `memory/foundation.md` with content identical to `memory/constitution.md` except the first heading:
   - Replace: `# SDD Superpowers Constitution`
@@ -384,12 +384,12 @@ Sub-groups A–F touch different files — run concurrently.
 
   All other content (Mission, Principles, Operational Context, Amendment Process) is preserved verbatim.
 
-- [ ] **T036** `[P]` Delete `memory/constitution.md`:
+- [x] **T036** `[P]` Delete `memory/constitution.md`:
   ```bash
   rm memory/constitution.md
   ```
 
-- [ ] **T037** `[P]` Verify AC-3.1 — foundation exists, constitution gone:
+- [x] **T037** `[P]` Verify AC-3.1 — foundation exists, constitution gone:
   ```bash
   head -1 memory/foundation.md
   ```
@@ -403,9 +403,9 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   Expected: `No such file or directory`
 
-- [ ] **T038** `[P]` Create `docs/contributing.md` with the content specified in plan.md Phase 6.2 (What Is SDD, Skills table, Workflow diagram, Bundled Skills table, Directory Structure, Quick Start — full content from plan section 6.2).
+- [x] **T038** `[P]` Create `docs/contributing.md` with the content specified in plan.md Phase 6.2 (What Is SDD, Skills table, Workflow diagram, Bundled Skills table, Directory Structure, Quick Start — full content from plan section 6.2).
 
-- [ ] **T039** `[P]` Verify AC-3.5 — contributing.md has moved content:
+- [x] **T039** `[P]` Verify AC-3.5 — contributing.md has moved content:
   ```bash
   grep "What Is SDD" docs/contributing.md
   ```
@@ -415,7 +415,7 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   Expected: match found
 
-- [ ] **T040** `[P]` Rewrite `CLAUDE.md` with this exact content:
+- [x] **T040** `[P]` Rewrite `CLAUDE.md` with this exact content:
 
   ```markdown
   <!-- sdd-init: generated -->
@@ -452,7 +452,7 @@ Sub-groups A–F touch different files — run concurrently.
   > For plugin contributor reference (skills, workflow, directory structure): see `docs/contributing.md`
   ```
 
-- [ ] **T041** `[P]` Verify AC-3.2 + AC-3.3:
+- [x] **T041** `[P]` Verify AC-3.2 + AC-3.3:
   ```bash
   head -1 CLAUDE.md
   ```
@@ -466,7 +466,7 @@ Sub-groups A–F touch different files — run concurrently.
   ```
   Expected: match found
 
-- [ ] **T042** `[P]` Update `memory/project_constitution_format.md` — rewrite entire file:
+- [x] **T042** `[P]` Update `memory/project_constitution_format.md` — rewrite entire file:
 
   ```markdown
   ---
@@ -483,13 +483,13 @@ Sub-groups A–F touch different files — run concurrently.
   **How to apply:** No action needed. The whitelist handles it automatically. If the hook fires on `foundation.md` in a project that has not yet applied feature 014's hook update, the old guidance applies: ignore the warning.
   ```
 
-- [ ] **T043** `[P]` Verify AC-3.7:
+- [x] **T043** `[P]` Verify AC-3.7:
   ```bash
   grep "foundation.md" memory/project_constitution_format.md
   ```
   Expected: match found
 
-- [ ] **T044** `[P]` Commit:
+- [x] **T044** `[P]` Commit:
   ```bash
   git add memory/foundation.md memory/project_constitution_format.md docs/contributing.md CLAUDE.md
   git commit -m "feat: self-migrate repo — foundation.md, contributing.md, boot-layer CLAUDE.md"
