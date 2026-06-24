@@ -7,6 +7,19 @@ description: Use when completing a development phase or major feature, and befor
 
 ## Overview
 
+<examples>
+<example>
+<context>Phase 1 implementation is complete and all tests pass. User is ready to move to Phase 2.</context>
+<correct>Invoke requesting-code-review. Dispatch a code-reviewer subagent with the diff, spec, and plan as context before proceeding to Phase 2.</correct>
+<incorrect>Continue to Phase 2 immediately — the code looks clean and a review would slow us down.</incorrect>
+</example>
+<example>
+<context>User says "the code looks good to me, let's just merge."</context>
+<correct>The author's review is not a substitute for structured review. Invoke requesting-code-review to dispatch a fresh reviewer subagent with no session bias.</correct>
+<incorrect>Merge without dispatching a reviewer — the author cannot objectively catch their own blind spots.</incorrect>
+</example>
+</examples>
+
 Dispatch a `sdd-superpowers:code-reviewer` subagent with precisely crafted context to catch issues before they cascade. The reviewer gets the work product, not your session history — keeping review focused and your context uncluttered.
 
 In SDD this is the **code quality** review stage — invoked after spec compliance review passes. Spec compliance is handled separately by `spec-reviewer-prompt.md` in `sdd-superpowers:subagent-driven-development`.
@@ -72,3 +85,15 @@ See template at: `requesting-code-review/code-reviewer.md`
 **After review:**
 - Critical/Important issues → `sdd-superpowers:receiving-code-review` to implement fixes, then re-dispatch this reviewer
 - All issues resolved → mark task complete, continue with `sdd-superpowers:sdd-execute`
+
+## Constraints
+
+- Does NOT give an ad-hoc inline review (reading the diff and commenting without subagent dispatch) — this skill dispatches a structured code-reviewer subagent
+- Does NOT skip the dispatch step even when the author believes the code is correct
+- Does NOT review code that has failing tests — tests must pass before review is meaningful
+
+## Error Handling
+
+- **No GitHub PR exists**: Run the review against the local diff; note the absence of a PR in the context passed to the reviewer subagent.
+- **Tests are failing**: Halt. Fix failing tests before requesting review — a review of broken code produces misleading findings.
+- **User requests gate bypass**: The gate is "structured review before merge." Explain that bypassing review is how regressions ship. Offer to dispatch the reviewer — it runs in the background and does not block other work.

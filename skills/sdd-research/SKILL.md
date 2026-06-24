@@ -9,6 +9,14 @@ description: Use when a spec has unresolved technology choices, performance targ
 
 ## Overview
 
+<examples>
+<example>
+<context>Spec requires sub-100ms search across 10M records with an open question: "SQL full-text search vs. dedicated search engine?"</context>
+<correct>Invoke sdd-research. Investigate both options against the performance target before planning — the wrong choice requires rework after implementation begins.</correct>
+<incorrect>Choose PostgreSQL full-text search in the plan without investigation because "it's already in the stack" — the performance target may not be achievable without a dedicated engine.</incorrect>
+</example>
+</examples>
+
 Gather critical technical context before committing to an implementation plan. Research agents investigate options so the plan is grounded in real-world constraints — library compatibility, performance characteristics, security implications — not assumptions.
 
 ## When to Use
@@ -36,3 +44,14 @@ Research document sections:
 After research, update `spec.md` to replace resolved `[NEEDS CLARIFICATION]` markers with concrete requirements.
 
 See [reference.md](reference.md) for the full investigation procedure, research.md template, per-domain investigation guides (library comparison, performance, security, integration), and quality standards.
+
+## Constraints
+
+- Does NOT make a technology recommendation without investigating against the specific requirement from the spec
+- Does NOT produce a plan or implementation — research.md feeds into sdd-plan
+
+## Error Handling
+
+- **Research scope is unclear**: Ask the user which open questions from the spec to investigate — do not research speculatively beyond what the spec requires.
+- **An external resource is unavailable**: Note the gap in research.md and flag it as an assumption for the plan.
+- **User requests gate bypass**: The gate is "investigate before deciding." Explain that planning around an uninvestigated choice produces plans that require revision. Offer to scope the research narrowly to the single highest-risk question.

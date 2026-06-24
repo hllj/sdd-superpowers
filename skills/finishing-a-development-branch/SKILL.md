@@ -7,6 +7,14 @@ description: Use when implementation is complete, all tests pass, and a decision
 
 ## Overview
 
+<examples>
+<example>
+<context>All tasks in tasks.md are checked off but the test suite has two failing tests.</context>
+<correct>Halt. Fix the failing tests before presenting integration options — a branch with failing tests is not complete.</correct>
+<incorrect>Present the four integration options anyway and let the user decide — failing tests are a blocker, not a trade-off.</incorrect>
+</example>
+</examples>
+
 Complete a development branch by verifying tests, preparing a merge commit message, and presenting four integration options: merge locally, create PR, keep as-is, or discard.
 
 **Core principle:** Verify tests → Prepare message → Present options → Execute choice → Clean up.
@@ -58,3 +66,14 @@ Which option?
 | Force-pushing without explicit request | Never force push unless user explicitly asked |
 
 See [reference.md](reference.md) for full step-by-step commands for each option, worktree cleanup detail, and integration notes.
+
+## Constraints
+
+- Does NOT present integration options while tests are failing
+- Does NOT claim a branch is ready to merge without running the full test suite first
+
+## Error Handling
+
+- **Tests are failing**: Halt. Fix failing tests before choosing an integration option.
+- **No test suite exists**: Document what was manually verified before presenting integration options.
+- **User requests gate bypass**: The gate is "tests must pass before integration." Explain that merging failing tests makes main broken for everyone. Offer to fix the failures first.

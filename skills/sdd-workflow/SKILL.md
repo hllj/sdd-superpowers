@@ -20,6 +20,14 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## Overview
 
+<examples>
+<example>
+<context>User opens a conversation in a repository that has no CLAUDE.md and no docs/specs/ directory.</context>
+<correct>This is not an SDD project. Announce that sdd-workflow does not apply and proceed with default Claude Code behaviour.</correct>
+<incorrect>Invoke sdd-workflow and attempt to route to SDD skills — the project has no foundation, so SDD routing will produce meaningless results.</incorrect>
+</example>
+</examples>
+
 Entry point for SDD. When a skill might apply, invoke it before acting — non-negotiable.
 
 ## When to Use
@@ -116,3 +124,14 @@ The skill itself tells you which type it is.
 - Proposing a fix without first invoking `sdd-superpowers:systematic-debugging` — symptom fix without root cause = regression risk
 
 Full routing rules and red flags: See [routing.md](routing.md)
+
+## Constraints
+
+- Does NOT apply to repositories without CLAUDE.md and docs/specs/ (non-SDD projects)
+- Does NOT replace the user's explicit instructions — sdd-workflow routes to skills; the user decides what to build
+
+## Error Handling
+
+- **Non-SDD repository detected** (no CLAUDE.md, no docs/specs/): Announce that this skill does not apply; proceed with default behaviour.
+- **Multiple SDD skills seem applicable**: Route to the highest-priority skill per the Quick Reference table; do not invoke multiple skills simultaneously.
+- **User requests gate bypass**: Name the specific gate the user wants to bypass; redirect to the appropriate SDD skill for the correct path forward.

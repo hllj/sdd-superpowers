@@ -11,6 +11,14 @@ description: Use when a feature spec exists and needs to become a technical impl
 
 Transform a feature specification into a complete, executable implementation plan. Every architecture choice, data model, and API contract must be justified by a requirement in `spec.md` — if a decision has no spec backing, question whether it belongs.
 
+<examples>
+<example>
+<context>spec.md exists but its status is still "Draft" and three [NEEDS CLARIFICATION] items remain open.</context>
+<correct>Do NOT start planning. Redirect to sdd-specify to resolve the clarifications and obtain explicit approval before planning begins.</correct>
+<incorrect>Plan against the Draft spec — the open items will surface as unknowns mid-plan and produce an incomplete or incorrect plan.</incorrect>
+</example>
+</examples>
+
 <HARD-GATE>
 Do NOT start planning until ALL of the following are true:
 1. `spec.md` exists at `docs/specs/NNN-slug/spec.md`
@@ -83,3 +91,15 @@ Fix issues before presenting to user.
 After saving `plan.md`, offer:
 
 > "Plan complete. Next: run `sdd-superpowers:sdd-tasks` to generate the executable task list."
+
+## Constraints
+
+- Does NOT start planning until spec.md exists, the user has explicitly approved the spec in this session, and the spec has zero [NEEDS CLARIFICATION] items
+- Does NOT make architectural or technology decisions not traceable to a spec requirement
+- Does NOT produce a plan while any of the four HARD-GATE conditions are unmet
+
+## Error Handling
+
+- **Spec has [NEEDS CLARIFICATION] items**: Resolve them in spec.md before planning begins.
+- **research.md is recommended but missing for a feature with unresolved tech choices**: Offer to run sdd-research first; note that planning without research may require plan revision.
+- **User requests gate bypass**: The gate is "no plan without an approved spec." Explain that a plan built on a Draft spec will need rework when the spec changes. Offer to resolve the open items first — it is faster than reworking the plan.

@@ -9,6 +9,19 @@ description: Use when a tasks.md exists and implementation should begin
 
 ## Overview
 
+<examples>
+<example>
+<context>tasks.md exists with 12 tasks. User says "let's start implementing."</context>
+<correct>Invoke sdd-execute. Verify the current branch is correct, then dispatch subagents in task order, completing each before the next.</correct>
+<incorrect>Begin writing implementation code in the main conversation context without checking branch or following task order.</incorrect>
+</example>
+<example>
+<context>User says "skip task 3, it's not blocking anything right now."</context>
+<correct>Explain why task ordering exists (dependencies, test-before-implementation). Offer to clarify whether task 3 is truly independent before deciding.</correct>
+<incorrect>Skip task 3 and proceed to task 4 — skipped tasks leave gaps in test coverage and may break later tasks that assume task 3 is complete.</incorrect>
+</example>
+</examples>
+
 Implement a feature by dispatching a fresh subagent per task, with two-stage review after each: spec-compliance first, then code quality. Parallel task groups run concurrently. Subagents never inherit session context — you construct exactly what they need.
 
 ## When to Use
@@ -92,3 +105,16 @@ Required sub-skills during execution:
 | sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |
 
 > **Note:** `sdd-superpowers:test-driven-development` is mandated for **implementer subagents** dispatched by `subagent-driven-development` — not invoked directly by the controller.
+
+## Constraints
+
+- Does NOT start implementation on main/master — branch must be verified before any subagent is dispatched
+- Does NOT skip tasks from the task list — if a task seems unnecessary, surface the question before bypassing it
+- Does NOT begin a new task until the prior task's verification step has passed
+
+## Error Handling
+
+- **tasks.md does not exist**: Redirect to `sdd-superpowers:sdd-tasks` before proceeding.
+- **Current branch is main/master**: Stop. Ask the user to confirm the correct feature branch before any implementation begins.
+- **A task is blocked by an unresolved dependency**: Surface the blocker explicitly to the user; do not skip the task or reorder silently.
+- **User requests gate bypass**: The gate is "no implementation on main/master." Explain the risk of implementing directly on main. Offer to create the feature branch first.
