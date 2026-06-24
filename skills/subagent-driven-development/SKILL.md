@@ -5,6 +5,10 @@ description: Use when executing implementation plans with independent tasks in t
 
 # Subagent-Driven Development
 
+## Overview
+
+Execute implementation plans by dispatching a fresh subagent per task, with spec-compliance and code-quality review after each.
+
 <examples>
 <example>
 <context>tasks.md has 8 tasks where task 4 depends on output from task 3, and task 7 depends on task 6.</context>

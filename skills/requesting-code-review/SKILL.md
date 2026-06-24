@@ -11,7 +11,7 @@ description: Use when completing a development phase or major feature, and befor
 <example>
 <context>Phase 1 implementation is complete and all tests pass. User is ready to move to Phase 2.</context>
 <correct>Invoke requesting-code-review. Dispatch a code-reviewer subagent with the diff, spec, and plan as context before proceeding to Phase 2.</correct>
-<incorrect>Continue to Phase 2 immediately — catching issues at a phase boundary is cheaper than finding them after Phase 2 is built on top.</incorrect>
+<incorrect>Continue to Phase 2 immediately — the code looks clean and a review would slow us down.</incorrect>
 </example>
 <example>
 <context>User says "the code looks good to me, let's just merge."</context>

@@ -402,5 +402,5 @@ The task prompt injected by the controller includes `spec.md` and the task text 
 ## Error Handling
 
 - **No test framework configured**: Ask which testing framework and test runner to use before writing any test code.
-- **Implementation already started without a test**: Stop. Write a test that captures the current expected behaviour, confirm it passes, then proceed — do not retroactively justify skipped tests.
+- **Implementation already started without a test**: Stop. Write a test that captures the expected behaviour, delete the pre-existing implementation, confirm the test now fails, then implement from scratch following the TDD cycle.
 - **User requests gate bypass**: The gate is "no implementation code before a failing test." Explain that skipping it means there is no evidence the code was broken before the fix. Offer to write the test first — it takes one step.

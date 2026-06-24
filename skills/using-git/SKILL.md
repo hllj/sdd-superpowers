@@ -52,4 +52,4 @@ See [reference.md](reference.md) for convention loading detail, full operation p
 
 - **No docs/git-convention.md found**: Default to Conventional Commits format (`type: description`) and note the missing convention file.
 - **Uncommitted changes exist on the wrong branch**: Halt. Help the user stash or move changes to the correct branch before committing.
-- **User requests gate bypass** (e.g. `--no-verify`): Explain what the hook does and why it exists. Only bypass if the user explicitly confirms they understand the consequence.
+- **User requests gate bypass** (e.g. `--no-verify`): The gate is "no commit without following the convention and hook chain." Explain what the hook does and why it exists. Offer the correct path — fix the underlying issue the hook is catching rather than bypassing it.

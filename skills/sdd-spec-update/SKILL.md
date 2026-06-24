@@ -109,7 +109,7 @@ See [reference.md](reference.md) for the full classification guide, per-artifact
 
 ## Constraints
 
-- Does NOT update any downstream artifact (plan, tasks, code) until the spec change is fully understood and a version bump is assigned
+- Does NOT update any downstream artifact (plan, tasks, code) until the spec change is fully understood, a version bump is assigned, and the user has explicitly confirmed the impact scope
 - Does NOT make scope changes without an impact assessment on existing plan and tasks
 
 ## Error Handling

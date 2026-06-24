@@ -94,7 +94,7 @@ After saving `plan.md`, offer:
 
 ## Constraints
 
-- Does NOT start planning until spec.md exists, is Approved, and has zero [NEEDS CLARIFICATION] items
+- Does NOT start planning until spec.md exists, the user has explicitly approved the spec in this session, and the spec has zero [NEEDS CLARIFICATION] items
 - Does NOT make architectural or technology decisions not traceable to a spec requirement
 - Does NOT produce a plan while any of the four HARD-GATE conditions are unmet
 
