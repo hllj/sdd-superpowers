@@ -1,8 +1,11 @@
 # Task List: Feature 015 — Skills Frontmatter and Description Refinement
 
-**Spec:** `docs/specs/015-skills-frontmatter-description-refinement/spec.md`
+**Spec:** `docs/specs/015-skills-frontmatter-description-refinement/spec.md` (v2.0.0)
 **Plan:** `docs/specs/015-skills-frontmatter-description-refinement/plan.md`
 **Branch:** `015-skills-frontmatter-description-refinement`
+
+> **v2.0.0 change:** Story 3 (allowed-tools) removed. Tasks 8–17 from v1 are dropped.
+> Phase 1 Tasks 2, 3, 5 are description-only (no combined allowed-tools edits).
 
 ---
 
@@ -10,13 +13,7 @@
 
 ### Task 0 — Create feature branch and doc-first commit
 
-```bash
-git checkout -b 015-skills-frontmatter-description-refinement
-git add docs/specs/015-skills-frontmatter-description-refinement/
-git commit -m "docs(015): add spec and plan for skills frontmatter and description refinement"
-```
-
-Expected: branch created, commit on new branch.
+Already done. Branch: `015-skills-frontmatter-description-refinement`
 
 ---
 
@@ -26,79 +23,37 @@ All Phase 1 tasks touch different files. [P] = safe to run concurrently.
 
 ---
 
-### [P] Task 1 — sdd-workflow: fix description + add user-invocable: false
+### [P] Task 1 — sdd-workflow: fix description + add user-invocable: false ✅ DONE
 
-**File:** `skills/sdd-workflow/SKILL.md`
+**Completed in initial execution run.**
 
-**RED — verify problem exists:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md
-```
-Expected: `description: Use when starting any conversation in an SDD project — establishes skill invocation order`
-
-```bash
-grep "user-invocable" /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md
-```
-Expected: no output (field absent)
-
-**EDIT — replace frontmatter block:**
-
-Old:
-```
----
-name: sdd-workflow
-description: Use when starting any conversation in an SDD project — establishes skill invocation order
----
-```
-
-New:
-```
----
-name: sdd-workflow
-description: Use when starting any conversation in an SDD project
-user-invocable: false
----
-```
-
-**GREEN — verify fix:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md
-```
-Expected: `description: Use when starting any conversation in an SDD project`
-
-```bash
-grep "user-invocable" /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md
-```
-Expected: `user-invocable: false`
+Verified: `description` ends at "SDD project"; `user-invocable: false` present.
 
 ---
 
-### [P] Task 2 — sdd-brainstorm: fix description + add allowed-tools
+### [P] Task 2 — sdd-brainstorm: fix description ✅ DONE
+
+**Completed in initial execution run.**
+
+Verified: description is `"Use when an idea is fuzzy, exploratory, or has competing approaches that need design exploration before specification"`.
+
+> Note: `allowed-tools` line was added during v1 execution and must be reverted — see Task 2R.
+
+---
+
+### [P] Task 2R — sdd-brainstorm: revert allowed-tools (v2.0.0 change)
 
 **File:** `skills/sdd-brainstorm/SKILL.md`
 
-**RED — verify problem exists:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md
-```
-Expected: contains "explore 2-3 directions and agree on a design first"
-
+**RED — verify problem (allowed-tools present):**
 ```bash
 grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md
 ```
-Expected: no output
+Expected: `allowed-tools: Bash, Read`
 
-**EDIT — replace frontmatter block:**
+**EDIT — remove allowed-tools line from frontmatter:**
 
 Old:
-```
----
-name: sdd-brainstorm
-description: Use when an idea is fuzzy, exploratory, or has competing approaches — before sdd-specify, when you need to explore 2-3 directions and agree on a design first
----
-```
-
-New:
 ```
 ---
 name: sdd-brainstorm
@@ -107,45 +62,45 @@ allowed-tools: Bash, Read
 ---
 ```
 
-**GREEN — verify fix:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md
+New:
 ```
-Expected: `description: Use when an idea is fuzzy, exploratory, or has competing approaches that need design exploration before specification`
+---
+name: sdd-brainstorm
+description: Use when an idea is fuzzy, exploratory, or has competing approaches that need design exploration before specification
+---
+```
 
+**GREEN:**
 ```bash
 grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md
 ```
-Expected: `allowed-tools: Bash, Read`
+Expected: no output
 
 ---
 
-### [P] Task 3 — sdd-tasks: fix description + add allowed-tools
+### [P] Task 3 — sdd-tasks: fix description ✅ DONE
+
+**Completed in initial execution run.**
+
+Verified: description is `"Use when an implementation plan is approved and needs to be broken down into executable tasks"`.
+
+> Note: `allowed-tools` line was added during v1 execution and must be reverted — see Task 3R.
+
+---
+
+### [P] Task 3R — sdd-tasks: revert allowed-tools (v2.0.0 change)
 
 **File:** `skills/sdd-tasks/SKILL.md`
 
-**RED — verify problem exists:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md
-```
-Expected: contains "checkboxed task list" and "after sdd-plan and before sdd-execute"
-
+**RED:**
 ```bash
 grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md
 ```
-Expected: no output
+Expected: `allowed-tools: Bash, Read`
 
-**EDIT — replace frontmatter block:**
+**EDIT — remove allowed-tools line from frontmatter:**
 
 Old:
-```
----
-name: sdd-tasks
-description: Use when an implementation plan exists and needs to become an ordered, checkboxed task list — after sdd-plan and before sdd-execute
----
-```
-
-New:
 ```
 ---
 name: sdd-tasks
@@ -154,81 +109,49 @@ allowed-tools: Bash, Read
 ---
 ```
 
-**GREEN — verify fix:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md
+New:
 ```
-Expected: `description: Use when an implementation plan is approved and needs to be broken down into executable tasks`
+---
+name: sdd-tasks
+description: Use when an implementation plan is approved and needs to be broken down into executable tasks
+---
+```
 
+**GREEN:**
 ```bash
 grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md
 ```
-Expected: `allowed-tools: Bash, Read`
+Expected: no output
 
 ---
 
-### [P] Task 4 — sdd-spec-update: fix description
+### [P] Task 4 — sdd-spec-update: fix description ✅ DONE
 
-**File:** `skills/sdd-spec-update/SKILL.md`
-
-**RED — verify problem exists:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-spec-update/SKILL.md
-```
-Expected: contains "to assess impact, version the spec, and propagate changes downstream"
-
-**EDIT — replace frontmatter block:**
-
-Old:
-```
----
-name: sdd-spec-update
-description: Use when a user describes a change, addition, or correction to an in-progress feature — after a spec exists but before or during implementation — to assess impact, version the spec, and propagate changes downstream
----
-```
-
-New:
-```
----
-name: sdd-spec-update
-description: Use when a user describes a change, addition, or correction to an approved spec — during or before implementation
----
-```
-
-**GREEN — verify fix:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-spec-update/SKILL.md
-```
-Expected: `description: Use when a user describes a change, addition, or correction to an approved spec — during or before implementation`
+**Completed in initial execution run.**
 
 ---
 
-### [P] Task 5 — verification-before-completion: fix description + add allowed-tools
+### [P] Task 5 — verification-before-completion: fix description ✅ DONE
+
+**Completed in initial execution run.**
+
+> Note: `allowed-tools` line was added during v1 execution and must be reverted — see Task 5R.
+
+---
+
+### [P] Task 5R — verification-before-completion: revert allowed-tools (v2.0.0 change)
 
 **File:** `skills/verification-before-completion/SKILL.md`
 
-**RED — verify problem exists:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
-```
-Expected: contains "run the verification command and read the output before making any success claim"
-
+**RED:**
 ```bash
 grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
 ```
-Expected: no output
+Expected: `allowed-tools: Bash, Read`
 
-**EDIT — replace frontmatter block:**
+**EDIT — remove allowed-tools line from frontmatter:**
 
 Old:
-```
----
-name: verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing — run the verification command and read the output before making any success claim
----
-```
-
-New:
 ```
 ---
 name: verification-before-completion
@@ -237,96 +160,39 @@ allowed-tools: Bash, Read
 ---
 ```
 
-**GREEN — verify fix:**
-```bash
-grep "^description:" /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
+New:
 ```
-Expected: `description: Use when about to claim work is complete, fixed, or passing`
+---
+name: verification-before-completion
+description: Use when about to claim work is complete, fixed, or passing
+---
+```
 
+**GREEN:**
 ```bash
 grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
 ```
-Expected: `allowed-tools: Bash, Read`
-
----
-
-### Task 6 — Verify all Phase 1 changes
-
-```bash
-grep "^description:" \
-  /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md \
-  /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md \
-  /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md \
-  /Users/hllj/Projects/sdd-superpowers/skills/sdd-spec-update/SKILL.md \
-  /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
-```
-
-Expected — none of these phrases appear in any output:
-- "establishes skill invocation order"
-- "2-3 directions"
-- "checkboxed task list"
-- "after sdd-plan and before sdd-execute"
-- "assess impact, version the spec"
-- "run the verification command and read the output"
-
-```bash
-grep "user-invocable" /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md
-```
-Expected: `user-invocable: false`
-
-```bash
-grep "allowed-tools" \
-  /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md \
-  /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md \
-  /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
-```
-Expected: three lines each showing `allowed-tools: Bash, Read`
-
----
-
-### Task 7 — Commit Phase 1
-
-```bash
-git add \
-  skills/sdd-workflow/SKILL.md \
-  skills/sdd-brainstorm/SKILL.md \
-  skills/sdd-tasks/SKILL.md \
-  skills/sdd-spec-update/SKILL.md \
-  skills/verification-before-completion/SKILL.md
-git commit -m "fix(skills): correct CSO-violating descriptions and add user-invocable to sdd-workflow"
-```
-
-Expected: commit created, 5 files changed.
-
----
-
-## Phase 2+3 — allowed-tools Frontmatter + Content Bug Fixes
-
-All Phase 2+3 tasks touch different files. [P] = safe to run concurrently.
-
----
-
-### [P] Task 8 — sdd-specify: add allowed-tools
-
-**File:** `skills/sdd-specify/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-specify/SKILL.md
-```
 Expected: no output
 
-**EDIT — replace frontmatter block:**
+---
+
+### [P] Task 6R — revert allowed-tools from Phase 2 files (v2.0.0 change)
+
+**Files:** `sdd-specify`, `sdd-plan`, `sdd-research`, `sdd-review`, `sdd-init`, `sdd-execute`, `using-git`, `systematic-debugging`, `requesting-code-review`, `test-driven-development`
+
+These files had `allowed-tools` added during v1 Phase 2 execution before the spec was updated.
+
+**RED — verify all 10 have allowed-tools:**
+```bash
+for f in skills/sdd-specify/SKILL.md skills/sdd-plan/SKILL.md skills/sdd-research/SKILL.md skills/sdd-review/SKILL.md skills/sdd-init/SKILL.md skills/sdd-execute/SKILL.md skills/using-git/SKILL.md skills/systematic-debugging/SKILL.md skills/requesting-code-review/SKILL.md skills/test-driven-development/SKILL.md; do
+  echo "=== $f ==="; grep "allowed-tools" "/Users/hllj/Projects/sdd-superpowers/$f"
+done
+```
+Expected: each file shows an `allowed-tools` line.
+
+**EDIT sdd-specify — remove allowed-tools:**
 
 Old:
-```
----
-name: sdd-specify
-description: Use when a user describes a new feature, idea, or problem without an existing spec — before any planning, research, or code
----
-```
-
-New:
 ```
 ---
 name: sdd-specify
@@ -334,28 +200,25 @@ description: Use when a user describes a new feature, idea, or problem without a
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-specify/SKILL.md
+New:
 ```
-Expected: `allowed-tools: Bash, Read`
-
 ---
-
-### [P] Task 9 — sdd-plan: add allowed-tools
-
-**File:** `skills/sdd-plan/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-plan/SKILL.md
+name: sdd-specify
+description: Use when a user describes a new feature, idea, or problem without an existing spec — before any planning, research, or code
+---
 ```
-Expected: no output
 
-**EDIT — replace frontmatter block:**
+**EDIT sdd-plan — remove allowed-tools:**
 
 Old:
+```
+---
+name: sdd-plan
+description: Use when a feature spec exists and needs to become a technical implementation plan
+allowed-tools: Bash, Read
+---
+```
+New:
 ```
 ---
 name: sdd-plan
@@ -363,36 +226,17 @@ description: Use when a feature spec exists and needs to become a technical impl
 ---
 ```
 
-New:
+**EDIT sdd-research — remove allowed-tools:**
+
+Old:
 ```
 ---
-name: sdd-plan
-description: Use when a feature spec exists and needs to become a technical implementation plan
+name: sdd-research
+description: Use when a spec has unresolved technology choices, performance targets, security requirements, or external integrations that need investigation before planning
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-plan/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
----
-
-### [P] Task 10 — sdd-research: add allowed-tools
-
-**File:** `skills/sdd-research/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-research/SKILL.md
-```
-Expected: no output
-
-**EDIT — replace frontmatter block:**
-
-Old:
+New:
 ```
 ---
 name: sdd-research
@@ -400,36 +244,17 @@ description: Use when a spec has unresolved technology choices, performance targ
 ---
 ```
 
-New:
+**EDIT sdd-review — remove allowed-tools:**
+
+Old:
 ```
 ---
-name: sdd-research
-description: Use when a spec has unresolved technology choices, performance targets, security requirements, or external integrations that need investigation before planning
+name: sdd-review
+description: Use when a spec needs a completeness check before planning, or when implementation claims to be complete and needs spec-alignment validation
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-research/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
----
-
-### [P] Task 11 — sdd-review: add allowed-tools
-
-**File:** `skills/sdd-review/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-review/SKILL.md
-```
-Expected: no output
-
-**EDIT — replace frontmatter block:**
-
-Old:
+New:
 ```
 ---
 name: sdd-review
@@ -437,36 +262,17 @@ description: Use when a spec needs a completeness check before planning, or when
 ---
 ```
 
-New:
+**EDIT sdd-init — remove allowed-tools:**
+
+Old:
 ```
 ---
-name: sdd-review
-description: Use when a spec needs a completeness check before planning, or when implementation claims to be complete and needs spec-alignment validation
+name: sdd-init
+description: Use when starting a new project that has no CLAUDE.md and no docs/specs/ directory
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-review/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
----
-
-### [P] Task 12 — sdd-init: add allowed-tools
-
-**File:** `skills/sdd-init/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-init/SKILL.md
-```
-Expected: no output
-
-**EDIT — replace frontmatter block:**
-
-Old:
+New:
 ```
 ---
 name: sdd-init
@@ -474,43 +280,17 @@ description: Use when starting a new project that has no CLAUDE.md and no docs/s
 ---
 ```
 
-New:
+**EDIT sdd-execute — remove allowed-tools:**
+
+Old:
 ```
 ---
-name: sdd-init
-description: Use when starting a new project that has no CLAUDE.md and no docs/specs/ directory
+name: sdd-execute
+description: Use when a tasks.md exists and implementation should begin
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-init/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
----
-
-### [P] Task 13 — sdd-execute: add allowed-tools + fix broken integration table
-
-**File:** `skills/sdd-execute/SKILL.md`
-
-This task applies two changes atomically: the `allowed-tools` frontmatter addition and the table bug fix.
-
-**RED — verify both problems:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-execute/SKILL.md
-```
-Expected: no output
-
-```bash
-grep -n "> \*\*Note:\*\*" /Users/hllj/Projects/sdd-superpowers/skills/sdd-execute/SKILL.md
-```
-Expected: line number present (note block exists between table rows)
-
-**EDIT 1 — replace frontmatter block:**
-
-Old:
+New:
 ```
 ---
 name: sdd-execute
@@ -518,86 +298,17 @@ description: Use when a tasks.md exists and implementation should begin
 ---
 ```
 
-New:
+**EDIT using-git — remove allowed-tools:**
+
+Old:
 ```
 ---
-name: sdd-execute
-description: Use when a tasks.md exists and implementation should begin
+name: using-git
+description: Use when any git operation is needed in an SDD project — branch creation, commits, merge commit validation, or showing the convention
 allowed-tools: Bash, Read
 ---
 ```
-
-**EDIT 2 — fix broken integration table:**
-
-Old (the entire Integration section):
-```
-## Integration
-
-Required sub-skills during execution:
-
-| When | Sub-skill |
-|------|-----------|
-| Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
-| Dispatching a parallel task group (2+ tasks) | `sdd-superpowers:dispatching-parallel-agents` |
-| Per-task commits | `sdd-superpowers:using-git` |
-
-> **Note:** `sdd-superpowers:test-driven-development` is mandated for **implementer subagents** dispatched by `subagent-driven-development` — not invoked directly by the controller.
-| Phase boundary | `sdd-superpowers:requesting-code-review` |
-| Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
-| Task fails or behavior unexpected | `sdd-superpowers:systematic-debugging` |
-| About to claim done | `sdd-superpowers:verification-before-completion` |
-| All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
-| sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |
-```
-
 New:
-```
-## Integration
-
-Required sub-skills during execution:
-
-| When | Sub-skill |
-|------|-----------|
-| Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
-| Dispatching a parallel task group (2+ tasks) | `sdd-superpowers:dispatching-parallel-agents` |
-| Per-task commits | `sdd-superpowers:using-git` |
-| Phase boundary | `sdd-superpowers:requesting-code-review` |
-| Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
-| Task fails or behavior unexpected | `sdd-superpowers:systematic-debugging` |
-| About to claim done | `sdd-superpowers:verification-before-completion` |
-| All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
-| sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |
-
-> **Note:** `sdd-superpowers:test-driven-development` is mandated for **implementer subagents** dispatched by `subagent-driven-development` — not invoked directly by the controller.
-```
-
-**GREEN — verify both fixes:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/sdd-execute/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
-```bash
-grep -n "> \*\*Note:\*\*" /Users/hllj/Projects/sdd-superpowers/skills/sdd-execute/SKILL.md
-grep -n "finishing-a-development-branch" /Users/hllj/Projects/sdd-superpowers/skills/sdd-execute/SKILL.md
-```
-Expected: note line number is HIGHER than finishing-a-development-branch line number (note is after the table)
-
----
-
-### [P] Task 14 — using-git: add allowed-tools
-
-**File:** `skills/using-git/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/using-git/SKILL.md
-```
-Expected: no output
-
-**EDIT — replace frontmatter block:**
-
-Old:
 ```
 ---
 name: using-git
@@ -605,43 +316,17 @@ description: Use when any git operation is needed in an SDD project — branch c
 ---
 ```
 
-New:
+**EDIT systematic-debugging — remove allowed-tools:**
+
+Old:
 ```
 ---
-name: using-git
-description: Use when any git operation is needed in an SDD project — branch creation, commits, merge commit validation, or showing the convention
+name: systematic-debugging
+description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/using-git/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
----
-
-### [P] Task 15 — systematic-debugging: add allowed-tools + fix heading capitalisation
-
-**File:** `skills/systematic-debugging/SKILL.md`
-
-This task applies two changes atomically.
-
-**RED — verify both problems:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/systematic-debugging/SKILL.md
-```
-Expected: no output
-
-```bash
-grep "^## your" /Users/hllj/Projects/sdd-superpowers/skills/systematic-debugging/SKILL.md
-```
-Expected: `## your human partner's Signals You're Doing It Wrong`
-
-**EDIT 1 — replace frontmatter block:**
-
-Old:
+New:
 ```
 ---
 name: systematic-debugging
@@ -649,61 +334,9 @@ description: Use when encountering any bug, test failure, or unexpected behavior
 ---
 ```
 
-New:
-```
----
-name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
-allowed-tools: Bash, Read
----
-```
-
-**EDIT 2 — fix heading capitalisation:**
+**EDIT requesting-code-review — remove allowed-tools:**
 
 Old:
-```
-## your human partner's Signals You're Doing It Wrong
-```
-
-New:
-```
-## Your Human Partner's Signals You're Doing It Wrong
-```
-
-**GREEN — verify both fixes:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/systematic-debugging/SKILL.md
-```
-Expected: `allowed-tools: Bash, Read`
-
-```bash
-grep "^## [Yy]our" /Users/hllj/Projects/sdd-superpowers/skills/systematic-debugging/SKILL.md
-```
-Expected: `## Your Human Partner's Signals You're Doing It Wrong` (capital Y and H)
-
----
-
-### [P] Task 16 — requesting-code-review: add allowed-tools
-
-**File:** `skills/requesting-code-review/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/requesting-code-review/SKILL.md
-```
-Expected: no output
-
-**EDIT — replace frontmatter block:**
-
-Old:
-```
----
-name: requesting-code-review
-description: Use when completing a development phase or major feature, and before merging to main
----
-```
-
-New:
 ```
 ---
 name: requesting-code-review
@@ -711,36 +344,17 @@ description: Use when completing a development phase or major feature, and befor
 allowed-tools: Bash, Read
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/requesting-code-review/SKILL.md
+New:
 ```
-Expected: `allowed-tools: Bash, Read`
-
 ---
-
-### [P] Task 17 — test-driven-development: add allowed-tools (Bash only)
-
-**File:** `skills/test-driven-development/SKILL.md`
-
-**RED:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/test-driven-development/SKILL.md
+name: requesting-code-review
+description: Use when completing a development phase or major feature, and before merging to main
+---
 ```
-Expected: no output
 
-**EDIT — replace frontmatter block:**
+**EDIT test-driven-development — remove allowed-tools:**
 
 Old:
-```
----
-name: test-driven-development
-description: Use when implementing any feature or bugfix, before writing implementation code
----
-```
-
-New:
 ```
 ---
 name: test-driven-development
@@ -748,70 +362,94 @@ description: Use when implementing any feature or bugfix, before writing impleme
 allowed-tools: Bash
 ---
 ```
-
-**GREEN:**
-```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/test-driven-development/SKILL.md
+New:
 ```
-Expected: `allowed-tools: Bash` (Bash only — no Read)
+---
+name: test-driven-development
+description: Use when implementing any feature or bugfix, before writing implementation code
+---
+```
+
+**GREEN — verify all 10 have no allowed-tools:**
+```bash
+for f in skills/sdd-specify/SKILL.md skills/sdd-plan/SKILL.md skills/sdd-research/SKILL.md skills/sdd-review/SKILL.md skills/sdd-init/SKILL.md skills/sdd-execute/SKILL.md skills/using-git/SKILL.md skills/systematic-debugging/SKILL.md skills/requesting-code-review/SKILL.md skills/test-driven-development/SKILL.md; do
+  grep "allowed-tools" "/Users/hllj/Projects/sdd-superpowers/$f" && echo "FAIL: $f" || echo "OK: $f"
+done
+```
+Expected: all 10 print `OK`
 
 ---
 
-### Task 18 — Verify all Phase 2+3 changes
+## Phase 2 — Content Bug Fixes
+
+### [P] Task 7 — sdd-execute: fix broken integration table ✅ DONE
+
+**Completed in initial execution run** (before spec update).
+
+Verified: note block appears after the last table row.
+
+---
+
+### [P] Task 8 — systematic-debugging: fix heading capitalisation ✅ DONE
+
+**Completed in initial execution run** (before spec update).
+
+Verified: `## Your Human Partner's Signals You're Doing It Wrong`
+
+---
+
+## Task 9 — Final verification sweep
 
 ```bash
-for f in \
-  skills/sdd-specify/SKILL.md \
-  skills/sdd-plan/SKILL.md \
-  skills/sdd-research/SKILL.md \
-  skills/sdd-review/SKILL.md \
-  skills/sdd-init/SKILL.md \
-  skills/sdd-execute/SKILL.md \
-  skills/using-git/SKILL.md \
-  skills/systematic-debugging/SKILL.md \
-  skills/requesting-code-review/SKILL.md; do
-  echo "=== $f ==="; grep "allowed-tools" "/Users/hllj/Projects/sdd-superpowers/$f"
-done
+# Descriptions clean
+grep "^description:" \
+  /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md \
+  /Users/hllj/Projects/sdd-superpowers/skills/sdd-brainstorm/SKILL.md \
+  /Users/hllj/Projects/sdd-superpowers/skills/sdd-tasks/SKILL.md \
+  /Users/hllj/Projects/sdd-superpowers/skills/sdd-spec-update/SKILL.md \
+  /Users/hllj/Projects/sdd-superpowers/skills/verification-before-completion/SKILL.md
 ```
-Expected: each file shows `allowed-tools: Bash, Read`
+Expected — none of these phrases appear:
+- "establishes skill invocation order"
+- "2-3 directions"
+- "checkboxed task list" / "after sdd-plan" / "before sdd-execute"
+- "assess impact, version the spec"
+- "run the verification command"
 
 ```bash
-grep "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/test-driven-development/SKILL.md
+# user-invocable on sdd-workflow
+grep "user-invocable" /Users/hllj/Projects/sdd-superpowers/skills/sdd-workflow/SKILL.md
 ```
-Expected: `allowed-tools: Bash`
+Expected: `user-invocable: false`
 
-**Confirm skills that must NOT have allowed-tools:**
 ```bash
-for f in \
-  skills/sdd-workflow/SKILL.md \
-  skills/sdd-spec-update/SKILL.md \
-  skills/subagent-driven-development/SKILL.md \
-  skills/dispatching-parallel-agents/SKILL.md \
-  skills/receiving-code-review/SKILL.md \
-  skills/finishing-a-development-branch/SKILL.md; do
-  echo "=== $f ==="; grep "allowed-tools" "/Users/hllj/Projects/sdd-superpowers/$f" || echo "  (absent — correct)"
-done
+# No allowed-tools anywhere in any skill
+grep -r "allowed-tools" /Users/hllj/Projects/sdd-superpowers/skills/
 ```
-Expected: all 6 print `(absent — correct)`
+Expected: no output
 
-**Confirm sdd-execute table fix:**
 ```bash
+# sdd-execute table fix
 grep -n "finishing-a-development-branch\|Note:" /Users/hllj/Projects/sdd-superpowers/skills/sdd-execute/SKILL.md
 ```
-Expected: `finishing-a-development-branch` line number < `Note:` line number
+Expected: `finishing-a-development-branch` line < `Note:` line
 
-**Confirm systematic-debugging heading fix:**
 ```bash
-grep "^## [A-Z]" /Users/hllj/Projects/sdd-superpowers/skills/systematic-debugging/SKILL.md | grep -i "partner"
+# systematic-debugging heading fix
+grep "^## [Yy]our" /Users/hllj/Projects/sdd-superpowers/skills/systematic-debugging/SKILL.md
 ```
 Expected: `## Your Human Partner's Signals You're Doing It Wrong`
 
 ---
 
-### Task 19 — Commit Phase 2+3
+## Task 10 — Commit all changes
 
 ```bash
-cd /Users/hllj/Projects/sdd-superpowers && git add \
+git add \
+  skills/sdd-brainstorm/SKILL.md \
+  skills/sdd-tasks/SKILL.md \
+  skills/sdd-spec-update/SKILL.md \
+  skills/verification-before-completion/SKILL.md \
   skills/sdd-specify/SKILL.md \
   skills/sdd-plan/SKILL.md \
   skills/sdd-research/SKILL.md \
@@ -821,20 +459,18 @@ cd /Users/hllj/Projects/sdd-superpowers && git add \
   skills/using-git/SKILL.md \
   skills/systematic-debugging/SKILL.md \
   skills/requesting-code-review/SKILL.md \
-  skills/test-driven-development/SKILL.md
-git commit -m "feat(skills): add allowed-tools frontmatter and fix two content bugs"
+  skills/test-driven-development/SKILL.md \
+  docs/specs/015-skills-frontmatter-description-refinement/
+git commit -m "fix(skills): description CSO fixes, user-invocable on sdd-workflow, content bug fixes"
 ```
-
-Expected: commit created, 10 files changed.
 
 ---
 
 ## Done Criteria
 
-- [ ] All 5 description fields contain only triggering conditions (no workflow leaks)
+- [ ] All 5 CSO-violating descriptions corrected
 - [ ] `sdd-workflow` has `user-invocable: false`
-- [ ] 12 skills have `allowed-tools: Bash, Read`; `test-driven-development` has `allowed-tools: Bash`
-- [ ] 6 skills have no `allowed-tools` field
+- [ ] No `allowed-tools` field exists in any skill
 - [ ] `sdd-execute` integration table has no `> Note:` block between rows
 - [ ] `systematic-debugging` heading is `## Your Human Partner's Signals You're Doing It Wrong`
-- [ ] 2 commits on branch `015-skills-frontmatter-description-refinement`
+- [ ] Single clean commit on branch `015-skills-frontmatter-description-refinement`

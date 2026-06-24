@@ -1,7 +1,6 @@
 ---
 name: sdd-brainstorm
 description: Use when an idea is fuzzy, exploratory, or has competing approaches that need design exploration before specification
-allowed-tools: Bash, Read
 ---
 
 # SDD: Brainstorm
