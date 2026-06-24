@@ -6,13 +6,13 @@ loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review
 # Tech Stack
 
 ## Languages
-Bash (primary), Markdown
+Bash (hook scripts, test harness) — primary implementation language for all automation
 
 ## Frameworks
-Claude Code superpowers plugin system — skills are markdown files read by the Skill tool; hooks are shell scripts
+Claude Code plugin framework (superpowers) — skills are markdown files read by the Skill tool; hooks are shell scripts registered in hooks/hooks.json
 
 ## Infrastructure
-No server infrastructure — runs entirely inside Claude Code sessions (local Claude Code CLI / desktop app / IDE extension)
+No external infrastructure — runs entirely within Claude Code sessions; hooks execute as subprocesses via the Claude Code harness
 
 ## Package Manager
-No package manager — plugin distributed via `.claude-plugin/` directory; installed by cloning the repo
+None — no compiled dependencies; jq required at runtime for JSON processing in hooks

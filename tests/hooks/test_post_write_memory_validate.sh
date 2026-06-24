@@ -59,5 +59,24 @@ INPUT=$(make_input "$TMP" "$TMP/docs/specs/001-test/spec.md")
 OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
 assert_empty "$OUTPUT" "FR-6 must-not: silent for non-memory writes"
 
+# FR-6 whitelist: foundation.md silenced
+echo "# Foundation" > "$TMP/memory/foundation.md"
+INPUT=$(make_input "$TMP" "$TMP/memory/foundation.md")
+OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_empty "$OUTPUT" "FR-6 whitelist: silent for foundation.md"
+
+# FR-6 whitelist: MEMORY.md silenced
+echo "# Memory" > "$TMP/memory/MEMORY.md"
+INPUT=$(make_input "$TMP" "$TMP/memory/MEMORY.md")
+OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_empty "$OUTPUT" "FR-6 whitelist: silent for MEMORY.md"
+
+# FR-6 whitelist: steering file silenced
+mkdir -p "$TMP/memory/steering"
+echo "# Tech Stack" > "$TMP/memory/steering/tech-stack.md"
+INPUT=$(make_input "$TMP" "$TMP/memory/steering/tech-stack.md")
+OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_empty "$OUTPUT" "FR-6 whitelist: silent for steering file"
+
 rm -rf "$TMP"
 summarize

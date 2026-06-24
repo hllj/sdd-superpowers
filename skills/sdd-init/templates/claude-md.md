@@ -1,5 +1,5 @@
 <!-- sdd-init: generated -->
-# SDD Superpowers
+# [Project Name]
 
 Before starting work, invoke `sdd-superpowers:sdd-workflow`.
 
