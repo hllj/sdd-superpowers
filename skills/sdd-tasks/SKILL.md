@@ -1,6 +1,7 @@
 ---
 name: sdd-tasks
-description: Use when an implementation plan exists and needs to become an ordered, checkboxed task list — after sdd-plan and before sdd-execute
+description: Use when an implementation plan is approved and needs to be broken down into executable tasks
+allowed-tools: Bash, Read
 ---
 
 # SDD: Tasks

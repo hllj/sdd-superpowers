@@ -1,6 +1,7 @@
 ---
 name: sdd-workflow
-description: Use when starting any conversation in an SDD project — establishes skill invocation order
+description: Use when starting any conversation in an SDD project
+user-invocable: false
 ---
 
 <SUBAGENT-STOP>
