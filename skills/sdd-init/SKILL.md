@@ -7,6 +7,14 @@ description: Use when starting a new project that has no CLAUDE.md and no docs/s
 
 ## Overview
 
+<examples>
+<example>
+<context>A project directory exists with a CLAUDE.md and docs/specs/ directory already set up.</context>
+<correct>Do NOT invoke sdd-init — the project foundation already exists. Use sdd-specify to start a new feature.</correct>
+<incorrect>Run sdd-init anyway to "refresh" the foundation — it will overwrite existing steering files and memory entries.</incorrect>
+</example>
+</examples>
+
 Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `memory/foundation.md`, auto-generates steering files in `memory/steering/`, and scaffolds `docs/specs/`, `CLAUDE.md`, and `docs/git-convention.md`. No feature work begins before the foundation file is approved.
 
 ## When to Use
@@ -46,3 +54,14 @@ Do NOT create any feature specs, plans, or code until the foundation file is app
 </HARD-GATE>
 
 See [reference.md](reference.md) for the full initialisation procedure, Mission Charter ceremony, steering file templates, scaffold templates, and error scenarios.
+
+## Constraints
+
+- Does NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written
+- Does NOT overwrite an existing CLAUDE.md or memory/foundation.md without explicit user confirmation
+
+## Error Handling
+
+- **Project already has CLAUDE.md and docs/specs/**: Redirect to sdd-specify for new features — do not re-run init.
+- **User cannot answer a Mission Charter question**: Mark it [NEEDS CLARIFICATION] and continue; the foundation can be amended later via the Amendment Process.
+- **User requests gate bypass**: The gate is "no feature work before foundation approval." Explain that without a foundation there is no mission to validate features against. Offer to complete the four-question ceremony — it takes under ten minutes.

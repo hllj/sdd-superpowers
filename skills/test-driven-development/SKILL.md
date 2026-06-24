@@ -7,6 +7,19 @@ description: Use when implementing any feature or bugfix, before writing impleme
 
 ## Overview
 
+<examples>
+<example>
+<context>User says "let's add a sorting function to the list utility."</context>
+<correct>Invoke test-driven-development. Write the failing test for sort behaviour before touching the implementation file.</correct>
+<incorrect>Open the implementation file and write the sort function first because "the logic is straightforward."</incorrect>
+</example>
+<example>
+<context>User says "it's just a one-liner fix, I'll write the test after."</context>
+<correct>Stop. Write the failing test first, confirm it is red, then write the fix.</correct>
+<incorrect>Write the one-liner now and add the test retroactively — retroactive tests cannot prove the code was broken before the fix.</incorrect>
+</example>
+</examples>
+
 Write the test first. Watch it fail. Write minimal code to pass.
 
 **Core principle:** If you didn't watch the test fail, you don't know if it tests the right thing.
@@ -379,3 +392,15 @@ No exceptions without your human partner's permission.
 
 **What the spec provides:**
 The task prompt injected by the controller includes `spec.md` and the task text from `tasks.md`. Use these as the source of truth for what behaviors to test. A test that passes but doesn't cover a spec requirement is a gap — not a success.
+
+## Constraints
+
+- Does NOT write implementation code before a failing test exists for the behaviour being implemented
+- Does NOT accept "I'll write the test after" as a valid path — tests precede implementation unconditionally
+- Does NOT skip the red-phase verification step — a test that was never observed failing proves nothing
+
+## Error Handling
+
+- **No test framework configured**: Ask which testing framework and test runner to use before writing any test code.
+- **Implementation already started without a test**: Stop. Write a test that captures the current expected behaviour, confirm it passes, then proceed — do not retroactively justify skipped tests.
+- **User requests gate bypass**: The gate is "no implementation code before a failing test." Explain that skipping it means there is no evidence the code was broken before the fix. Offer to write the test first — it takes one step.

@@ -7,6 +7,14 @@ description: Use when receiving code review feedback, before implementing review
 
 ## Overview
 
+<examples>
+<example>
+<context>A code reviewer returns a finding: "the retry logic in fetch.ts is missing exponential backoff."</context>
+<correct>Invoke receiving-code-review. Triage the finding: verify it against the spec, confirm the current code, assess severity, then decide to implement, defer, or reject with rationale.</correct>
+<incorrect>Immediately implement the backoff change without triaging — the spec may not require it, making it scope creep.</incorrect>
+</example>
+</examples>
+
 Code review requires technical evaluation, not emotional performance. Verify before implementing. Ask before assuming. Technical correctness over social comfort.
 
 ## When to Use
@@ -47,3 +55,15 @@ Response pattern:
 Push back when suggestion breaks functionality, reviewer lacks context, violates YAGNI, or conflicts with prior architectural decisions. Use technical reasoning, not defensiveness.
 
 See [reference.md](reference.md) for source-specific handling (human partner vs. external reviewers), YAGNI check procedure, implementation ordering, pushback technique, and real examples.
+
+## Constraints
+
+- Does NOT implement review feedback without first verifying the finding against the spec and current code
+- Does NOT accept all findings uncritically — findings may be outside spec scope or based on misread code
+- Does NOT reject findings without documented rationale
+
+## Error Handling
+
+- **Feedback is ambiguous or references code that does not match current state**: Ask the reviewer for clarification before classifying or implementing.
+- **Finding conflicts with an approved spec decision**: Note the conflict; defer to the spec unless the user decides to update it via sdd-spec-update.
+- **User requests gate bypass**: The gate is "verify before implementing review feedback." Explain that unverified feedback may introduce scope creep or incorrect changes. Offer to triage one finding at a time.

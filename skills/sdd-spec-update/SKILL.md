@@ -11,6 +11,14 @@ description: Use when a user describes a change, addition, or correction to an a
 
 Safely integrate mid-flight changes into a running SDD workflow. Changes are classified by their downstream impact using a spec versioning scheme (MAJOR.MINOR.PATCH), and only the artifacts actually affected are updated. The spec remains the source of truth — all downstream documents derive from it.
 
+<examples>
+<example>
+<context>User says "we decided to drop the CSV export requirement — let's just remove it."</context>
+<correct>Invoke sdd-spec-update. Assess downstream impact, assign a version bump, update spec.md, and propagate changes to plan and tasks before removing any code.</correct>
+<incorrect>Delete the CSV export code and remove the relevant tasks from tasks.md without versioning the spec — the spec and implementation are now out of sync with no audit trail.</incorrect>
+</example>
+</examples>
+
 <HARD-GATE>
 Do NOT update any downstream artifact (plan, tasks, code) until:
 1. The change is fully understood — no ambiguity remains
@@ -98,3 +106,14 @@ After propagating changes:
 > "Spec updated to vX.Y.Z. [List updated artifacts]. Resuming from [next unaffected task / re-planning needed]. Run `sdd-superpowers:sdd-execute` (or `sdd-superpowers:sdd-plan`) to continue."
 
 See [reference.md](reference.md) for the full classification guide, per-artifact update procedures, spec version header format, and task resume rules.
+
+## Constraints
+
+- Does NOT update any downstream artifact (plan, tasks, code) until the spec change is fully understood and a version bump is assigned
+- Does NOT make scope changes without an impact assessment on existing plan and tasks
+
+## Error Handling
+
+- **Change scope is unclear**: Ask one clarifying question before assigning a version bump — never assume the extent of a change.
+- **Change conflicts with an already-completed task**: Surface the conflict to the user; offer options (revert the task, update the spec to reflect what was built, or add a new task to align).
+- **User requests gate bypass**: The gate is "no downstream changes before spec is versioned." Explain that un-versioned spec changes break traceability. Offer to do the version bump first — it is a one-line change.

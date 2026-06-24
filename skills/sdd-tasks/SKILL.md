@@ -11,6 +11,14 @@ description: Use when an implementation plan is approved and needs to be broken 
 
 Convert an implementation plan into a flat, ordered, executable task list with parallelization hints. Tasks are the atomic unit of SDD execution — each has unambiguous done criteria, complete code, and an exact verification command.
 
+<examples>
+<example>
+<context>plan.md was just written but the user has not yet reviewed or approved it.</context>
+<correct>Do NOT generate tasks yet. Present plan.md and wait for explicit approval before generating the task list.</correct>
+<incorrect>Generate tasks immediately after plan.md is saved — unreviewed plans produce task lists that encode unvalidated decisions.</incorrect>
+</example>
+</examples>
+
 <HARD-GATE>
 Do NOT generate tasks until ALL of the following are true:
 1. `plan.md` exists at `docs/specs/NNN-slug/plan.md`
@@ -82,3 +90,15 @@ Required sub-skills:
 After saving `tasks.md`, offer:
 
 > "Task list complete. Next: run `sdd-superpowers:sdd-execute` to begin implementation."
+
+## Constraints
+
+- Does NOT generate tasks until plan.md exists and the user has explicitly approved it in the current session
+- Does NOT generate tasks while spec.md status is Draft
+- Does NOT produce a task with a "TBD", "TODO", or "similar to above" placeholder
+
+## Error Handling
+
+- **Plan has TBD or placeholder items**: Halt. Resolve placeholders in plan.md before generating tasks — tasks derived from incomplete plans are also incomplete.
+- **Spec status is Draft**: Redirect to sdd-specify to obtain explicit approval before proceeding.
+- **User requests gate bypass**: The gate is "no tasks without an approved plan." Explain that tasks built on an unapproved plan encode unvalidated decisions into the executable checklist. Offer to review the plan first.

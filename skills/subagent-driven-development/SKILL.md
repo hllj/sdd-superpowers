@@ -5,6 +5,14 @@ description: Use when executing implementation plans with independent tasks in t
 
 # Subagent-Driven Development
 
+<examples>
+<example>
+<context>tasks.md has 8 tasks where task 4 depends on output from task 3, and task 7 depends on task 6.</context>
+<correct>Dispatch tasks 1–2 in parallel if independent, then task 3 sequentially, then task 4 after task 3 is confirmed complete — respecting the dependency chain throughout.</correct>
+<incorrect>Dispatch all 8 tasks concurrently — dependent tasks will fail or produce incorrect results when their prerequisites are not yet complete.</incorrect>
+</example>
+</examples>
+
 Execute plan by dispatching fresh subagent per task, with two-stage review after each: spec compliance review first, then code quality review.
 
 **Why subagents:** You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
@@ -288,3 +296,14 @@ Done!
 
 **Alternative workflow:**
 - `sdd-superpowers:sdd-execute` - Use for parallel worktree execution instead of same-session subagents
+
+## Constraints
+
+- Does NOT dispatch tasks that have sequential dependencies concurrently
+- Does NOT allow a subagent to inherit the main session's conversation history — each subagent receives only the context constructed for its specific task
+
+## Error Handling
+
+- **A subagent returns a failure**: Do not dispatch the next dependent task. Surface the failure to the user and decide whether to retry, fix the task definition, or debug first with systematic-debugging.
+- **Tasks appear parallelizable but share a file**: Identify the shared file; execute those tasks sequentially instead.
+- **User requests gate bypass**: The gate is "no concurrent dispatch for dependent tasks." Explain the failure mode. Offer to map out the dependency graph before dispatching.

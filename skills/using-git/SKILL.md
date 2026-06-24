@@ -9,6 +9,14 @@ description: Use when any git operation is needed in an SDD project — branch c
 
 ## Overview
 
+<examples>
+<example>
+<context>About to make the first commit on a new feature. User says "just commit everything."</context>
+<correct>Invoke using-git. Read docs/git-convention.md for the commit message format, stage specific named files (not git add -A blindly), and craft a Conventional Commits message.</correct>
+<incorrect>Run git add . && git commit -m "updates" — this violates the commit convention and may accidentally stage sensitive or unrelated files.</incorrect>
+</example>
+</examples>
+
 All SDD git operations run through this skill. It enforces the convention in `docs/git-convention.md` for every branch name and commit message. Two usage modes: direct invocation (user picks from a menu) or delegation (another skill passes a named operation and inputs).
 
 ## When to Use
@@ -33,3 +41,15 @@ All SDD git operations run through this skill. It enforces the convention in `do
 Convention file: `docs/git-convention.md` (YAML frontmatter with `branch_pattern`, `commit_format`, `allowed_types`). Missing file on new project → halt, run `sdd-superpowers:sdd-init`. Missing on existing project → offer 4-question creation dialogue.
 
 See [reference.md](reference.md) for convention loading detail, full operation procedures (A–D), error reference table, and worktrees guide.
+
+## Constraints
+
+- Does NOT create a commit without reading docs/git-convention.md first (or using Conventional Commits format if no convention file exists)
+- Does NOT use `git add -A` or `git add .` without reviewing what will be staged
+- Does NOT force-push to main/master
+
+## Error Handling
+
+- **No docs/git-convention.md found**: Default to Conventional Commits format (`type: description`) and note the missing convention file.
+- **Uncommitted changes exist on the wrong branch**: Halt. Help the user stash or move changes to the correct branch before committing.
+- **User requests gate bypass** (e.g. `--no-verify`): Explain what the hook does and why it exists. Only bypass if the user explicitly confirms they understand the consequence.

@@ -7,6 +7,19 @@ description: Use when encountering any bug, test failure, or unexpected behavior
 
 ## Overview
 
+<examples>
+<example>
+<context>User reports: "the export function crashes with a TypeError on null input."</context>
+<correct>Invoke systematic-debugging. Reproduce the failure, form hypotheses about the null propagation path, trace to root cause before proposing any code change.</correct>
+<incorrect>Immediately patch the null check at the crash site without tracing where the null originates — the root cause may be an upstream caller passing bad data.</incorrect>
+</example>
+<example>
+<context>User says "just patch line 42, that's clearly where it breaks."</context>
+<correct>Acknowledge the symptom at line 42, but run the diagnostic protocol first — the crash site is rarely the root cause.</correct>
+<incorrect>Add the patch at line 42 without investigation — symptom fixes mask the underlying bug and create regression risk.</incorrect>
+</example>
+</examples>
+
 Random fixes waste time and create new bugs. Quick patches mask underlying issues.
 
 **Core principle:** ALWAYS find root cause before attempting fixes. Symptom fixes are failure.
@@ -294,3 +307,15 @@ From debugging sessions:
 - Random fixes approach: 2-3 hours of thrashing
 - First-time fix rate: 95% vs 40%
 - New bugs introduced: Near zero vs common
+
+## Constraints
+
+- Does NOT propose or write a fix before root cause is established through the diagnostic protocol
+- Does NOT accept symptom location as root cause — the crash site and the origin of the fault are often different
+- Does NOT skip hypothesis formation and testing steps under time pressure
+
+## Error Handling
+
+- **No error message or reproduction steps provided**: Ask for the exact error output, stack trace, and steps to reproduce before beginning diagnosis.
+- **Root cause traces to a wide blast radius** (e.g. a shared utility used in many places): Surface the scope to the user before proposing a fix; do not auto-expand the change.
+- **User requests gate bypass**: The gate is "no fix before root cause." Explain that patching without diagnosis creates regression risk. Offer to run the diagnosis protocol — it is designed to be fast.

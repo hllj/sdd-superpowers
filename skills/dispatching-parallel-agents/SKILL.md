@@ -11,6 +11,14 @@ If you were dispatched as a subagent to execute a specific task, skip this skill
 
 ## Overview
 
+<examples>
+<example>
+<context>Three implementation tasks exist but all write to the same shared configuration file.</context>
+<correct>Identify the shared resource; execute the tasks sequentially to avoid write conflicts rather than dispatching them in parallel.</correct>
+<incorrect>Mark all three [P] and dispatch concurrently — concurrent writes to the same file produce race conditions and corrupted output.</incorrect>
+</example>
+</examples>
+
 Delegate independent tasks to specialized agents with isolated context. Each agent receives only what it needs — no session history — keeping them focused and results verifiable. Parallel dispatch turns N sequential tasks into 1 concurrent round.
 
 In SDD, this skill is invoked from within `sdd-superpowers:sdd-execute` when a task group in `tasks.md` has 2+ independent tasks that can be built concurrently without shared state.
@@ -70,3 +78,13 @@ See [reference.md](reference.md) for the full dispatch pattern, agent prompt tem
 - Fix issues with `sdd-superpowers:receiving-code-review` if reviews fail
 - Mark tasks complete in TodoWrite
 - Continue to next phase with `sdd-superpowers:sdd-execute`
+
+## Constraints
+
+- Does NOT dispatch tasks that share mutable state or write to the same file concurrently
+- Does NOT parallelize tasks that have sequential dependencies (task B requires task A's output)
+
+## Error Handling
+
+- **Tasks appear independent but share a common resource**: Identify the shared resource explicitly; execute those tasks sequentially instead.
+- **User requests gate bypass**: The gate is "no concurrent dispatch for tasks with shared state." Explain the race condition risk. Offer to map out which tasks are truly independent before dispatching.
