@@ -113,13 +113,13 @@ Append as the final section of the skill body.
 
 ---
 
-## Phase 0: Verification Script (Test-First)
+## Phase 0: Verification Script (Test-First) [DONE]
 
 **Implements:** FR-6 | **Satisfies:** AC-1.1, AC-2.1, AC-3.1, AC-4.1, AC-4.3
 
 ### 0.1 Write the verification script
 
-- [ ] Create `tests/016-verify-skill-structure.sh`:
+- [x] Create `tests/016-verify-skill-structure.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -223,12 +223,12 @@ fi
 
 ### 0.2 Run verification — expect FAIL
 
-- [ ] Run: `bash tests/016-verify-skill-structure.sh`
-- [ ] Expected: multiple FAIL lines (no skill has the required sections yet), exit code 1
+- [x] Run: `bash tests/016-verify-skill-structure.sh`
+- [x] Expected: multiple FAIL lines (no skill has the required sections yet), exit code 1
 
 ---
 
-## Phase 1: Phase 1 Skills — 2 Examples + Constraints + Error Handling
+## Phase 1: Phase 1 Skills — 2 Examples + Constraints + Error Handling [DONE]
 
 **Implements:** FR-1, FR-2, FR-4, FR-5 | **Satisfies:** AC-1.1, AC-1.2, AC-1.3, AC-3.1–AC-3.3, AC-4.1–AC-4.3
 
@@ -264,70 +264,70 @@ Each Phase 1 skill gets the same edit sequence:
 
 ### 1.1 `test-driven-development`
 
-- [ ] Check current line count: `wc -l skills/test-driven-development/SKILL.md` (currently 381)
-- [ ] Insert `<examples>` block (2 entries) after line containing `## Overview`
-- [ ] Append `## Constraints` section (3–4 "Does NOT" entries derived from TDD core principle)
-- [ ] Append `## Error Handling` section (3 entries per table above)
-- [ ] Verify line count: `wc -l skills/test-driven-development/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "test-driven-development"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/test-driven-development/SKILL.md` (currently 381)
+- [x] Insert `<examples>` block (2 entries) after line containing `## Overview`
+- [x] Append `## Constraints` section (3–4 "Does NOT" entries derived from TDD core principle)
+- [x] Append `## Error Handling` section (3 entries per table above)
+- [x] Verify line count: `wc -l skills/test-driven-development/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "test-driven-development"` — expect no FAIL
 
 ### 1.2 `systematic-debugging`
 
-- [ ] Check current line count: `wc -l skills/systematic-debugging/SKILL.md` (currently 296)
-- [ ] Insert `<examples>` block (2 entries) after `## Overview`
-- [ ] Append `## Constraints` section
-- [ ] Append `## Error Handling` section
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "systematic-debugging"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/systematic-debugging/SKILL.md` (currently 296)
+- [x] Insert `<examples>` block (2 entries) after `## Overview`
+- [x] Append `## Constraints` section
+- [x] Append `## Error Handling` section
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "systematic-debugging"` — expect no FAIL
 
 ### 1.3 `verification-before-completion`
 
-- [ ] Check current line count: `wc -l skills/verification-before-completion/SKILL.md` (currently 61)
-- [ ] Insert `<examples>` block (2 entries) after `## Overview`
-- [ ] Append `## Constraints` section
-- [ ] Append `## Error Handling` section
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "verification-before-completion"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/verification-before-completion/SKILL.md` (currently 61)
+- [x] Insert `<examples>` block (2 entries) after `## Overview`
+- [x] Append `## Constraints` section
+- [x] Append `## Error Handling` section
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "verification-before-completion"` — expect no FAIL
 
 ### 1.4 `sdd-specify`
 
-- [ ] Check current line count: `wc -l skills/sdd-specify/SKILL.md` (currently 56)
-- [ ] Insert `<examples>` block (2 entries) after `## Overview` (before existing `<HARD-GATE>`)
-- [ ] Append `## Constraints` section — must echo the HARD-GATE: "Does NOT write implementation code, scaffold any project, or make architectural decisions before a spec is approved."
-- [ ] Append `## Error Handling` section
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-specify"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/sdd-specify/SKILL.md` (currently 56)
+- [x] Insert `<examples>` block (2 entries) after `## Overview` (before existing `<HARD-GATE>`)
+- [x] Append `## Constraints` section — must echo the HARD-GATE: "Does NOT write implementation code, scaffold any project, or make architectural decisions before a spec is approved."
+- [x] Append `## Error Handling` section
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-specify"` — expect no FAIL
 
 ### 1.5 `sdd-execute`
 
-- [ ] Check current line count: `wc -l skills/sdd-execute/SKILL.md` (currently 94)
-- [ ] Insert `<examples>` block (2 entries) after `## Overview`
-- [ ] Append `## Constraints` section — must echo the HARD-GATE: "Does NOT start implementation on main/master."
-- [ ] Append `## Error Handling` section
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-execute"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/sdd-execute/SKILL.md` (currently 94)
+- [x] Insert `<examples>` block (2 entries) after `## Overview`
+- [x] Append `## Constraints` section — must echo the HARD-GATE: "Does NOT start implementation on main/master."
+- [x] Append `## Error Handling` section
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-execute"` — expect no FAIL
 
 ### 1.6 `sdd-brainstorm`
 
-- [ ] Check current line count: `wc -l skills/sdd-brainstorm/SKILL.md` (currently 41)
-- [ ] Insert `<examples>` block (2 entries) after `## Overview` (before existing `<HARD-GATE>`)
-- [ ] Append `## Constraints` section — must echo the HARD-GATE: "Does NOT invoke sdd-specify, sdd-plan, or any implementation skill until the user has approved the design. Does NOT write code."
-- [ ] Append `## Error Handling` section
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-brainstorm"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/sdd-brainstorm/SKILL.md` (currently 41)
+- [x] Insert `<examples>` block (2 entries) after `## Overview` (before existing `<HARD-GATE>`)
+- [x] Append `## Constraints` section — must echo the HARD-GATE: "Does NOT invoke sdd-specify, sdd-plan, or any implementation skill until the user has approved the design. Does NOT write code."
+- [x] Append `## Error Handling` section
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-brainstorm"` — expect no FAIL
 
 ### 1.7 `requesting-code-review`
 
-- [ ] Check current line count: `wc -l skills/requesting-code-review/SKILL.md` (currently 74)
-- [ ] Insert `<examples>` block (2 entries) after `## Overview`
-- [ ] Append `## Constraints` section
-- [ ] Append `## Error Handling` section
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "requesting-code-review"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/requesting-code-review/SKILL.md` (currently 74)
+- [x] Insert `<examples>` block (2 entries) after `## Overview`
+- [x] Append `## Constraints` section
+- [x] Append `## Error Handling` section
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "requesting-code-review"` — expect no FAIL
 
 ---
 
-## Phase 2: Phase 2 Skills — 1 Example + Constraints + Error Handling
+## Phase 2: Phase 2 Skills — 1 Example + Constraints + Error Handling [DONE]
 
 **Implements:** FR-1, FR-3, FR-4, FR-5 | **Satisfies:** AC-2.1, AC-2.2, AC-3.1–AC-3.3, AC-4.1–AC-4.3
 
@@ -380,12 +380,12 @@ Where a skill has additional common failure modes, add them. Specifics:
 
 For each of the 12 Phase 2 skills:
 
-- [ ] Check current line count: `wc -l skills/<skill-name>/SKILL.md`
-- [ ] Insert `<examples>` block (1 entry) after `## Overview`
-- [ ] Append `## Constraints` section (matching HARD-GATE language where a gate exists)
-- [ ] Append `## Error Handling` section (per-skill entries from table above)
-- [ ] Verify line count ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "<skill-name>"` — expect no FAIL
+- [x] Check current line count: `wc -l skills/<skill-name>/SKILL.md`
+- [x] Insert `<examples>` block (1 entry) after `## Overview`
+- [x] Append `## Constraints` section (matching HARD-GATE language where a gate exists)
+- [x] Append `## Error Handling` section (per-skill entries from table above)
+- [x] Verify line count ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "<skill-name>"` — expect no FAIL
 
 Skills in order: `dispatching-parallel-agents`, `finishing-a-development-branch`,
 `receiving-code-review`, `sdd-init`, `sdd-plan`, `sdd-research`, `sdd-review`,
@@ -393,16 +393,16 @@ Skills in order: `dispatching-parallel-agents`, `finishing-a-development-branch`
 
 ---
 
-## Phase 3: Integration Verification
+## Phase 3: Integration Verification [DONE]
 
 **Implements:** All FRs | **Satisfies:** All ACs
 
-- [ ] Run full verification: `bash tests/016-verify-skill-structure.sh`
-- [ ] Expected output: `All 19 skills pass structural validation.` — exit code 0
-- [ ] Confirm no `<HARD-GATE>` block is contradicted: for each skill with gates, verify the
+- [x] Run full verification: `bash tests/016-verify-skill-structure.sh`
+- [x] Expected output: `All 19 skills pass structural validation.` — exit code 0
+- [x] Confirm no `<HARD-GATE>` block is contradicted: for each skill with gates, verify the
   `## Constraints` entry uses the same prohibitive verb as the gate's "Do NOT" clause
-- [ ] Confirm `## Error Handling` is the final section in every skill (no content after it)
-- [ ] Confirm `## Constraints` is the second-to-last section in every skill
+- [x] Confirm `## Error Handling` is the final section in every skill (no content after it)
+- [x] Confirm `## Constraints` is the second-to-last section in every skill
 
 ---
 

@@ -14,7 +14,7 @@
 
 ### T001 Write verification script
 
-- [ ] **T001** Create `tests/016-verify-skill-structure.sh` with this exact content:
+- [x] **T001** Create `tests/016-verify-skill-structure.sh` with this exact content:
 
 ```bash
 #!/usr/bin/env bash
@@ -98,15 +98,15 @@ else
 fi
 ```
 
-- [ ] `chmod +x tests/016-verify-skill-structure.sh`
+- [x] `chmod +x tests/016-verify-skill-structure.sh`
 
 ---
 
 ### T002 Run verification script — confirm RED
 
-- [ ] **T002** Run: `bash tests/016-verify-skill-structure.sh`
-- [ ] Expected: Multiple `FAIL [skill-name]: missing ...` lines, exit code 1
-- [ ] If output shows `All 19 skills pass structural validation.` — stop and investigate (skills already modified unexpectedly)
+- [x] **T002** Run: `bash tests/016-verify-skill-structure.sh`
+- [x] Expected: Multiple `FAIL [skill-name]: missing ...` lines, exit code 1
+- [x] If output shows `All 19 skills pass structural validation.` — stop and investigate (skills already modified unexpectedly)
 
 ---
 
@@ -118,7 +118,7 @@ fi
 
 ### T003 `[P]` Edit `test-driven-development/SKILL.md`
 
-- [ ] **T003** Insert after the line `## Overview` in `skills/test-driven-development/SKILL.md`:
+- [x] **T003** Insert after the line `## Overview` in `skills/test-driven-development/SKILL.md`:
 
 ```markdown
 <examples>
@@ -135,7 +135,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/test-driven-development/SKILL.md`:
+- [x] Append to end of `skills/test-driven-development/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -151,14 +151,14 @@ fi
 - **User requests gate bypass**: The gate is "no implementation code before a failing test." Explain that skipping it means there is no evidence the code was broken before the fix. Offer to write the test first — it takes one step.
 ```
 
-- [ ] Verify: `wc -l skills/test-driven-development/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "test-driven-development"` — expect no output (no FAILs for this skill)
+- [x] Verify: `wc -l skills/test-driven-development/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "test-driven-development"` — expect no output (no FAILs for this skill)
 
 ---
 
 ### T004 `[P]` Edit `systematic-debugging/SKILL.md`
 
-- [ ] **T004** Insert after the line `## Overview` in `skills/systematic-debugging/SKILL.md`:
+- [x] **T004** Insert after the line `## Overview` in `skills/systematic-debugging/SKILL.md`:
 
 ```markdown
 <examples>
@@ -175,7 +175,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/systematic-debugging/SKILL.md`:
+- [x] Append to end of `skills/systematic-debugging/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -191,14 +191,14 @@ fi
 - **User requests gate bypass**: The gate is "no fix before root cause." Explain that patching without diagnosis creates regression risk. Offer to run the diagnosis protocol — it is designed to be fast.
 ```
 
-- [ ] Verify: `wc -l skills/systematic-debugging/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "systematic-debugging"` — expect no output
+- [x] Verify: `wc -l skills/systematic-debugging/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "systematic-debugging"` — expect no output
 
 ---
 
 ### T005 `[P]` Edit `verification-before-completion/SKILL.md`
 
-- [ ] **T005** Insert after the line `## Overview` in `skills/verification-before-completion/SKILL.md`:
+- [x] **T005** Insert after the line `## Overview` in `skills/verification-before-completion/SKILL.md`:
 
 ```markdown
 <examples>
@@ -215,7 +215,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/verification-before-completion/SKILL.md`:
+- [x] Append to end of `skills/verification-before-completion/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -231,14 +231,14 @@ fi
 - **User requests gate bypass**: The gate is "no completion claim without fresh evidence." Explain that claiming done without running tests means the claim cannot be trusted. Offer to run the suite — it is one command.
 ```
 
-- [ ] Verify: `wc -l skills/verification-before-completion/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "verification-before-completion"` — expect no output
+- [x] Verify: `wc -l skills/verification-before-completion/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "verification-before-completion"` — expect no output
 
 ---
 
 ### T006 `[P]` Edit `sdd-specify/SKILL.md`
 
-- [ ] **T006** Insert after the line `## Overview` in `skills/sdd-specify/SKILL.md` (before the existing `<HARD-GATE>` block):
+- [x] **T006** Insert after the line `## Overview` in `skills/sdd-specify/SKILL.md` (before the existing `<HARD-GATE>` block):
 
 ```markdown
 <examples>
@@ -255,7 +255,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-specify/SKILL.md`:
+- [x] Append to end of `skills/sdd-specify/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -271,14 +271,14 @@ fi
 - **User requests gate bypass**: The gate is "no planning or code before an approved spec." Explain that without a spec there is no source of truth for plan validation. Offer to write the spec — it is the fastest path to a trustworthy plan.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-specify/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-specify"` — expect no output
+- [x] Verify: `wc -l skills/sdd-specify/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-specify"` — expect no output
 
 ---
 
 ### T007 `[P]` Edit `sdd-execute/SKILL.md`
 
-- [ ] **T007** Insert after the line `## Overview` in `skills/sdd-execute/SKILL.md`:
+- [x] **T007** Insert after the line `## Overview` in `skills/sdd-execute/SKILL.md`:
 
 ```markdown
 <examples>
@@ -295,7 +295,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-execute/SKILL.md`:
+- [x] Append to end of `skills/sdd-execute/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -312,14 +312,14 @@ fi
 - **User requests gate bypass**: The gate is "no implementation on main/master." Explain the risk of implementing directly on main. Offer to create the feature branch first.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-execute/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-execute"` — expect no output
+- [x] Verify: `wc -l skills/sdd-execute/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-execute"` — expect no output
 
 ---
 
 ### T008 `[P]` Edit `sdd-brainstorm/SKILL.md`
 
-- [ ] **T008** Insert after the line `## Overview` in `skills/sdd-brainstorm/SKILL.md` (before the existing `<HARD-GATE>` block):
+- [x] **T008** Insert after the line `## Overview` in `skills/sdd-brainstorm/SKILL.md` (before the existing `<HARD-GATE>` block):
 
 ```markdown
 <examples>
@@ -336,7 +336,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-brainstorm/SKILL.md`:
+- [x] Append to end of `skills/sdd-brainstorm/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -352,14 +352,14 @@ fi
 - **User requests gate bypass**: The gate is "no sdd-specify or implementation before design approval." Explain that without an approved design, the spec will reflect the first approach considered rather than the best one. Offer to complete the design review — it is a short approval step.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-brainstorm/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-brainstorm"` — expect no output
+- [x] Verify: `wc -l skills/sdd-brainstorm/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-brainstorm"` — expect no output
 
 ---
 
 ### T009 `[P]` Edit `requesting-code-review/SKILL.md`
 
-- [ ] **T009** Insert after the line `## Overview` in `skills/requesting-code-review/SKILL.md`:
+- [x] **T009** Insert after the line `## Overview` in `skills/requesting-code-review/SKILL.md`:
 
 ```markdown
 <examples>
@@ -376,7 +376,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/requesting-code-review/SKILL.md`:
+- [x] Append to end of `skills/requesting-code-review/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -392,8 +392,8 @@ fi
 - **User requests gate bypass**: The gate is "structured review before merge." Explain that bypassing review is how regressions ship. Offer to dispatch the reviewer — it runs in the background and does not block other work.
 ```
 
-- [ ] Verify: `wc -l skills/requesting-code-review/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "requesting-code-review"` — expect no output
+- [x] Verify: `wc -l skills/requesting-code-review/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "requesting-code-review"` — expect no output
 
 ---
 
@@ -405,7 +405,7 @@ fi
 
 ### T010 `[P]` Edit `dispatching-parallel-agents/SKILL.md`
 
-- [ ] **T010** Insert after the line `## Overview` (or after the `<SUBAGENT-STOP>` block if Overview is absent) in `skills/dispatching-parallel-agents/SKILL.md`:
+- [x] **T010** Insert after the line `## Overview` (or after the `<SUBAGENT-STOP>` block if Overview is absent) in `skills/dispatching-parallel-agents/SKILL.md`:
 
 ```markdown
 <examples>
@@ -417,7 +417,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/dispatching-parallel-agents/SKILL.md`:
+- [x] Append to end of `skills/dispatching-parallel-agents/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -431,14 +431,14 @@ fi
 - **User requests gate bypass**: The gate is "no concurrent dispatch for tasks with shared state." Explain the race condition risk. Offer to map out which tasks are truly independent before dispatching.
 ```
 
-- [ ] Verify: `wc -l skills/dispatching-parallel-agents/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "dispatching-parallel-agents"` — expect no output
+- [x] Verify: `wc -l skills/dispatching-parallel-agents/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "dispatching-parallel-agents"` — expect no output
 
 ---
 
 ### T011 `[P]` Edit `finishing-a-development-branch/SKILL.md`
 
-- [ ] **T011** Insert after the line `## Overview` in `skills/finishing-a-development-branch/SKILL.md`:
+- [x] **T011** Insert after the line `## Overview` in `skills/finishing-a-development-branch/SKILL.md`:
 
 ```markdown
 <examples>
@@ -450,7 +450,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/finishing-a-development-branch/SKILL.md`:
+- [x] Append to end of `skills/finishing-a-development-branch/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -465,14 +465,14 @@ fi
 - **User requests gate bypass**: The gate is "tests must pass before integration." Explain that merging failing tests makes main broken for everyone. Offer to fix the failures first.
 ```
 
-- [ ] Verify: `wc -l skills/finishing-a-development-branch/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "finishing-a-development-branch"` — expect no output
+- [x] Verify: `wc -l skills/finishing-a-development-branch/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "finishing-a-development-branch"` — expect no output
 
 ---
 
 ### T012 `[P]` Edit `receiving-code-review/SKILL.md`
 
-- [ ] **T012** Insert after the line `## Overview` in `skills/receiving-code-review/SKILL.md`:
+- [x] **T012** Insert after the line `## Overview` in `skills/receiving-code-review/SKILL.md`:
 
 ```markdown
 <examples>
@@ -484,7 +484,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/receiving-code-review/SKILL.md`:
+- [x] Append to end of `skills/receiving-code-review/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -500,14 +500,14 @@ fi
 - **User requests gate bypass**: The gate is "verify before implementing review feedback." Explain that unverified feedback may introduce scope creep or incorrect changes. Offer to triage one finding at a time.
 ```
 
-- [ ] Verify: `wc -l skills/receiving-code-review/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "receiving-code-review"` — expect no output
+- [x] Verify: `wc -l skills/receiving-code-review/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "receiving-code-review"` — expect no output
 
 ---
 
 ### T013 `[P]` Edit `sdd-init/SKILL.md`
 
-- [ ] **T013** Insert after the line `## Overview` in `skills/sdd-init/SKILL.md`:
+- [x] **T013** Insert after the line `## Overview` in `skills/sdd-init/SKILL.md`:
 
 ```markdown
 <examples>
@@ -519,7 +519,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-init/SKILL.md`:
+- [x] Append to end of `skills/sdd-init/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -534,14 +534,14 @@ fi
 - **User requests gate bypass**: The gate is "no feature work before foundation approval." Explain that without a foundation there is no mission to validate features against. Offer to complete the four-question ceremony — it takes under ten minutes.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-init/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-init"` — expect no output
+- [x] Verify: `wc -l skills/sdd-init/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-init"` — expect no output
 
 ---
 
 ### T014 `[P]` Edit `sdd-plan/SKILL.md`
 
-- [ ] **T014** Insert after the line `## Overview` in `skills/sdd-plan/SKILL.md` (before the existing `<HARD-GATE>` block):
+- [x] **T014** Insert after the line `## Overview` in `skills/sdd-plan/SKILL.md` (before the existing `<HARD-GATE>` block):
 
 ```markdown
 <examples>
@@ -553,7 +553,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-plan/SKILL.md`:
+- [x] Append to end of `skills/sdd-plan/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -569,14 +569,14 @@ fi
 - **User requests gate bypass**: The gate is "no plan without an approved spec." Explain that a plan built on a Draft spec will need rework when the spec changes. Offer to resolve the open items first — it is faster than reworking the plan.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-plan/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-plan"` — expect no output
+- [x] Verify: `wc -l skills/sdd-plan/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-plan"` — expect no output
 
 ---
 
 ### T015 `[P]` Edit `sdd-research/SKILL.md`
 
-- [ ] **T015** Insert after the line `## Overview` in `skills/sdd-research/SKILL.md`:
+- [x] **T015** Insert after the line `## Overview` in `skills/sdd-research/SKILL.md`:
 
 ```markdown
 <examples>
@@ -588,7 +588,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-research/SKILL.md`:
+- [x] Append to end of `skills/sdd-research/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -603,14 +603,14 @@ fi
 - **User requests gate bypass**: The gate is "investigate before deciding." Explain that planning around an uninvestigated choice produces plans that require revision. Offer to scope the research narrowly to the single highest-risk question.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-research/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-research"` — expect no output
+- [x] Verify: `wc -l skills/sdd-research/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-research"` — expect no output
 
 ---
 
 ### T016 `[P]` Edit `sdd-review/SKILL.md`
 
-- [ ] **T016** Insert after the line `## Overview` in `skills/sdd-review/SKILL.md`:
+- [x] **T016** Insert after the line `## Overview` in `skills/sdd-review/SKILL.md`:
 
 ```markdown
 <examples>
@@ -622,7 +622,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-review/SKILL.md`:
+- [x] Append to end of `skills/sdd-review/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -637,14 +637,14 @@ fi
 - **User requests gate bypass**: The gate is "spec-alignment validation before merge." Explain that unchecked criteria may mean the feature is incomplete. Offer to review one story at a time to keep it fast.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-review/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-review"` — expect no output
+- [x] Verify: `wc -l skills/sdd-review/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-review"` — expect no output
 
 ---
 
 ### T017 `[P]` Edit `sdd-spec-update/SKILL.md`
 
-- [ ] **T017** Insert after the line `## Overview` in `skills/sdd-spec-update/SKILL.md` (before the existing `<HARD-GATE>` block):
+- [x] **T017** Insert after the line `## Overview` in `skills/sdd-spec-update/SKILL.md` (before the existing `<HARD-GATE>` block):
 
 ```markdown
 <examples>
@@ -656,7 +656,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-spec-update/SKILL.md`:
+- [x] Append to end of `skills/sdd-spec-update/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -671,14 +671,14 @@ fi
 - **User requests gate bypass**: The gate is "no downstream changes before spec is versioned." Explain that un-versioned spec changes break traceability. Offer to do the version bump first — it is a one-line change.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-spec-update/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-spec-update"` — expect no output
+- [x] Verify: `wc -l skills/sdd-spec-update/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-spec-update"` — expect no output
 
 ---
 
 ### T018 `[P]` Edit `sdd-tasks/SKILL.md`
 
-- [ ] **T018** Insert after the line `## Overview` in `skills/sdd-tasks/SKILL.md` (before the existing `<HARD-GATE>` block):
+- [x] **T018** Insert after the line `## Overview` in `skills/sdd-tasks/SKILL.md` (before the existing `<HARD-GATE>` block):
 
 ```markdown
 <examples>
@@ -690,7 +690,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-tasks/SKILL.md`:
+- [x] Append to end of `skills/sdd-tasks/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -706,14 +706,14 @@ fi
 - **User requests gate bypass**: The gate is "no tasks without an approved plan." Explain that tasks built on an unapproved plan encode unvalidated decisions into the executable checklist. Offer to review the plan first.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-tasks/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-tasks"` — expect no output
+- [x] Verify: `wc -l skills/sdd-tasks/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-tasks"` — expect no output
 
 ---
 
 ### T019 `[P]` Edit `sdd-workflow/SKILL.md`
 
-- [ ] **T019** Insert after the line `## Overview` in `skills/sdd-workflow/SKILL.md`:
+- [x] **T019** Insert after the line `## Overview` in `skills/sdd-workflow/SKILL.md`:
 
 ```markdown
 <examples>
@@ -725,7 +725,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/sdd-workflow/SKILL.md`:
+- [x] Append to end of `skills/sdd-workflow/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -740,14 +740,14 @@ fi
 - **User requests gate bypass**: Name the specific gate the user wants to bypass; redirect to the appropriate SDD skill for the correct path forward.
 ```
 
-- [ ] Verify: `wc -l skills/sdd-workflow/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-workflow"` — expect no output
+- [x] Verify: `wc -l skills/sdd-workflow/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "sdd-workflow"` — expect no output
 
 ---
 
 ### T020 `[P]` Edit `subagent-driven-development/SKILL.md`
 
-- [ ] **T020** Insert after the line `# Subagent-Driven Development` heading (first heading after frontmatter) in `skills/subagent-driven-development/SKILL.md`:
+- [x] **T020** Insert after the line `# Subagent-Driven Development` heading (first heading after frontmatter) in `skills/subagent-driven-development/SKILL.md`:
 
 ```markdown
 <examples>
@@ -759,7 +759,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/subagent-driven-development/SKILL.md`:
+- [x] Append to end of `skills/subagent-driven-development/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -774,14 +774,14 @@ fi
 - **User requests gate bypass**: The gate is "no concurrent dispatch for dependent tasks." Explain the failure mode. Offer to map out the dependency graph before dispatching.
 ```
 
-- [ ] Verify: `wc -l skills/subagent-driven-development/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "subagent-driven-development"` — expect no output
+- [x] Verify: `wc -l skills/subagent-driven-development/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "subagent-driven-development"` — expect no output
 
 ---
 
 ### T021 `[P]` Edit `using-git/SKILL.md`
 
-- [ ] **T021** Insert after the line `## Overview` in `skills/using-git/SKILL.md`:
+- [x] **T021** Insert after the line `## Overview` in `skills/using-git/SKILL.md`:
 
 ```markdown
 <examples>
@@ -793,7 +793,7 @@ fi
 </examples>
 ```
 
-- [ ] Append to end of `skills/using-git/SKILL.md`:
+- [x] Append to end of `skills/using-git/SKILL.md`:
 
 ```markdown
 ## Constraints
@@ -809,8 +809,8 @@ fi
 - **User requests gate bypass** (e.g. `--no-verify`): Explain what the hook does and why it exists. Only bypass if the user explicitly confirms they understand the consequence.
 ```
 
-- [ ] Verify: `wc -l skills/using-git/SKILL.md` — must be ≤ 500
-- [ ] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "using-git"` — expect no output
+- [x] Verify: `wc -l skills/using-git/SKILL.md` — must be ≤ 500
+- [x] Run: `bash tests/016-verify-skill-structure.sh 2>&1 | grep "using-git"` — expect no output
 
 ---
 
@@ -822,7 +822,7 @@ fi
 
 ### T022 Run full verification — confirm GREEN
 
-- [ ] **T022** Verify AC-1.1, AC-2.1, AC-3.1, AC-4.1, AC-4.3:
+- [x] **T022** Verify AC-1.1, AC-2.1, AC-3.1, AC-4.1, AC-4.3:
   Run: `bash tests/016-verify-skill-structure.sh`
   Expected: `All 19 skills pass structural validation.` — exit code 0
   If any FAIL lines appear: fix the identified skill before continuing.
@@ -831,7 +831,7 @@ fi
 
 ### T023 Confirm HARD-GATE / Constraints alignment
 
-- [ ] **T023** Verify AC-3.3: For each skill that has a `<HARD-GATE>` block, confirm the `## Constraints` section uses the same prohibitive verb:
+- [x] **T023** Verify AC-3.3: For each skill that has a `<HARD-GATE>` block, confirm the `## Constraints` section uses the same prohibitive verb:
   ```bash
   for skill in sdd-brainstorm sdd-specify sdd-execute sdd-plan sdd-tasks sdd-spec-update sdd-init; do
     echo "=== $skill ==="
@@ -847,7 +847,7 @@ fi
 
 ### T024 Confirm section ordering in every skill
 
-- [ ] **T024** Verify `## Error Handling` is the final section and `## Constraints` is second-to-last:
+- [x] **T024** Verify `## Error Handling` is the final section and `## Constraints` is second-to-last:
   ```bash
   for skill_dir in skills/*/; do
     name=$(basename "$skill_dir")
@@ -870,7 +870,7 @@ fi
 
 ### T025 Quickstart spot-check
 
-- [ ] **T025** Spot-check a Phase 1 skill and a Phase 2 skill manually:
+- [x] **T025** Spot-check a Phase 1 skill and a Phase 2 skill manually:
   ```bash
   # Phase 1 spot-check: test-driven-development
   grep -A 20 "<examples>" skills/test-driven-development/SKILL.md | head -20
@@ -888,7 +888,7 @@ fi
 
 ### T026 Commit all changes
 
-- [ ] **T026** Invoke `sdd-superpowers:using-git` for the final commit. Stage and commit:
+- [x] **T026** Invoke `sdd-superpowers:using-git` for the final commit. Stage and commit:
   - All 19 modified `skills/*/SKILL.md` files
   - `tests/016-verify-skill-structure.sh`
   - `docs/specs/016-skill-best-practices-alignment/` (spec, plan, tasks, design)
