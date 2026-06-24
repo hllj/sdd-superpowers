@@ -6,15 +6,15 @@ loaded-by: sdd-plan, sdd-execute, sdd-review
 # Test Strategy
 
 ## Test Framework
-Smoke scenarios in `docs/specs/NNN-feature/quickstart.md` — manual or subagent-executed scenario walkthroughs (no automated test runner detected)
+Custom bash test harness — `tests/hooks/helpers.sh` provides `assert_contains`, `assert_empty`, `assert_equals`; each hook has a dedicated test file; `tests/hooks/run_all.sh` runs all suites
 
 ## Test Levels
-- Unit tests: skill reference.md step verification (read the file, confirm the block is present)
-- Integration tests: smoke scenarios in quickstart.md — invoke the skill end-to-end and observe output
-- E2E tests: full SDD workflow walkthrough from sdd-init to sdd-review on a real project
+- Unit tests: each hook script tested in isolation with fixture temp directories
+- Integration tests: `run_all.sh` verifies all 9 hook scripts together; quickstart scenarios in spec verify end-to-end hook behavior
+- E2E tests: N/A — skill behavior is verified by sdd-review Mode B coverage matrix, not automated
 
 ## Coverage Expectations
-Each feature spec must have at least 4 smoke scenarios: happy path, fast/flag variant, error detection, and skill-loading integration
+Every hook script must have a corresponding test file in `tests/hooks/`. Every new AC must have a test that goes RED before implementation and GREEN after.
 
 ## Mocking Policy
-No mocks — skills are invoked against real project state; test scenarios use real file reads and subagent dispatch
+Real filesystem fixtures only — no mocked file I/O. External commands (git, jq) are real binaries. Test isolation via `mktemp -d` temp directories cleaned up after each test.

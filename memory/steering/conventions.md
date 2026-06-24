@@ -6,19 +6,28 @@ loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-review
 # Conventions
 
 ## File Naming
-Skills: `skills/<skill-name>/SKILL.md` (overview) + `skills/<skill-name>/reference.md` (full procedure). Specs: `docs/specs/NNN-feature-name/spec.md`. Memory entries: `memory/<slug>.md` with YAML frontmatter.
+- Hook scripts: `kebab-case.sh` under `scripts/hooks/`
+- Test files: `test_snake_case.sh` under `tests/hooks/`
+- Skill files: `SKILL.md` and `reference.md` under `skills/<skill-name>/`
+- Memory files: `snake_case.md` under `memory/`
+- Spec artifacts: `spec.md`, `plan.md`, `tasks.md`, `research.md` under `docs/specs/NNN-slug/`
 
 ## Directory Structure
 ```
-skills/<skill-name>/   — SKILL.md + reference.md (+ optional scripts/, references/)
-docs/specs/NNN-name/   — spec.md, plan.md, tasks.md, quickstart.md
-memory/                — constitution.md + MEMORY.md index + *.md entries
-memory/steering/       — tech-stack.md, test-strategy.md, conventions.md, team-practices.md
-hooks/                 — shell scripts for lifecycle enforcement
+skills/         # One subdirectory per skill; SKILL.md + reference.md required
+scripts/hooks/  # Hook shell scripts + lib/ for shared utilities
+tests/hooks/    # One test file per hook; helpers.sh shared
+memory/         # Tier 2 memory entries + MEMORY.md index
+memory/steering/ # Tier 1 operational context files
+docs/specs/     # Feature specs organized by NNN-slug
 ```
 
 ## Code Style
-Markdown-first. Skill reference.md files use `##` for steps, `###` for sub-steps. Hard gates use `<HARD-GATE>` blocks. Templates use `{{placeholder}}` for fill-in values.
+- Bash: `set -euo pipefail` at top of every hook script; `shellcheck`-clean
+- Skills: markdown only — no code blocks with executable commands unless illustrative
+- Commits: Conventional Commits format per `docs/git-convention.md`
 
 ## Architectural Patterns
-Skill files are instructions read by Claude, not executed code. Each skill has a SKILL.md (loaded at invocation) and reference.md (loaded for full procedure). Steering files use YAML frontmatter `loaded-by:` to declare which skills incorporate them.
+- Skills describe WHAT to do; hooks enforce gates automatically
+- Every hook reads stdin JSON via `jq`; outputs JSON with `hookSpecificOutput` or `systemMessage`
+- Shared logic extracted to `scripts/hooks/lib/` (e.g., `detect-active-spec.sh`)

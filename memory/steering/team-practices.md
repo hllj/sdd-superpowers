@@ -6,10 +6,10 @@ loaded-by: sdd-plan, sdd-review, using-git
 # Team Practices
 
 ## Branching
-Pattern: `NNN-slug` (e.g. `013-sdd-init-redesign`). See `docs/git-convention.md` for full regex and allowed types.
+Pattern: `NNN-slug` (e.g. `014-tiered-memory-architecture`) — see `docs/git-convention.md` for full regex. One branch per spec; branch created by `sdd-tasks` after tasks.md is written.
 
 ## Code Review
-Skills use `sdd-review` for spec-alignment validation. Phase boundaries trigger `requesting-code-review`. Fixes from review go through `receiving-code-review`.
+Every feature goes through `sdd-review` Mode B (coverage matrix + test run) before merge. PRs created via `finishing-a-development-branch`. No direct pushes to master.
 
 ## Release Process
-Bump `.claude-plugin/plugin.json` + `marketplace.json` on every release. No automated release pipeline — tag on main after all tasks verified.
+Version bump in `.claude-plugin/plugin.json` and `marketplace.json` on every release. Tag on master after merge. Semantic versioning (MAJOR.MINOR.PATCH).
