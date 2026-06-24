@@ -39,6 +39,7 @@ NO COMPLETION CLAIM without fresh verification evidence
 | Skill | When to Use |
 |-------|-------------|
 | `sdd-workflow` | Start of any conversation — establishes mandatory skill invocation |
+| `sdd-init` | New project with no CLAUDE.md or docs/specs/ → mission charter ceremony + steering scaffold |
 | `sdd-brainstorm` | Idea is fuzzy/exploratory → dialogue + 2-3 approaches + design.md |
 | `sdd-specify` | Idea is clear, or design.md exists → structured PRD (spec.md) |
 | `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
@@ -101,7 +102,7 @@ Skills run only when Claude is asked to invoke them. Hooks run unconditionally, 
 
 | Event | Script | What it does | Why it exists |
 |-------|--------|-------------|---------------|
-| `SessionStart` | `session-start.sh` | Injects `memory/constitution.md`, `memory/MEMORY.md`, the active spec (first 50 lines), and all open tasks into every session's context | Claude would otherwise re-derive project conventions from scratch each session; this ensures it always starts with accurate project state |
+| `SessionStart` | `session-start.sh` | Injects `memory/foundation.md`, `memory/MEMORY.md`, the active spec (first 50 lines), and all open tasks into every session's context | Claude would otherwise re-derive project conventions from scratch each session; this ensures it always starts with accurate project state |
 | `PreToolUse` → Write on `plan.md` | `pre-write-plan-gate.sh` | Blocks writing `plan.md` unless a `spec.md` exists in the same folder **and** its status is `Approved` | Enforces the hard gate: **NO PLAN without an approved spec** |
 | `PreToolUse` → Write on `tasks.md` | `pre-write-tasks-gate.sh` | Blocks writing `tasks.md` unless `plan.md` exists in the same folder | Enforces the hard gate: **NO TASKS without a plan** |
 | `PreToolUse` → Write or Edit (any file) | `pre-write-edit-state.sh` | Records `had_writes: true` in a per-session temp file | Gives `stop.sh` a signal to emit end-of-session reminders only when files were actually changed — stays silent on read-only sessions |
@@ -147,14 +148,15 @@ These skills are invoked at specific SDD workflow points:
 
 ## Project Context (CLAUDE.md)
 
-When sdd-init creates `CLAUDE.md` for a new project, it includes pointers to context sources that Claude should read at the start of each conversation:
+When `sdd-init` creates `CLAUDE.md` for a new project, it wires up a three-tier memory architecture loaded automatically each session:
 
-| Source | What it contains |
-|--------|-----------------|
-| `memory/constitution.md` | Nine Articles — immutable architectural principles |
-| `memory/MEMORY.md` | Index of all persistent memory files |
-| `docs/git-convention.md` | Branch naming regex, commit format, allowed types |
-| `docs/specs/` | All feature specs, plans, and task lists |
+| Tier | Source | What it contains |
+|------|--------|-----------------|
+| 0 — Identity | `memory/foundation.md` | Mission charter — tech stack, test strategy, conventions, deployment; loaded every session via `SessionStart` hook |
+| 1 — Steering | `memory/steering/*.md` | Scoped operational context (e.g. `tech-stack.md`, `test-strategy.md`) loaded silently by the skills that need them |
+| 2 — Episodic | `memory/MEMORY.md` + individual files | Persistent decisions, feedback, and project state indexed for future sessions |
+| — | `docs/git-convention.md` | Branch naming regex, commit format, allowed types |
+| — | `docs/specs/` | All feature specs, plans, and task lists |
 
 This ensures Claude always starts with full project context rather than re-deriving conventions from scratch.
 
