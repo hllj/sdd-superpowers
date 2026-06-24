@@ -1,6 +1,6 @@
 ---
 name: verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing — run the verification command and read the output before making any success claim
+description: Use when about to claim work is complete, fixed, or passing
 ---
 
 # Verification Before Completion

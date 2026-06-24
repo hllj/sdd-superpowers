@@ -84,11 +84,11 @@ Required sub-skills during execution:
 | Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
 | Dispatching a parallel task group (2+ tasks) | `sdd-superpowers:dispatching-parallel-agents` |
 | Per-task commits | `sdd-superpowers:using-git` |
-
-> **Note:** `sdd-superpowers:test-driven-development` is mandated for **implementer subagents** dispatched by `subagent-driven-development` — not invoked directly by the controller.
 | Phase boundary | `sdd-superpowers:requesting-code-review` |
 | Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
 | Task fails or behavior unexpected | `sdd-superpowers:systematic-debugging` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
 | sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |
+
+> **Note:** `sdd-superpowers:test-driven-development` is mandated for **implementer subagents** dispatched by `subagent-driven-development` — not invoked directly by the controller.

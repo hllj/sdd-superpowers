@@ -1,6 +1,6 @@
 ---
 name: sdd-spec-update
-description: Use when a user describes a change, addition, or correction to an in-progress feature — after a spec exists but before or during implementation — to assess impact, version the spec, and propagate changes downstream
+description: Use when a user describes a change, addition, or correction to an approved spec — during or before implementation
 ---
 
 # SDD: Spec Update
