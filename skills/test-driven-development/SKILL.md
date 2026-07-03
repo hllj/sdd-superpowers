@@ -37,7 +37,7 @@ Write the test first. Watch it fail. Write minimal code to pass.
 **Exceptions (ask your human partner):**
 - Throwaway prototypes
 - Generated code
-- Configuration files
+- Configuration files (but NOT skill files or prose edits — see Integration below for the adapted cycle)
 
 Thinking "skip TDD just this once"? Stop. That's rationalization.
 
@@ -386,12 +386,26 @@ No exceptions without your human partner's permission.
 
 ## Integration (SDD)
 
-**Called by:**
-- `sdd-superpowers:sdd-execute` — mandated for every implementer subagent
-- `sdd-superpowers:subagent-driven-development` — mandated for every implementer subagent
+**Position in the SDD workflow:**
 
-**What the spec provides:**
-The task prompt injected by the controller includes `spec.md` and the task text from `tasks.md`. Use these as the source of truth for what behaviors to test. A test that passes but doesn't cover a spec requirement is a gap — not a success.
+```
+sdd-execute (controller)
+  └─ subagent-driven-development (orchestrator)
+       └─ implementer subagent ← YOU ARE HERE
+            └─ test-driven-development (this skill)
+```
+
+This skill is invoked by every **implementer subagent** dispatched from `sdd-superpowers:subagent-driven-development`. The controller (`sdd-execute`) mandates it in the subagent prompt — it is not invoked by the controller directly.
+
+**Called by:**
+- Implementer subagents dispatched from `sdd-superpowers:subagent-driven-development`
+- (Mandate injected by `sdd-superpowers:sdd-execute` into the subagent prompt via Step 3a)
+
+**What the work unit provides:**
+The subagent prompt includes `spec.md` and the work unit text (from `tasks.md` in task-driven mode, or from the relevant `plan.md` section in plan-driven mode). Use these as the source of truth for what behaviors to test. A test that passes but doesn't cover a spec requirement is a gap — not a success.
+
+**Prose/skill file adaptation:**
+When the work unit is a prose or Markdown edit (skill files, config, documentation), TDD adapts to verification assertions: (1) grep/check confirms old text exists before editing (RED), (2) apply the edit, (3) grep/check confirms new text is present (GREEN). This is not an exemption — it is TDD applied to non-executable artifacts.
 
 ## Constraints
 

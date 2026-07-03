@@ -3,6 +3,10 @@ name: sdd-tasks
 description: Use when an implementation plan is approved and needs to be broken down into executable tasks
 ---
 
+> **RETIRED — Feature 018**
+> This skill is no longer part of the standard SDD workflow. `sdd-execute` now drives implementation directly from `plan.md` when no `tasks.md` exists.
+> If you have an existing `tasks.md`, `sdd-execute` will continue to use it. For new features, go from plan approval directly to `sdd-execute`.
+
 # SDD: Tasks
 
 **Announce at start:** "I'm using the sdd-tasks skill to generate the task list."

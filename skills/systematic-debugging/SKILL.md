@@ -300,6 +300,33 @@ These techniques are part of systematic debugging and available in this director
 - **test-driven-development** - For creating failing test case (Phase 4, Step 1)
 - **verification-before-completion** - Verify fix worked before claiming success
 
+## Integration (SDD)
+
+**Position in the SDD workflow:**
+
+```
+sdd-execute (controller)
+  └─ subagent-driven-development (orchestrator)
+       └─ implementer subagent
+            ├─ test-driven-development (normal path)
+            └─ systematic-debugging ← YOU ARE HERE (when tests fail or BLOCKED)
+  └─ systematic-debugging ← also here (controller invokes when implementer is BLOCKED repeatedly)
+```
+
+**Invoked by:**
+- `sdd-superpowers:sdd-execute` — when an implementer subagent returns BLOCKED after context provision and model upgrade have failed (3+ fix attempts with no resolution); controller stops dispatch and invokes this skill before escalating to the user
+- Implementer subagents — when a test fails repeatedly with no clear fix path, or when behavior is unexpected during a work unit
+- User directly — via `sdd-superpowers:sdd-workflow` routing whenever "it's not working", "getting an error", or "unexpected behavior" is described
+
+**What follows this skill:**
+- `sdd-superpowers:test-driven-development` — Phase 4 of debugging produces a failing test that captures the root cause; TDD drives the fix from there
+- `sdd-superpowers:verification-before-completion` — after the fix is applied, fresh verification confirms the root cause is resolved and no regressions introduced
+- `sdd-superpowers:sdd-execute` — execution resumes once the blocker is cleared
+
+**Never:**
+- Propose or apply a fix before completing Phases 1–3 (root cause → pattern → hypothesis)
+- Resume `sdd-execute` dispatch until systematic-debugging has confirmed root cause and fix
+
 ## Real-World Impact
 
 From debugging sessions:
