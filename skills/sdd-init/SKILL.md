@@ -15,7 +15,7 @@ description: Use when starting a new project that has no CLAUDE.md and no docs/s
 </example>
 </examples>
 
-Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `memory/foundation.md`, auto-generates steering files in `memory/steering/`, and scaffolds `docs/specs/`, `CLAUDE.md`, and `docs/git-convention.md`. No feature work begins before the foundation file is approved.
+Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `.claude/memory/foundation.md`, auto-generates steering files in `.claude/memory/steering/`, and scaffolds `docs/specs/`, `CLAUDE.md`, and `docs/git-convention.md`. No feature work begins before the foundation file is approved.
 
 ## When to Use
 
@@ -29,11 +29,11 @@ Files created by sdd-init:
 
 | File | Purpose |
 |------|---------|
-| `memory/foundation.md` | Foundation file — mission statement + 3–5 project-specific principles |
-| `memory/steering/tech-stack.md` | Tech stack context — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review |
-| `memory/steering/test-strategy.md` | Test philosophy — loaded by sdd-plan, sdd-execute, sdd-review |
-| `memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
-| `memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |
+| `.claude/memory/foundation.md` | Foundation file — mission statement + 3–5 project-specific principles |
+| `.claude/memory/steering/tech-stack.md` | Tech stack context — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review |
+| `.claude/memory/steering/test-strategy.md` | Test philosophy — loaded by sdd-plan, sdd-execute, sdd-review |
+| `.claude/memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
+| `.claude/memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |
 | `docs/specs/.gitkeep` | Spec directory scaffold |
 | `CLAUDE.md` | SDD workflow instructions with Project Foundation pointer |
 | `docs/git-convention.md` | Branch naming + commit format rules |
@@ -44,8 +44,8 @@ Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-con
 
 1. Detect project context (subagent, silent) + check for existing foundation file
 2. Mission Charter: 4 questions via structured UI (Q1 mission, Q2 non-negotiables, Q3 failure modes, Q4 amendment) — Q3 skipped if `--fast`
-3. Draft foundation from answers → user approval gate → write `memory/foundation.md`
-4. Auto-generate 4 steering files from detected context → write `memory/steering/*.md`
+3. Draft foundation from answers → user approval gate → write `.claude/memory/foundation.md`
+4. Auto-generate 4 steering files from detected context → write `.claude/memory/steering/*.md`
 5. Create scaffold files (CLAUDE.md, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
 6. Initial commit → hand off to `sdd-superpowers:sdd-workflow`
 
@@ -58,7 +58,7 @@ See [reference.md](reference.md) for the full initialisation procedure, Mission 
 ## Constraints
 
 - Does NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written
-- Does NOT overwrite an existing CLAUDE.md or memory/foundation.md without explicit user confirmation
+- Does NOT overwrite an existing CLAUDE.md or .claude/memory/foundation.md without explicit user confirmation
 
 ## Error Handling
 
