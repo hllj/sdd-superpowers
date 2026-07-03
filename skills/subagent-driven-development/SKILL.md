@@ -28,16 +28,16 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 ```dot
 digraph when_to_use {
     "sdd-execute invoked?" [shape=diamond];
-    "Have tasks.md?" [shape=diamond];
+    "Have tasks.md or plan.md?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
     "Use subagent-driven-development" [shape=box];
-    "Run sdd-tasks first" [shape=box];
+    "Run sdd-plan first" [shape=box];
     "Re-order or split tightly coupled tasks" [shape=box];
 
-    "sdd-execute invoked?" -> "Have tasks.md?" [label="yes"];
-    "sdd-execute invoked?" -> "Run sdd-tasks first" [label="no — tasks.md missing"];
-    "Have tasks.md?" -> "Tasks mostly independent?" [label="yes"];
-    "Have tasks.md?" -> "Run sdd-tasks first" [label="no"];
+    "sdd-execute invoked?" -> "Have tasks.md or plan.md?" [label="yes"];
+    "sdd-execute invoked?" -> "Run sdd-plan first" [label="no — neither exists"];
+    "Have tasks.md or plan.md?" -> "Tasks mostly independent?" [label="yes"];
+    "Have tasks.md or plan.md?" -> "Run sdd-plan first" [label="no — neither exists"];
     "Tasks mostly independent?" -> "Use subagent-driven-development" [label="yes"];
     "Tasks mostly independent?" -> "Re-order or split tightly coupled tasks" [label="no"];
 }
@@ -71,12 +71,12 @@ digraph process {
         "Mark task complete in TodoWrite" [shape=box];
     }
 
-    "Read tasks.md + spec.md, extract all tasks with full text, note context, create TodoWrite" [shape=box];
+    "Read tasks.md (if exists) or derive work units from plan.md + spec.md; create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
     "Use finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
-    "Read tasks.md + spec.md, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
+    "Read tasks.md (if exists) or derive work units from plan.md + spec.md; create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer subagent asks questions?";
     "Implementer subagent asks questions?" -> "Answer questions, provide context" [label="yes"];
     "Answer questions, provide context" -> "Dispatch implementer subagent (./implementer-prompt.md)";
@@ -136,9 +136,9 @@ Before dispatching any subagent, read these files once and keep the content in c
 
 | File | Purpose |
 |------|---------|
-| `docs/specs/NNN-feature/tasks.md` | Source of all tasks — extract full text per task |
+| `docs/specs/NNN-feature/tasks.md` | Primary task source when present — extract full text per task (task-driven mode) |
+| `docs/specs/NNN-feature/plan.md` | Primary source when tasks.md is absent — derive work units from sections (plan-driven mode); always include as implementer context |
 | `docs/specs/NNN-feature/spec.md` | Authoritative spec — pass to spec reviewer as ground truth |
-| `docs/specs/NNN-feature/plan.md` | Architecture and contracts — include as implementer context |
 
 Never make subagents read these files themselves. Extract and inject the relevant content into each prompt.
 
@@ -153,9 +153,9 @@ Never make subagents read these files themselves. Extract and inject the relevan
 ```
 You: I'm using sdd-superpowers:subagent-driven-development to execute this plan.
 
-[Read docs/specs/NNN-feature/tasks.md and docs/specs/NNN-feature/spec.md once]
-[Extract all 5 tasks with full text and context]
-[Create TodoWrite with all tasks]
+[Read docs/specs/NNN-feature/tasks.md if it exists; otherwise read plan.md + spec.md and derive work units]
+[Extract all work units with full text and context]
+[Create TodoWrite with all work units]
 
 Task 1: Hook installation script
 
@@ -291,7 +291,7 @@ Done!
 
 **Required workflow skills:**
 - `sdd-superpowers:using-git` - For any git operation (branch creation, commits, convention validation)
-- `sdd-superpowers:sdd-plan` - Creates the plan and `sdd-superpowers:sdd-tasks` creates the tasks.md this skill executes
+- `sdd-superpowers:sdd-plan` - Creates the plan this skill executes from (tasks.md is optional; plan-driven mode derives work units from plan.md directly)
 - `sdd-superpowers:requesting-code-review` - Code review template for reviewer subagents
 - `sdd-superpowers:finishing-a-development-branch` - Complete development after all tasks
 
