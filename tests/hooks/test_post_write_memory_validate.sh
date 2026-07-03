@@ -78,5 +78,22 @@ INPUT=$(make_input "$TMP" "$TMP/.claude/memory/steering/tech-stack.md")
 OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
 assert_empty "$OUTPUT" "AC-3.3: silent for steering file"
 
+# AC-3.1 relative path: validate when file_path is bare relative (no leading /)
+# Claude Code may pass .claude/memory/foo.md without an absolute prefix
+echo "# No frontmatter" > "$TMP/.claude/memory/relative_bad.md"
+INPUT=$(make_input "$TMP" ".claude/memory/relative_bad.md")
+OUTPUT=$(CWD="$TMP" CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_contains "$OUTPUT" "frontmatter" "AC-3.1 relative path: validates bare .claude/memory/ path"
+
+# AC-3.3 whitelist relative path: foundation.md silenced with bare relative path
+INPUT=$(make_input "$TMP" ".claude/memory/foundation.md")
+OUTPUT=$(CWD="$TMP" CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_empty "$OUTPUT" "AC-3.3 relative path: silent for foundation.md with bare relative path"
+
+# AC-3.3 whitelist relative path: steering file silenced with bare relative path
+INPUT=$(make_input "$TMP" ".claude/memory/steering/tech-stack.md")
+OUTPUT=$(CWD="$TMP" CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT")
+assert_empty "$OUTPUT" "AC-3.3 relative path: silent for steering file with bare relative path"
+
 rm -rf "$TMP"
 summarize

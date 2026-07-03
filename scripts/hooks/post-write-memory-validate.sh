@@ -11,13 +11,21 @@ source "${SCRIPT_DIR}/lib/detect-active-spec.sh"
 
 detect_sdd_project "$CWD" || exit 0
 
+# Resolve bare relative paths against CWD so file existence checks work correctly
 case "$FILE_PATH" in
-  */.claude/memory/*.md) ;;
+  /*) ;;
+  *) FILE_PATH="${CWD}/${FILE_PATH}" ;;
+esac
+
+case "$FILE_PATH" in
+  .claude/memory/*.md|*/.claude/memory/*.md) ;;
   *) exit 0 ;;
 esac
 
 case "$FILE_PATH" in
-  */.claude/memory/foundation.md|*/.claude/memory/MEMORY.md|*/.claude/memory/steering/*.md) exit 0 ;;
+  .claude/memory/foundation.md|*/.claude/memory/foundation.md|\
+  .claude/memory/MEMORY.md|*/.claude/memory/MEMORY.md|\
+  .claude/memory/steering/*.md|*/.claude/memory/steering/*.md) exit 0 ;;
 esac
 
 [ -f "$FILE_PATH" ] || exit 0
