@@ -93,6 +93,8 @@ Provide the subagent with:
 - The spec file path: `docs/specs/<NNN>-<feature-slug>/spec.md`
 - The scene: "You are implementing [work unit title / task ID] as part of feature NNN-<slug>. Complete this work using the `sdd-superpowers:test-driven-development` skill (RED-GREEN-REFACTOR: write failing test → confirm it fails → write minimal implementation → confirm it passes → commit). Do NOT write implementation code before a failing test exists. Include the work unit title '[exact plan section heading]' in your commit message. Report DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, or BLOCKED."
 
+> **TDD for prose/config changes:** If the work unit is a prose or Markdown edit (skill files, config, documentation) rather than executable code, TDD still applies — adapted as verification assertions: (1) grep/check to confirm the old text exists before editing (RED — change not yet made), (2) apply the edit, (3) grep/check to confirm the new text is present (GREEN — change verified). The implementer subagent must still invoke `sdd-superpowers:test-driven-development` and follow this adapted cycle. "It's just prose" is not an exemption from the discipline.
+
 **3b. Handle implementer status**
 
 | Status | Action |
