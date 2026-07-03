@@ -5,9 +5,9 @@ Before starting work, invoke `sdd-superpowers:sdd-workflow`.
 
 ## Memory
 
-Memory lives in `memory/` — see `memory/MEMORY.md` for the index.
-Project identity is in `memory/foundation.md`.
-Steering files in `memory/steering/` are loaded by skills when relevant.
+Memory lives in `.claude/memory/` — see `.claude/memory/MEMORY.md` for the index.
+Project identity is in `.claude/memory/foundation.md`.
+Steering files in `.claude/memory/steering/` are loaded by skills when relevant.
 
 ## Hard Gates
 
