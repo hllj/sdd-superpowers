@@ -43,12 +43,22 @@ digraph when_to_use {
 }
 ```
 
-**Role:** This skill is invoked by `sdd-execute` (the controller) to orchestrate session-based execution. It is not a peer of `sdd-execute` — `sdd-execute` calls it.
+**Position in the SDD workflow:**
+
+```
+sdd-execute (controller) ← invokes this skill
+  └─ subagent-driven-development (orchestrator) ← YOU ARE HERE
+       └─ implementer subagent (one per work unit)
+            └─ test-driven-development (inside each implementer)
+```
+
+**Role:** This skill is invoked by `sdd-execute` (the controller) to orchestrate session-based execution. It is not a peer of `sdd-execute` — `sdd-execute` calls it. Users never invoke this skill directly.
 
 **How it works:**
-- Fresh subagent per task (no context pollution)
-- Two-stage review after each task: spec compliance first, then code quality
-- Faster iteration (no human-in-loop between tasks)
+- Reads `tasks.md` (task-driven mode) or derives work units from `plan.md` + `spec.md` (plan-driven mode)
+- Fresh subagent per work unit (no context pollution)
+- Two-stage review after each unit: spec compliance first, then code quality
+- Faster iteration (no human-in-loop between units)
 
 ## The Process
 
@@ -289,17 +299,21 @@ Done!
 
 ## Integration
 
-**Required workflow skills:**
-- `sdd-superpowers:using-git` - For any git operation (branch creation, commits, convention validation)
-- `sdd-superpowers:sdd-plan` - Creates the plan this skill executes from (tasks.md is optional; plan-driven mode derives work units from plan.md directly)
-- `sdd-superpowers:requesting-code-review` - Code review template for reviewer subagents
-- `sdd-superpowers:finishing-a-development-branch` - Complete development after all tasks
-
-**Subagents should use:**
-- `sdd-superpowers:test-driven-development` - Subagents follow TDD for each task
-
 **Invoked by:**
-- `sdd-superpowers:sdd-execute` — the controller skill that calls this skill to orchestrate session-based execution
+- `sdd-superpowers:sdd-execute` — the controller that reads `tasks.md` or `plan.md`, derives work units, and delegates orchestration to this skill
+
+**Each implementer subagent must use:**
+- `sdd-superpowers:test-driven-development` — TDD is mandated inside every implementer subagent; the controller injects this mandate into the subagent prompt
+
+**Skills used during orchestration:**
+- `sdd-superpowers:using-git` — for per-unit commits (convention validation, conflict detection)
+- `sdd-superpowers:requesting-code-review` — spec-compliance and code-quality review after each unit
+- `sdd-superpowers:receiving-code-review` — when a reviewer returns issues requiring fixes
+- `sdd-superpowers:finishing-a-development-branch` — after all units are complete and reviewed
+
+**Upstream (provides input to this skill):**
+- `sdd-superpowers:sdd-plan` — creates `plan.md` (plan-driven mode source of truth)
+- `sdd-superpowers:sdd-tasks` — creates `tasks.md` when it exists (task-driven mode, backward-compatible)
 
 ## Constraints
 
