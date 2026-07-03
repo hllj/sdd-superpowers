@@ -38,8 +38,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 | Idea is clear and ready to formalize | `sdd-superpowers:sdd-specify` |
 | Need to investigate tech options before committing | `sdd-superpowers:sdd-research` |
 | Spec exists, need an implementation plan | `sdd-superpowers:sdd-plan` |
-| Plan exists, need executable tasks | `sdd-superpowers:sdd-tasks` |
-| Ready to execute tasks with agents | `sdd-superpowers:sdd-execute` |
+| Plan approved, ready to implement | `sdd-superpowers:sdd-execute` |
 | User describes a change or addition to an approved spec | `sdd-superpowers:sdd-spec-update` |
 | Checking spec completeness before planning | `sdd-superpowers:sdd-review` |
 | Checking implementation matches spec after coding | `sdd-superpowers:sdd-review` |
@@ -61,8 +60,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 1. `sdd-superpowers:sdd-brainstorm` (optional) → `sdd-superpowers:sdd-specify` — establish WHAT to build
 2. `sdd-superpowers:sdd-research` (optional) — investigate HOW before committing
 3. `sdd-superpowers:sdd-plan` — establish the technical approach
-4. `sdd-superpowers:sdd-tasks` — establish the ORDER to build it
-5. `sdd-superpowers:sdd-execute` — actually build it
+4. `sdd-superpowers:sdd-execute` — actually build it
    - **At any point after spec approval:** `sdd-superpowers:sdd-spec-update` — integrate mid-flight changes before continuing
 6. `sdd-superpowers:sdd-review` + `sdd-superpowers:verification-before-completion` — confirm it was built correctly
 
@@ -142,12 +140,8 @@ The following tables map exact user phrases and agent-action signals to bundled 
 - A spec exists and implementation hasn't started
 - User says "plan this" or "how do we implement X"
 
-**`sdd-superpowers:sdd-tasks` is mandatory when:**
-- A plan exists and execution is imminent
-- User wants to track progress or dispatch agents
-
 **`sdd-superpowers:sdd-execute` is mandatory when:**
-- A tasks.md exists and user says "implement", "build", "execute"
+- A plan is approved and user says "implement", "build", "execute", or "let's start"
 
 **`sdd-superpowers:sdd-spec-update` is mandatory when:**
 - User describes a change, addition, or correction to an already-approved spec
@@ -183,7 +177,6 @@ The following tables map exact user phrases and agent-action signals to bundled 
 |---------|---------|--------|
 | "This is small, I'll just code it" | Small features become large ones. Specs prevent scope drift. | `sdd-superpowers:sdd-specify` first |
 | "The plan is obvious, skip planning" | Obvious plans surface hidden dependencies when written down. | `sdd-superpowers:sdd-plan` first |
-| "I know what tests to write" | Skipping tasks skips parallelization hints and spec traceability. | `sdd-superpowers:sdd-tasks` first |
 | "I need more context before invoking a skill" | Skill check comes BEFORE information gathering. Skills tell you HOW to gather it. | Invoke the relevant skill first |
 | "I'm sure it works" | Confidence is not evidence. Evidence is evidence. | `sdd-superpowers:verification-before-completion` |
 | "Tests pass so it's done" | Tests passing ≠ spec alignment. They verify code, not intent. | `sdd-superpowers:sdd-review` to confirm spec alignment |

@@ -80,8 +80,7 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | Clear idea | `sdd-superpowers:sdd-specify` |
 | Unresolved tech choices | `sdd-superpowers:sdd-research` |
 | Spec exists | `sdd-superpowers:sdd-plan` |
-| Plan exists | `sdd-superpowers:sdd-tasks` |
-| Tasks exist | `sdd-superpowers:sdd-execute` |
+| Plan approved | `sdd-superpowers:sdd-execute` |
 | **Change or addition to an approved spec** | `sdd-superpowers:sdd-spec-update` |
 | **All tasks complete** (post-implementation) | `sdd-superpowers:sdd-review` ← required before merge |
 | Spec completeness check (pre-plan) | `sdd-superpowers:sdd-review` |
@@ -97,7 +96,6 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 
 ```
 NO PLAN without an approved spec
-NO TASKS without a plan
 NO CODE without a prior failing test
 NO COMPLETION CLAIM without fresh verification evidence
 ```
@@ -114,7 +112,7 @@ The skill itself tells you which type it is.
 
 - Skipping `sdd-superpowers:sdd-brainstorm` — assess fuzziness first
 - Coding without a spec — `sdd-superpowers:sdd-specify` first
-- Updating tasks or plan without running `sdd-superpowers:sdd-spec-update` when user requests a change — spec must be versioned first
+- Updating plan without running `sdd-superpowers:sdd-spec-update` when user requests a change — spec must be versioned first
 - Claiming done without evidence — `sdd-superpowers:verification-before-completion`
 - Skipping `sdd-superpowers:sdd-review` after implementation — it is a required step before `finishing-a-development-branch`
 - Invoking this skill inside a subagent task — subagents skip this skill entirely
