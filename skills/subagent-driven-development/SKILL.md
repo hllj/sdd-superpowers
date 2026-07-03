@@ -298,8 +298,8 @@ Done!
 **Subagents should use:**
 - `sdd-superpowers:test-driven-development` - Subagents follow TDD for each task
 
-**Alternative workflow:**
-- `sdd-superpowers:sdd-execute` - Use for parallel worktree execution instead of same-session subagents
+**Invoked by:**
+- `sdd-superpowers:sdd-execute` — the controller skill that calls this skill to orchestrate session-based execution
 
 ## Constraints
 

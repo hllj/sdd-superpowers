@@ -391,7 +391,7 @@ No exceptions without your human partner's permission.
 - `sdd-superpowers:subagent-driven-development` — mandated for every implementer subagent
 
 **What the spec provides:**
-The task prompt injected by the controller includes `spec.md` and the task text from `tasks.md`. Use these as the source of truth for what behaviors to test. A test that passes but doesn't cover a spec requirement is a gap — not a success.
+The task prompt injected by the controller includes `spec.md` and the work unit text (from `tasks.md` in task-driven mode, or from the relevant `plan.md` section in plan-driven mode). Use these as the source of truth for what behaviors to test. A test that passes but doesn't cover a spec requirement is a gap — not a success.
 
 ## Constraints
 
