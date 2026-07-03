@@ -6,28 +6,24 @@ loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-review
 # Conventions
 
 ## File Naming
-- Hook scripts: `kebab-case.sh` under `scripts/hooks/`
-- Test files: `test_snake_case.sh` under `tests/hooks/`
-- Skill files: `SKILL.md` and `reference.md` under `skills/<skill-name>/`
-- Memory files: `snake_case.md` under `.claude/memory/`
-- Spec artifacts: `spec.md`, `plan.md`, `tasks.md`, `research.md` under `docs/specs/NNN-slug/`
+- Skills: `skills/<skill-name>/SKILL.md` + `reference.md` (and optional `templates/`)
+- Specs: `docs/specs/NNN-feature-slug/spec.md`
+- Plans: `docs/specs/NNN-feature-slug/plan.md`
+- Tasks: `docs/specs/NNN-feature-slug/tasks.md`
+- Hooks: `scripts/hooks/<event-name>.sh`
+- Tests: `tests/hooks/test_<hook-name>.sh`
 
 ## Directory Structure
 ```
-skills/         # One subdirectory per skill; SKILL.md + reference.md required
-scripts/hooks/  # Hook shell scripts + lib/ for shared utilities
-tests/hooks/    # One test file per hook; helpers.sh shared
-.claude/memory/          # Tier 2 memory entries + MEMORY.md index
-.claude/memory/steering/ # Tier 1 operational context files
-docs/specs/     # Feature specs organized by NNN-slug
+.claude/          Claude runtime (memory, settings, CLAUDE.md)
+docs/specs/       Feature specs, plans, tasks — one directory per feature
+skills/           Reusable skill definitions (SKILL.md + reference.md)
+scripts/hooks/    Bash hook scripts wired via settings.local.json
+tests/hooks/      Hook test suites and fixtures
 ```
 
 ## Code Style
-- Bash: `set -euo pipefail` at top of every hook script; `shellcheck`-clean
-- Skills: markdown only — no code blocks with executable commands unless illustrative
-- Commits: Conventional Commits format per `docs/git-convention.md`
+Bash: POSIX-compatible where possible; `set -e` in hook scripts; quote all variables
 
 ## Architectural Patterns
-- Skills describe WHAT to do; hooks enforce gates automatically
-- Every hook reads stdin JSON via `jq`; outputs JSON with `hookSpecificOutput` or `systemMessage`
-- Shared logic extracted to `scripts/hooks/lib/` (e.g., `detect-active-spec.sh`)
+Skills are prose instructions — no executable code. Hooks are the only runnable boundary. Each hook is a single-responsibility script.
