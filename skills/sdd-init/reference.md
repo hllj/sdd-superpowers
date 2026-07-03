@@ -150,6 +150,144 @@ Edit steering files freely — they are not subject to the amendment process.
 [From Q4]
 ```
 
+## Step 4: Rules Generation Phase
+
+### Step 4.1: Detect Tech Stack
+
+Use the Project Profile returned by the codebase exploration subagent in Step 1.5.
+
+If any manifest files were not yet read, read them now: `package.json` (dependencies, devDependencies, scripts), `pyproject.toml`, `requirements.txt`, `Cargo.toml`, `go.mod`, `composer.json`, `Gemfile`, `build.gradle`, `pom.xml`.
+
+Produce a **Stack Context** string: language(s), frameworks, test runners, linters, and notable tools. Example: "TypeScript, Next.js 14, Prisma, Jest, ESLint/Prettier".
+
+**Fallback:** If no manifest files are found and Step 1.5 returned "Empty project", ask exactly one question: "What is the primary language and framework for this project?" Use the answer as Stack Context. No further questions.
+
+### Step 4.2: Dispatch Research Subagents (Parallel)
+
+Announce: "Researching best practices, security rules, and automation patterns for your stack. Running three parallel lookups."
+
+Dispatch exactly **three subagents concurrently** (not sequentially), each receiving the Stack Context.
+
+**Subagent 1 — Conventions:**
+
+> "You are researching development best practices for: [Stack Context].
+>
+> Search the web for:
+> 1. Naming conventions (files, functions, variables, modules)
+> 2. Recommended project directory structure
+> 3. Linting and formatting best practices
+> 4. Commonly cited best practices (dos) for this stack
+> 5. Commonly cited anti-patterns (don'ts) to avoid
+>
+> Based on your research, propose a set of per-topic rule files for `.claude/rules/`. Infer the topics from the stack — do NOT use a fixed list. For each topic:
+> - `filename`: descriptive, e.g. `testing.md`, `api-design.md`
+> - `subdir` (optional): use when the stack has distinct layers, e.g. `frontend/`, `backend/`
+> - `rules`: 5–10 rules mixing best practices (✓ do), anti-patterns (✗ avoid), and conventions
+>
+> Return a structured list. Do NOT return raw web text — synthesize into actionable rules only."
+
+**Subagent 2 — Security & Permissions:**
+
+> "You are researching security and permission needs for: [Stack Context].
+>
+> Search the web for:
+> 1. Dangerous shell commands that should be blocked when working with this stack
+> 2. Safe CLI tools developers commonly allow in Claude Code for this stack
+> 3. Sensitive file patterns that should be protected
+> 4. Security anti-patterns specific to this stack
+>
+> Return a structured summary with exactly these keys:
+> - `allowedTools`: list of safe CLI command prefixes (e.g. `npm`, `jest`, `prisma`)
+> - `blockedTools`: dangerous commands to block (e.g. `rm -rf`, `DROP TABLE`)
+> - `ignorePatterns`: sensitive file/directory patterns (e.g. `.env`, `*.pem`, `secrets/`)
+>
+> Do NOT return raw web text — synthesize into concrete, actionable entries only."
+
+**Subagent 3 — Automation & Hooks:**
+
+> "You are researching automation and hook patterns for: [Stack Context].
+>
+> Search the web for:
+> 1. Common pre-commit checks for this stack (lint, format, type check)
+> 2. Test-on-push patterns
+> 3. Community-recommended Claude Code hook setups for this stack
+>
+> Return a structured list of hooks for Claude Code's `settings.json`. For each hook:
+> - `event`: one of `PreToolUse`, `PostToolUse`, `Stop`, `Notification`
+> - `matcher` (optional): tool name pattern to match
+> - `command`: the shell command to run
+>
+> Do NOT return raw web text — synthesize into concrete, actionable entries only."
+
+**Empty result handling:** If a subagent returns no usable results, mark its section as empty and note: "No [conventions / security / automation] rules could be generated — you can add these manually later." Init does not fail.
+
+### Step 4.3: User Review Flow
+
+After all three subagents complete, present proposals in two sections. Do NOT write any files during this step.
+
+**Section A — Rule files (from Subagent 1 results):**
+
+For each proposed `.claude/rules/` file, present in sequence:
+
+```
+Proposed: .claude/rules/[subdir/]filename.md
+
+[full proposed file content]
+
+Approve as-is, tweak the content, or skip this file? (approve / tweak / skip)
+```
+
+- **approve**: mark for writing; move to next file
+- **tweak**: show content in editable block; when user confirms, mark for writing; move to next file
+- **skip**: mark as skipped; do not prompt for this file again; move to next file
+
+**Section B — settings.json (from Subagents 2 and 3):**
+
+Merge both subagents' results into a single `settings.json` block:
+
+```json
+{
+  "allowedTools": ["<tool>", "..."],
+  "blockedTools": ["<tool>", "..."],
+  "ignorePatterns": ["<pattern>", "..."],
+  "hooks": [
+    {
+      "event": "<PreToolUse|PostToolUse|Stop|Notification>",
+      "matcher": "<optional>",
+      "command": "<shell command>"
+    }
+  ]
+}
+```
+
+**Conflict check:** Before presenting, check whether `settings.json` already exists at the project root.
+- If it exists: announce "A `settings.json` already exists. Choose: (merge) add proposed entries alongside existing ones, (overwrite) replace the file entirely, or (skip) leave the file unchanged."
+- If it does not exist: present the block directly.
+
+Then ask: "Approve this settings.json block, tweak it, or skip it? (approve / tweak / skip)"
+
+### Step 4.4: Write Approved Files (Atomic)
+
+Write all approved files in one uninterrupted pass — no user interaction between writes.
+
+1. **Rule files:** For each approved rule file:
+   - Create parent directory if needed (e.g. `mkdir -p .claude/rules/frontend/`)
+   - If a file already exists at that path: prompt "`.claude/rules/[path]` exists — overwrite or skip?" before writing
+   - Write the approved content
+
+2. **settings.json:**
+   - If approved with **merge**: read existing file, merge entries (union lists for arrays, no duplicates), write merged result
+   - If approved with **overwrite**: write proposed block as new file
+   - If approved with **no conflict**: write proposed block as new file
+   - If skipped: write nothing
+
+After writing, announce:
+> "Rules generation complete:
+> - `.claude/rules/` — [N] files written ([list filenames])
+> - `settings.json` — [written / merged / skipped]"
+
+Then: "Proceed to Step 5."
+
 ## Step 5: Scaffold Creation
 
 Create files in this order. Announce each file before creating it.
