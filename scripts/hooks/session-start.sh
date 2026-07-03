@@ -21,12 +21,12 @@ append_section() {
 ${content}"
 }
 
-if [ -f "${CWD}/memory/foundation.md" ]; then
-  append_section "memory/foundation.md" "$(cat "${CWD}/memory/foundation.md")"
+if [ -f "${CWD}/.claude/memory/foundation.md" ]; then
+  append_section ".claude/memory/foundation.md" "$(cat "${CWD}/.claude/memory/foundation.md")"
 fi
 
-if [ -f "${CWD}/memory/MEMORY.md" ]; then
-  append_section "memory/MEMORY.md" "$(cat "${CWD}/memory/MEMORY.md")"
+if [ -f "${CWD}/.claude/memory/MEMORY.md" ]; then
+  append_section ".claude/memory/MEMORY.md" "$(cat "${CWD}/.claude/memory/MEMORY.md")"
 fi
 
 ACTIVE_SPEC_DIR=$(detect_active_spec "$CWD")

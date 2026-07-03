@@ -12,12 +12,12 @@ source "${SCRIPT_DIR}/lib/detect-active-spec.sh"
 detect_sdd_project "$CWD" || exit 0
 
 case "$FILE_PATH" in
-  */memory/*.md) ;;
+  */.claude/memory/*.md) ;;
   *) exit 0 ;;
 esac
 
 case "$FILE_PATH" in
-  */memory/foundation.md|*/memory/MEMORY.md|*/memory/steering/*.md) exit 0 ;;
+  */.claude/memory/foundation.md|*/.claude/memory/MEMORY.md|*/.claude/memory/steering/*.md) exit 0 ;;
 esac
 
 [ -f "$FILE_PATH" ] || exit 0
@@ -31,20 +31,20 @@ else
   FRONTMATTER=$(awk 'BEGIN{p=0} /^---/{p++; if(p==2)exit; next} p==1{print}' "$FILE_PATH")
   FNAME=$(basename "$FILE_PATH")
   echo "$FRONTMATTER" | grep -q '^name:' || \
-    add_issue "memory/${FNAME} is missing the 'name' field in frontmatter"
+    add_issue ".claude/memory/${FNAME} is missing the 'name' field in frontmatter"
   echo "$FRONTMATTER" | grep -q '^description:' || \
-    add_issue "memory/${FNAME} is missing the 'description' field in frontmatter"
+    add_issue ".claude/memory/${FNAME} is missing the 'description' field in frontmatter"
   echo "$FRONTMATTER" | grep -q 'type:' || \
-    add_issue "memory/${FNAME} is missing the 'metadata.type' field in frontmatter (under metadata:)"
+    add_issue ".claude/memory/${FNAME} is missing the 'metadata.type' field in frontmatter (under metadata:)"
 
   NAME_SLUG=$(echo "$FRONTMATTER" | grep '^name:' | \
     sed "s/^name:[[:space:]]*//" | tr -d '"'"'")
 
   if [ -n "$NAME_SLUG" ]; then
-    if [ ! -f "${CWD}/memory/MEMORY.md" ]; then
-      add_issue "memory/MEMORY.md does not exist. Create it and add: '- [Title]($(basename "$FILE_PATH")) — description'"
-    elif ! grep -q "$NAME_SLUG" "${CWD}/memory/MEMORY.md"; then
-      add_issue "Name slug '${NAME_SLUG}' not found in memory/MEMORY.md. Add: '- [Title]($(basename "$FILE_PATH")) — one-line description'"
+    if [ ! -f "${CWD}/.claude/memory/MEMORY.md" ]; then
+      add_issue ".claude/memory/MEMORY.md does not exist. Create it and add: '- [Title]($(basename "$FILE_PATH")) — description'"
+    elif ! grep -q "$NAME_SLUG" "${CWD}/.claude/memory/MEMORY.md"; then
+      add_issue "Name slug '${NAME_SLUG}' not found in .claude/memory/MEMORY.md. Add: '- [Title]($(basename "$FILE_PATH")) — one-line description'"
     fi
   fi
 fi
