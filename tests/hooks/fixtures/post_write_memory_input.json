@@ -4,7 +4,7 @@
   "cwd": "__CWD_PLACEHOLDER__",
   "tool_name": "Write",
   "tool_input": {
-    "file_path": "__CWD_PLACEHOLDER__/memory/test_memory.md",
+    "file_path": "__CWD_PLACEHOLDER__/.claude/memory/test_memory.md",
     "content": ""
   }
 }

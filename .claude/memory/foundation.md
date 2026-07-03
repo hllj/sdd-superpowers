@@ -17,7 +17,7 @@ so specs remain the source of truth and code is their generated expression.
 
 ## Operational Context
 
-Steering files in `memory/steering/` carry project-specific operational context
+Steering files in `.claude/memory/steering/` carry project-specific operational context
 (tech stack, test strategy, conventions, team practices). Each file's `loaded-by`
 frontmatter lists which skills silently incorporate it during that skill's session.
 Edit steering files freely — they are not subject to the amendment process.
