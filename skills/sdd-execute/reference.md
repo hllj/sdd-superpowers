@@ -224,7 +224,7 @@ Never touch plan or tasks directly — `sdd-spec-update` owns that propagation.
 If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 
 1. Read the failure carefully
-2. Plan problem? → Update `plan.md` and `tasks.md`, continue
+2. Plan problem? → Update `plan.md` (and `tasks.md` if it exists), continue
 3. Spec ambiguity? → Clarify with user, update `spec.md`, continue
 4. Architectural issue (3+ different fixes all fail)? → Stop, invoke `sdd-superpowers:systematic-debugging`, discuss with user
 
@@ -234,7 +234,7 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 
 ## Integration
 
-**Called after:** `sdd-superpowers:sdd-tasks`
+**Called after:** `sdd-superpowers:sdd-plan` (plan-driven mode) or `sdd-superpowers:sdd-tasks` (task-driven mode, when tasks.md exists)
 
 **Subagents must use:**
 - `sdd-superpowers:test-driven-development` — mandatory for every implementation task
