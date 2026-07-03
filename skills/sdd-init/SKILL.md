@@ -37,6 +37,8 @@ Files created by sdd-init:
 | `docs/specs/.gitkeep` | Spec directory scaffold |
 | `CLAUDE.md` | Project context and judgment-based SDD guide — edit "About This Project" section after init |
 | `docs/git-convention.md` | Branch naming + commit format rules |
+| `.claude/rules/*.md` | Per-topic rule files — best practices, anti-patterns, conventions inferred from stack |
+| `settings.json` | Allowed/blocked tools, ignore patterns, and automation hooks inferred from stack |
 
 Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-constrained sessions.
 
@@ -45,9 +47,10 @@ Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-con
 1. Detect project context (subagent, silent) + check for existing foundation file
 2. Mission Charter: 4 questions via structured UI (Q1 mission, Q2 non-negotiables, Q3 failure modes, Q4 amendment) — Q3 skipped if `--fast`
 3. Draft foundation from answers → user approval gate → write `.claude/memory/foundation.md`
-4. Auto-generate 4 steering files from detected context → write `.claude/memory/steering/*.md`
-5. Create scaffold files (CLAUDE.md, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
-6. Initial commit → hand off to `sdd-superpowers:sdd-workflow`
+4. Rules generation: detect stack → 3 parallel research subagents → user review (approve/tweak/skip) → write `.claude/rules/*.md` and `settings.json`
+5. Auto-generate 4 steering files from detected context + research results → write `.claude/memory/steering/*.md`
+6. Create scaffold files (CLAUDE.md, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
+7. Initial commit → hand off to `sdd-superpowers:sdd-workflow`
 
 <HARD-GATE>
 Do NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written.
