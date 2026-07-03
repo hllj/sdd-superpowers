@@ -35,7 +35,7 @@ Files created by sdd-init:
 | `.claude/memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |
 | `docs/specs/.gitkeep` | Spec directory scaffold |
-| `CLAUDE.md` | SDD workflow instructions with Project Foundation pointer |
+| `CLAUDE.md` | Project context and judgment-based SDD guide — edit "About This Project" section after init |
 | `docs/git-convention.md` | Branch naming + commit format rules |
 
 Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-constrained sessions.
