@@ -50,6 +50,7 @@ Before evaluating any routing or skill invocation, check whether this project is
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
 | Each implementer subagent (dispatched from subagent-driven-development) | `sdd-superpowers:test-driven-development` |
+| Ending a session | `sdd-superpowers:session-wrap` |
 
 ---
 
