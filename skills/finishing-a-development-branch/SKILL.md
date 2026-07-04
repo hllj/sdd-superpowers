@@ -54,8 +54,9 @@ Implementation complete. What would you like to do?
 Which option?
 ```
 
+**After the chosen option and any cleanup complete, invoke `sdd-superpowers:session-wrap` quick mode to capture session learnings before closing.**
+
 **Option 4 requires typed "discard" confirmation.** Never auto-delete.
-After the chosen option and any cleanup complete, invoke `sdd-superpowers:session-wrap` quick mode to capture session learnings before closing.
 
 ## Common Mistakes
 
