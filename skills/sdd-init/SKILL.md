@@ -47,7 +47,7 @@ Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-con
 1. Detect project context (subagent, silent) + check for existing foundation file
 2. Mission Charter: 4 questions via structured UI (Q1 mission, Q2 non-negotiables, Q3 failure modes, Q4 amendment) — Q3 skipped if `--fast`
 3. Draft foundation from answers → user approval gate → write `.claude/memory/foundation.md`
-4. Rules generation: detect stack → 3 parallel research subagents → user review (approve/tweak/skip) → write `.claude/rules/*.md` and `settings.json`
+4. Rules generation: detect stack → check for source files → up to 5 parallel subagents (3 web-research + 2 codebase exploration when source files exist) → merge findings (codebase patterns take precedence on conflict) → user review (approve/tweak/skip) → write `.claude/rules/*.md` and `settings.json`
 5. Auto-generate 4 steering files from detected context + research results → write `.claude/memory/steering/*.md`
 6. Create scaffold files (CLAUDE.md, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
 7. Initial commit → hand off to `sdd-superpowers:sdd-workflow`

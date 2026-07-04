@@ -162,11 +162,26 @@ Produce a **Stack Context** string: language(s), frameworks, test runners, linte
 
 **Fallback:** If no manifest files are found and Step 1.5 returned "Empty project — no context detected.", ask exactly one question: "What is the primary language and framework for this project?" Use the answer as Stack Context. No further questions.
 
+### Source File Existence Check
+
+After determining Stack Context, check whether the project has qualifying source files:
+
+A **qualifying source file** is any file that is:
+- Not inside `node_modules/`, `.git/`, `vendor/`, `dist/`, `build/`, `target/`, `coverage/`, `__pycache__/`
+- Not a manifest file already read in this step (`package.json`, `pyproject.toml`, `requirements.txt`, `Cargo.toml`, `go.mod`, `composer.json`, `Gemfile`, `build.gradle`, `pom.xml`)
+- Not matching `*.min.js` or `*.d.ts`
+
+If at least one qualifying source file exists: set **`has_source_files = true`**.
+
+If no qualifying source files exist: set **`has_source_files = false`** — Step 4.2 skips exploration subagents silently.
+
 ### Step 4.2: Dispatch Research Subagents (Parallel)
 
-Announce: "Researching best practices, security rules, and automation patterns for your stack. Running three parallel lookups."
+**If `has_source_files = true`:** Announce: "Researching best practices and exploring your codebase for existing patterns. Running five parallel lookups."
 
-Dispatch exactly **three subagents concurrently** (not sequentially), each receiving the Stack Context.
+**If `has_source_files = false`:** Announce: "Researching best practices, security rules, and automation patterns for your stack. Running three parallel lookups."
+
+Dispatch subagents concurrently (not sequentially), each receiving the Stack Context. When `has_source_files = true`, dispatch all five in a single parallel batch. When `has_source_files = false`, dispatch the three web-research subagents only.
 
 **Subagent 1 — Conventions:**
 
@@ -220,11 +235,86 @@ Dispatch exactly **three subagents concurrently** (not sequentially), each recei
 >
 > Do NOT return raw web text — synthesize into concrete, actionable entries only."
 
-**Empty result handling:** If a subagent returns no usable results, mark its section as empty and note: "No [conventions / security / automation] rules could be generated — you can add these manually later." Init does not fail.
+**Subagent 4 — Source Pattern** *(dispatched only when `has_source_files = true`)*
+
+> "You are analyzing source code patterns in this project. Follow these steps in order.
+>
+> **Step A — Configuration files.** Read these files if they exist — they encode enforced conventions:
+> `.eslintrc`, `.eslintrc.json`, `.eslintrc.js`, `.eslintrc.yml`, `.prettierrc`, `.prettierrc.json`,
+> `.prettierrc.js`, `tsconfig.json`, `pyproject.toml` (tool.ruff / tool.black / tool.isort sections only),
+> `.rubocop.yml`, `.golangci.yml`
+>
+> **Step B — Source file sampling.** List top-level directories, excluding:
+> `node_modules/`, `.git/`, `vendor/`, `dist/`, `build/`, `target/`, `coverage/`, `__pycache__/`.
+> Identify primary source directories (`src/`, `lib/`, `app/`, `pkg/`, `internal/`, or equivalent).
+> For each, read at most 10 files — prefer files at the directory root before nested subdirectories.
+> Total cap: 30 source files across all directories.
+> Skip: `*.min.js`, `*.d.ts`, `*.lock`, binary files.
+>
+> **Step C — Insufficient data check.** If fewer than 3 source files were readable:
+> Return `{ "status": "insufficient", "findings": {} }` and stop.
+>
+> **Step D — Synthesize findings.** Return a structured object:
+> - `file_naming`: detected convention — one of: kebab-case / PascalCase / snake_case / camelCase / unclear
+> - `function_naming`: detected convention (same options)
+> - `variable_naming`: detected convention (same options)
+> - `import_organization`: observed pattern — grouped-by-type / alphabetical / none / unclear
+> - `architectural_patterns`: list of patterns inferred from directory names and import structure
+>   (e.g. `["service layer", "repository pattern", "MVC"]`)
+> - `error_handling`: observed pattern — exceptions / result-types / error-codes / mixed / unclear
+> - `config_enforced`: list of conventions enforced by config files
+>   (e.g. `["no-var (eslint)", "single quotes (prettier)", "strict null checks (tsconfig)"]`)
+> - `examples`: for each non-empty field above, one representative file path + snippet of ≤3 lines
+>
+> Return the structured object only. Do NOT return raw file content."
+
+**Subagent 5 — Test Pattern** *(dispatched only when `has_source_files = true`)*
+
+> "You are analyzing test patterns in this project. Follow these steps in order.
+>
+> **Step A — Find test files.** Locate files matching:
+> `*.test.*`, `*.spec.*`, `*_test.*`, `test_*.*`
+> and all files inside directories named `test/`, `tests/`, `__tests__/`, `spec/`.
+> Exclude: `node_modules/`, `.git/`, `vendor/`, `dist/`, `build/`, `target/`.
+>
+> **Step B — No tests check.** If no test files are found:
+> Return `{ "status": "no_tests", "findings": {} }` and stop.
+>
+> **Step C — Sample.** Read at most 30 test files. Prefer files at the root of each test directory before nested files.
+>
+> **Step D — Synthesize findings.** Return a structured object:
+> - `file_naming`: test file naming convention observed (e.g. `*.test.ts`, `test_*.py`, `*_test.go`)
+> - `test_organization`: style — describe-it / test-suite-classes / flat-functions / mixed
+> - `assertion_style`: library and style (e.g. `expect().toBe()`, `assert.equal()`, `should.equal()`)
+> - `mock_patterns`: observed approach — jest.mock / sinon / factory-functions / manual-stubs / none
+> - `fixture_patterns`: observed approach — inline-setup / shared-fixture-files / factories / none
+> - `examples`: for each non-empty field above, one representative file path + snippet of ≤3 lines
+>
+> Return the structured object only. Do NOT return raw file content."
+
+**Empty result handling:** If any subagent — web-research or exploration — returns no usable results or a status of `"insufficient"` / `"no_tests"`, mark its section as empty. For web-research subagents, note: "No [conventions / security / automation] rules could be generated — you can add these manually later." For exploration subagents, skip the merge step for that subagent's scope and use web-research results only for those topics. Init does not fail.
 
 ### Step 4.3: User Review Flow
 
-After all three subagents complete, present proposals in two sections. Do NOT write any files during this step.
+### Merge Codebase Findings with Web-Research Results
+
+*(This step runs only when `has_source_files = true` and at least one exploration subagent returned non-empty findings. Otherwise skip to Section A.)*
+
+Before assembling Section A rule file proposals, merge Source Pattern and Test Pattern findings with Subagent 1 (Conventions) results using this table:
+
+| Situation | Action |
+|-----------|--------|
+| Codebase finding **overlaps** a web-research rule — same convention, possibly different wording | Keep web-research rule text as-is. Append a codebase example: `— observed in [filepath]` |
+| Codebase finding **contradicts** a web-research rule — different convention | Use codebase pattern as the rule text. Append: `Note: web research recommends [X] — confirm this matches your intent` |
+| Codebase finding has **no web-research counterpart** for its topic | Add as a new rule line prefixed with `[observed]` |
+| Web-research rule has **no codebase counterpart** | Keep unchanged — no prefix, no modification |
+
+If both exploration and web-research returned empty for a topic: propose no rule file for that topic.
+
+After applying the merge table, prefix the Section A announcement with:
+> "Rule files may include `[observed]` markers on lines derived directly from your codebase, and `Note:` comments where web research suggests a different convention than what your code currently uses."
+
+After all subagents complete, present proposals in two sections. Do NOT write any files during this step.
 
 **Section A — Rule files (from Subagent 1 results):**
 
