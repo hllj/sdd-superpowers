@@ -6,7 +6,7 @@ loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review
 # Tech Stack
 
 ## Languages
-Markdown (skill files, specs, plans), Bash (hook scripts, test scripts), YAML (frontmatter, config), Python (test utilities)
+Markdown (skill files, specs, plans), Bash (hook scripts, test scripts), YAML (frontmatter, config)
 
 ## Frameworks
 Claude Code plugin framework (superpowers); skills are Markdown files loaded by Claude at runtime; hooks are Bash scripts registered in hooks/hooks.json

@@ -9,7 +9,7 @@ loaded-by: sdd-plan, sdd-review, using-git
 Feature branches follow `NNN-slug` pattern (e.g., `019-rules-gen-init`). See `docs/git-convention.md` for the full convention once created.
 
 ## Code Review
-[Edit to match reality — e.g., 1 approver required, PR must pass hook test suite]
+PRs are reviewed via the `sdd-superpowers:requesting-code-review` skill, which dispatches a `sdd-superpowers:code-reviewer` subagent. No external approvers required — review is AI-assisted. Merge only after all hook tests pass (`bash tests/hooks/run_all.sh`).
 
 ## Release Process
-[Edit to match reality — e.g., tag on main, bump version in .claude-plugin/plugin.json, update CHANGELOG.md]
+See [[feedback_release_process]] for the full step-by-step checklist. Summary: branch → version bump in `.claude-plugin/plugin.json` → CHANGELOG → commit → push → PR (before merging) → merge → tag.
