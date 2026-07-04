@@ -6,15 +6,15 @@ loaded-by: sdd-plan, sdd-execute, sdd-review
 # Test Strategy
 
 ## Test Framework
-Bash — test scripts in `tests/hooks/` with a `run_all.sh` runner
+Bash test suite: `tests/hooks/run_all.sh` — custom helpers in `tests/hooks/helpers.sh` with `assert_exit_zero`, `assert_contains`, `assert_empty`
 
 ## Test Levels
-- Unit tests: per-hook bash scripts testing individual hook behaviours
-- Integration tests: `run_all.sh` runs all hook test suites in sequence
-- E2E tests: N/A — skills are prose; hooks are the executable boundary
+- Unit tests: each hook script in `scripts/hooks/` has a matching `tests/hooks/test_<name>.sh`
+- Integration tests: `run_all.sh` runs the full suite end-to-end
+- E2E tests: N/A — skill behavior is validated manually by invoking Claude Code
 
 ## Coverage Expectations
-Every hook change must have a corresponding test update. New acceptance criteria → new test assertions before implementation.
+Every hook file in `scripts/hooks/` must have a corresponding test file. Gate hooks (deny-path) must have at least one negative-path test.
 
 ## Mocking Policy
-Tests use fixture files (JSON inputs, stub memory dirs) — no external calls mocked since hooks are pure shell scripts
+Hook scripts are tested by piping fixture JSON from `tests/hooks/fixtures/` to the script stdin. No external mocking libraries.

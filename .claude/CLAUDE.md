@@ -1,7 +1,25 @@
 <!-- sdd-init: generated -->
 # SDD Superpowers
 
-Before starting work, invoke `sdd-superpowers:sdd-workflow`.
+## About This Project
+
+A Claude Code plugin that enforces Specification-Driven Development through 22+ skills, event-driven hook gates, and a three-tier memory system. Skills are Markdown files loaded by Claude at runtime; hooks are Bash scripts that gate writes, validate state, and inject context. Every change starts with an approved spec.
+
+Key components:
+- `skills/` — SDD workflow skills (sdd-specify, sdd-plan, sdd-execute, sdd-review, etc.)
+- `scripts/hooks/` — Claude Code hook scripts (PreToolUse/PostToolUse/Stop gates)
+- `tests/hooks/` — Bash test suite for hook scripts
+- `.claude/memory/` — Foundation, steering files, and memory index
+
+## Working in This Project
+
+For small tasks (typo fixes, config tweaks, answering questions, quick edits) —
+work directly without ceremony.
+
+For feature development, new functionality, or any change with meaningful scope —
+follow the SDD workflow: invoke `sdd-superpowers:sdd-workflow` to get started.
+
+Use judgment: if a task could break something or spans multiple files, SDD applies.
 
 ## Memory
 
@@ -9,7 +27,7 @@ Memory lives in `.claude/memory/` — see `.claude/memory/MEMORY.md` for the ind
 Project identity is in `.claude/memory/foundation.md`.
 Steering files in `.claude/memory/steering/` are loaded by skills when relevant.
 
-## Hard Gates
+## Hard Gates (when following SDD)
 
 - NO PLAN without an approved spec
 - NO TASKS without a plan

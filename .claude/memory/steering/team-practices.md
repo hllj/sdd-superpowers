@@ -6,10 +6,10 @@ loaded-by: sdd-plan, sdd-review, using-git
 # Team Practices
 
 ## Branching
-Pattern: `NNN-slug` (e.g. `017-memory-relocation-claude-dir`) — see `docs/git-convention.md`
+Feature branches follow `NNN-slug` pattern (e.g., `019-rules-gen-init`). See `docs/git-convention.md` for the full convention once created.
 
 ## Code Review
-Spec-review gate before planning; plan-review gate before tasks; no merge without all tasks verified
+[Edit to match reality — e.g., 1 approver required, PR must pass hook test suite]
 
 ## Release Process
-Semantic versioning; tag on main; changelog updated before tag; see memory for end-to-end release checklist
+[Edit to match reality — e.g., tag on main, bump version in .claude-plugin/plugin.json, update CHANGELOG.md]

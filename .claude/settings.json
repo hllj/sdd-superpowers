@@ -1,0 +1,50 @@
+{
+  "allowedTools": [
+    "Bash(git *)",
+    "Bash(grep *)",
+    "Bash(find *)",
+    "Bash(ls *)",
+    "Bash(cat *)",
+    "Bash(head *)",
+    "Bash(tail *)",
+    "Bash(wc *)",
+    "Bash(python *)",
+    "Bash(python3 *)",
+    "Bash(bash tests/*)",
+    "Bash(echo *)",
+    "Bash(pwd)",
+    "Bash(which *)",
+    "Bash(jq *)"
+  ],
+  "blockedTools": [
+    "Bash(rm -rf *)",
+    "Bash(curl * | bash)",
+    "Bash(curl * | sh)",
+    "Bash(wget * | sh)",
+    "Bash(sudo *)",
+    "Bash(git config --global *)"
+  ],
+  "ignorePatterns": [
+    ".env",
+    ".env.*",
+    "**/.env",
+    "**/.env.*",
+    "**/*.pem",
+    "**/*.key",
+    "**/secrets/**",
+    "**/.ssh/**",
+    "**/.aws/**"
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Write|Edit",
+      "command": "FILE=$(echo \"$CLAUDE_TOOL_OUTPUT\" | jq -r '.file_path // empty' 2>/dev/null); if [[ \"$FILE\" == *.sh ]] && command -v shellcheck &>/dev/null; then shellcheck --severity=warning \"$FILE\"; fi"
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": "Write|Edit",
+      "command": "FILE=$(echo \"$CLAUDE_TOOL_OUTPUT\" | jq -r '.file_path // empty' 2>/dev/null); if [[ \"$FILE\" == *scripts/hooks/*.sh || \"$FILE\" == *tests/hooks/*.sh ]]; then bash tests/hooks/run_all.sh 2>&1 || true; fi"
+    }
+  ]
+}

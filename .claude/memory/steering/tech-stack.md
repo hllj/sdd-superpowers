@@ -6,13 +6,13 @@ loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review
 # Tech Stack
 
 ## Languages
-Bash (hook scripts), Markdown (skills, specs, memory files)
+Markdown (skill files, specs, plans), Bash (hook scripts, test scripts), YAML (frontmatter, config), Python (test utilities)
 
 ## Frameworks
-superpowers plugin framework for Claude Code
+Claude Code plugin framework (superpowers); skills are Markdown files loaded by Claude at runtime; hooks are Bash scripts registered in hooks/hooks.json
 
 ## Infrastructure
-Claude Code CLI — hooks execute via `.claude/settings.local.json` event bindings
+Claude Code CLI / Desktop app; plugin installed via `claude plugin install`; no server, no build step, no deploy pipeline
 
 ## Package Manager
-None — no build system; skills and hooks are plain files
+None — plugin distributed as a directory; Bash scripts have no external dependencies beyond standard Unix tools (`jq`, `shellcheck`)
