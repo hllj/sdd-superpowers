@@ -34,7 +34,7 @@ Save these?
 
 ## Deep Mode (full review)
 
-**When invoked directly by the user.** Scan and review each candidate individually.
+**When invoked directly by the user, or when the user selects "Deep Mode" from Quick Mode.** Scan and review each candidate individually, starting from scratch.
 
 ### Memory Phase
 
@@ -62,7 +62,7 @@ Scan for narrative learnings worth referencing in future specs or plans:
 
 Present each candidate using the lesson template (see `templates/lesson.md`).
 
-**On approval:** If `docs/lessons/` does not exist, create it. Write to `docs/lessons/YYYY-MM-DD-<slug>.md` (replacing `YYYY-MM-DD` with today's ISO 8601 date).
+**On approval:** If `docs/lessons/` does not exist, create it. Write to `docs/lessons/YYYY-MM-DD-<slug>.md`.
 
 **If no candidates found:** Report "No lesson candidates found."
 
@@ -72,7 +72,7 @@ Report "N memories written, M lessons written." If files were written, suggest: 
 
 ## Constraints
 
-- Does NOT spawn subagents — operates entirely from live conversation context
+- Does NOT spawn subagents — runs entirely in-session
 - Does NOT write any file the user has not explicitly approved
 - Does NOT re-propose skipped candidates
 - Quick Mode does NOT auto-write files — the user must explicitly choose "Save all" or "Select"
