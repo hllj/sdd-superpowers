@@ -306,7 +306,7 @@ Confirm that `.claude/memory/foundation.md` was written in Step 3. If Phase 1 wa
 
 Announce: "Generating steering files from your project context. Edit these to match reality."
 
-Use the Project Profile from Step 1.5 to pre-fill each file. If the profile has no signal for a field, write `[Edit to match reality]` as the placeholder. Create `.claude/memory/steering/` if it does not exist.
+Use the Stack Context from Step 4.1 and the Conventions subagent summary from Step 4.2 to pre-fill each file. If rules generation was skipped or returned empty, fall back to the Project Profile from Step 1.5. If neither source has a signal for a field, write `[Edit to match reality]` as the placeholder. Create `.claude/memory/steering/` if it does not exist.
 
 Write all four files:
 
@@ -372,7 +372,7 @@ loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-review
 [Detected: {{dir_structure}} — edit to match reality]
 
 ## Code Style
-[Detected: {{code_style}} — edit to match reality]
+[From rules generation research — edit to match reality]
 
 ## Architectural Patterns
 [e.g., repository pattern for data access, composition over inheritance — edit to match reality]
