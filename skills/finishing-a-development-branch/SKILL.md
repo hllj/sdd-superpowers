@@ -15,7 +15,7 @@ description: Use when implementation is complete, all tests pass, and a decision
 </example>
 </examples>
 
-Complete a development branch by verifying tests, preparing a merge commit message, and presenting four integration options: merge locally, create PR, keep as-is, or discard.
+Verify tests, prepare a merge commit message, and present four integration options: merge locally, create PR, keep, or discard.
 
 **Core principle:** Verify tests → Prepare message → Present options → Execute choice → Clean up.
 
@@ -39,6 +39,7 @@ Complete a development branch by verifying tests, preparing a merge commit messa
 | 3 | Present exactly 4 options |
 | 4 | Execute chosen option |
 | 5 | Cleanup worktree (only if one was used) |
+| 6 | Invoke `sdd-superpowers:session-wrap` quick mode |
 
 **The 4 options (present verbatim):**
 
@@ -53,6 +54,8 @@ Implementation complete. What would you like to do?
 Which option?
 ```
 
+**After the chosen option and any cleanup complete, invoke `sdd-superpowers:session-wrap` quick mode to capture session learnings before closing.**
+
 **Option 4 requires typed "discard" confirmation.** Never auto-delete.
 
 ## Common Mistakes
@@ -65,15 +68,15 @@ Which option?
 | Deleting work without confirmation | Require typed "discard" for Option 4 |
 | Force-pushing without explicit request | Never force push unless user explicitly asked |
 
-See [reference.md](reference.md) for full step-by-step commands for each option, worktree cleanup detail, and integration notes.
+See [reference.md](reference.md) for per-option commands and worktree cleanup detail.
 
 ## Constraints
 
 - Does NOT present integration options while tests are failing
-- Does NOT claim a branch is ready to merge without running the full test suite first
+- Does NOT claim merge-ready without running the full test suite
 
 ## Error Handling
 
 - **Tests are failing**: Halt. Fix failing tests before choosing an integration option.
-- **No test suite exists**: Document what was manually verified before presenting integration options.
-- **User requests gate bypass**: The gate is "tests must pass before integration." Explain that merging failing tests makes main broken for everyone. Offer to fix the failures first.
+- **No test suite exists**: Document what was manually verified before presenting options.
+- **User requests gate bypass**: Tests must pass before integration. Explain that merging failing tests breaks main; offer to fix failures first.
