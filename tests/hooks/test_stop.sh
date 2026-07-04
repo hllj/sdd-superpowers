@@ -73,8 +73,6 @@ assert_json_field "{\"had_writes\":$HAD2}" '.had_writes' "true" \
   "FR-8: had_writes true after Edit"
 rm -f "$STATE_FILE2"
 
-rm -rf "$TMP"
-
 # AC-4.1: stop message lists all four memory types
 SESSION_ID_41="${SESSION_ID}-ac41"
 STATE_FILE_41="${TMPDIR:-/tmp}/sdd-state-${SESSION_ID_41}.json"
@@ -95,5 +93,7 @@ assert_contains "$MSG41" "reference" \
 # AC-4.2: stop message names session-wrap skill
 assert_contains "$MSG41" "session-wrap" \
   "AC-4.2: stop message names session-wrap skill"
+
+rm -rf "$TMP"
 
 summarize
