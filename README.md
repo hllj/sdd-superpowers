@@ -29,7 +29,6 @@ SDD inverts the traditional relationship between specs and code. Instead of writ
 
 ```
 NO PLAN without an approved spec
-NO TASKS without a plan
 NO CODE without a prior failing test
 NO COMPLETION CLAIM without fresh verification evidence
 ```
@@ -44,10 +43,10 @@ NO COMPLETION CLAIM without fresh verification evidence
 | `sdd-specify` | Idea is clear, or design.md exists → structured PRD (spec.md) |
 | `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
-| `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
-| `sdd-execute` | Tasks exist → invokes `subagent-driven-development` to orchestrate per-task subagents with spec-compliance + code-quality review |
+| `sdd-execute` | Plan approved → invokes `subagent-driven-development` to orchestrate per-task subagents with spec-compliance + code-quality review |
 | `sdd-spec-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
 | `sdd-review` | Spec completeness check (pre-plan) or implementation alignment (post-execute) |
+| `session-wrap` | End of session → captures memory candidates and narrative lessons before context is lost |
 
 ## Workflow
 
@@ -69,9 +68,6 @@ sdd-specify ──────────────────► docs/specs
 sdd-plan ─────────────────────► docs/specs/NNN-feature/plan.md
                                  docs/specs/NNN-feature/data-model.md
                                  docs/specs/NNN-feature/contracts/
- │
- ▼
-sdd-tasks ────────────────────► docs/specs/NNN-feature/tasks.md
  │
  ▼
 sdd-execute ──────────────────► Implementation with per-task subagents
@@ -102,14 +98,12 @@ Skills run only when Claude is asked to invoke them. Hooks run unconditionally, 
 
 | Event | Script | What it does | Why it exists |
 |-------|--------|-------------|---------------|
-| `SessionStart` | `session-start.sh` | Injects `memory/foundation.md`, `memory/MEMORY.md`, the active spec (first 50 lines), and all open tasks into every session's context | Claude would otherwise re-derive project conventions from scratch each session; this ensures it always starts with accurate project state |
+| `SessionStart` | `session-start.sh` | Injects `memory/foundation.md`, `memory/MEMORY.md`, and the active spec (first 50 lines) into every session's context | Claude would otherwise re-derive project conventions from scratch each session; this ensures it always starts with accurate project state |
 | `PreToolUse` → Write on `plan.md` | `pre-write-plan-gate.sh` | Blocks writing `plan.md` unless a `spec.md` exists in the same folder **and** its status is `Approved` | Enforces the hard gate: **NO PLAN without an approved spec** |
-| `PreToolUse` → Write on `tasks.md` | `pre-write-tasks-gate.sh` | Blocks writing `tasks.md` unless `plan.md` exists in the same folder | Enforces the hard gate: **NO TASKS without a plan** |
 | `PreToolUse` → Write or Edit (any file) | `pre-write-edit-state.sh` | Records `had_writes: true` in a per-session temp file | Gives `stop.sh` a signal to emit end-of-session reminders only when files were actually changed — stays silent on read-only sessions |
 | `PostToolUse` → Write on `memory/*.md` | `post-write-memory-validate.sh` | Checks that a newly written memory file has valid YAML frontmatter (`name`, `description`, `metadata.type`) and is indexed in `memory/MEMORY.md` | Memory files missing frontmatter or index entries are invisible to future sessions; this catches structural errors immediately |
-| `PostToolUse` → Write or Edit on `tasks.md` | `post-write-tasks-check.sh` | After any change to `tasks.md`, checks whether all task checkboxes are `[x]` (ignoring content inside code blocks). If all are done, injects a reminder to add `[DONE]` markers to `plan.md` phase headings and invoke `sdd-review` | `tasks.md` and `plan.md` drift apart without this — the hook keeps them in sync automatically |
 | `SubagentStart` | `subagent-start.sh` | Injects the active spec title, path, and objective section into every subagent's context | Subagents dispatched by `sdd-execute` start cold; without this they have no awareness of what feature they're implementing |
-| `Stop` | `stop.sh` | At session end, if any writes occurred this session, emits a checklist reminder: save new learnings to `memory/`, run `verification-before-completion` | Prevents the common failure mode of ending a session without persisting decisions or running final verification |
+| `Stop` | `stop.sh` | At session end, if any writes occurred this session, emits a checklist reminder: invoke `session-wrap` to capture learnings, run `verification-before-completion` | Prevents the common failure mode of ending a session without persisting decisions or running final verification |
 
 ## Quick Start
 
@@ -122,10 +116,10 @@ Skills run only when Claude is asked to invoke them. Hooks run unconditionally, 
 # Clear idea path:
 # 1. Use sdd-specify to create a spec
 # 2. Use sdd-plan to plan the feature
-# 3. Use sdd-tasks to generate the task list
-# 4. Use sdd-execute to implement it
+# 3. Use sdd-execute to implement it
 #    (if requirements change mid-flight: use sdd-spec-update first)
-# 5. Use sdd-review to validate the implementation
+# 4. Use sdd-review to validate the implementation
+# 5. Use session-wrap at end of session to capture learnings
 ```
 
 ## Bundled Support Skills
@@ -143,6 +137,7 @@ These skills are invoked at specific SDD workflow points:
 | Dispatching 2+ independent tasks concurrently | `dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `subagent-driven-development` |
 | Each implementer subagent (dispatched from `subagent-driven-development`) | `test-driven-development` |
+| Ending a session and want to preserve learnings | `session-wrap` |
 
 **Skill hierarchy during execution:** `sdd-execute` (controller) → invokes `subagent-driven-development` → dispatches implementer subagents → each subagent invokes `test-driven-development`. TDD is enforced at the implementer-subagent level, not by the controller directly.
 
