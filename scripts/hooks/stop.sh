@@ -22,5 +22,5 @@ fi
 [[ "$HAD_WRITES" = "true" ]] || exit 0
 
 jq -n '{
-  systemMessage: "Session end checklist (writes occurred this session):\n1. Memory: Save any new learnings, decisions, or feedback to .claude/memory/ files now.\n2. Verification: Run verification-before-completion before claiming any work is done."
+  systemMessage: "Session end — invoke session-wrap to capture memory and lessons:\n  - feedback: approach corrections or validations received this session?\n  - project: status, goal, or deadline changes?\n  - user: new preferences or expertise observed?\n  - reference: external resources encountered?\n\nVerification: run verification-before-completion before claiming any work is done."
 }'
