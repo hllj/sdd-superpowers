@@ -90,7 +90,7 @@ Fix issues before presenting to user.
 
 After saving `plan.md`, offer:
 
-> "Plan complete. Next: run `sdd-superpowers:sdd-tasks` to generate the executable task list."
+> "Plan complete. Next: run `sdd-superpowers:sdd-execute` to begin implementation."
 
 ## Constraints
 

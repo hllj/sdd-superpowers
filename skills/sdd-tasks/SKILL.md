@@ -1,6 +1,6 @@
 ---
 name: sdd-tasks
-description: Use when an implementation plan is approved and needs to be broken down into executable tasks
+description: "Retired — do not use. See sdd-superpowers:sdd-execute."
 ---
 
 > **RETIRED — Feature 018**

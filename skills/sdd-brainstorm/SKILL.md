@@ -62,5 +62,5 @@ See [reference.md](reference.md) for full checklist, process flow diagram, desig
 ## Error Handling
 
 - **design.md already exists from a prior brainstorm session**: Skip directly to `sdd-superpowers:sdd-specify` fast-path — do not re-run brainstorm.
-- **User wants to jump straight to implementation**: Stop. Redirect through sdd-specify → sdd-plan → sdd-tasks first; implementation without a spec has no source of truth.
+- **User wants to jump straight to implementation**: Stop. Redirect through sdd-specify → sdd-plan → sdd-execute first; implementation without a spec has no source of truth.
 - **User requests gate bypass**: The gate is "no sdd-specify or implementation before design approval." Explain that without an approved design, the spec will reflect the first approach considered rather than the best one. Offer to complete the design review — it is a short approval step.

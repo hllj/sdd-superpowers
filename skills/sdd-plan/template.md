@@ -1,7 +1,5 @@
 # Implementation Plan: <Feature Name>
 
-> **For agentic workers:** Use sdd-tasks to generate an executable task list from this plan.
-
 **Spec:** docs/specs/<NNN>-<feature-slug>/spec.md
 **Research:** docs/specs/<NNN>-<feature-slug>/research.md (if applicable)
 **Created:** YYYY-MM-DD

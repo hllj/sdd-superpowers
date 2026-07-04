@@ -13,7 +13,7 @@ description: Use when a plan is approved and implementation should begin
 <example>
 <context>plan.md is approved. User says "let's start implementing."</context>
 <correct>Invoke sdd-execute. Verify the current branch is correct, read plan.md + spec.md, derive work units into TodoWrite, then dispatch subagents in work-unit order.</correct>
-<incorrect>Redirect to sdd-tasks — execution derives work units directly from plan.md.</incorrect>
+<incorrect>Generate a tasks.md list before starting — execution derives work units directly from plan.md.</incorrect>
 </example>
 <example>
 <context>User says "skip task 3, it's not blocking anything right now."</context>
