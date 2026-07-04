@@ -1,6 +1,6 @@
 ---
 name: sdd-execute
-description: Use when a plan is approved and implementation should begin; works with or without tasks.md
+description: Use when a plan is approved and implementation should begin
 ---
 
 # SDD: Execute
@@ -11,14 +11,9 @@ description: Use when a plan is approved and implementation should begin; works 
 
 <examples>
 <example>
-<context>plan.md is approved. tasks.md does not exist. User says "let's start implementing."</context>
+<context>plan.md is approved. User says "let's start implementing."</context>
 <correct>Invoke sdd-execute. Verify the current branch is correct, read plan.md + spec.md, derive work units into TodoWrite, then dispatch subagents in work-unit order.</correct>
-<incorrect>Redirect to sdd-tasks — tasks.md is not required. Plan-driven mode handles execution directly from plan.md.</incorrect>
-</example>
-<example>
-<context>tasks.md exists with 12 tasks. User says "let's start implementing."</context>
-<correct>Invoke sdd-execute. Verify the current branch is correct, then read tasks.md and dispatch subagents in task order, completing each before the next.</correct>
-<incorrect>Ignore tasks.md and re-derive work units from plan.md — if tasks.md exists, use it.</incorrect>
+<incorrect>Redirect to sdd-tasks — execution derives work units directly from plan.md.</incorrect>
 </example>
 <example>
 <context>User says "skip task 3, it's not blocking anything right now."</context>
@@ -31,9 +26,8 @@ Implement a feature by dispatching a fresh subagent per task, with two-stage rev
 
 ## When to Use
 
-- A `plan.md` is approved and implementation is ready to start (with or without `tasks.md`)
-- If `tasks.md` exists: use it as-is (existing behavior)
-- If `tasks.md` is absent: plan-driven mode — derive work units from `plan.md` + `spec.md`
+- A `plan.md` is approved and implementation is ready to start
+- Derive work units from `plan.md` + `spec.md`
 - NOT on `main`/`master` — a feature branch must exist
 
 <HARD-GATE>
@@ -46,8 +40,7 @@ Execution flow:
 
 ```
 Verify branch + baseline
-→ Detect mode: tasks.md present → task-driven | tasks.md absent → plan-driven
-→ Plan-driven: read plan.md + spec.md → derive work units → record in TodoWrite
+→ Read plan.md + spec.md → derive work units → record in TodoWrite
 → Restart detection: check git log for completed work units → skip matched units
 → Sequential units: one subagent at a time
 → Parallel units: dispatch concurrently, wait for all, then review
@@ -61,8 +54,8 @@ Implementer status handling:
 
 | Status | Action |
 |--------|--------|
-| DONE | Mark unit complete in TodoWrite (task-driven: also mark `[x]` in `tasks.md`), then proceed to spec-compliance review |
-| DONE_WITH_CONCERNS | Mark unit complete in TodoWrite (task-driven: also mark `[x]` in `tasks.md`); if correctness concern fix first; if observational proceed |
+| DONE | Mark unit complete in TodoWrite, then proceed to spec-compliance review |
+| DONE_WITH_CONCERNS | Mark unit complete in TodoWrite; if correctness concern fix first; if observational proceed |
 | NEEDS_CONTEXT | Provide context, re-dispatch |
 | BLOCKED | Assess: context / model upgrade / split task / escalate |
 
@@ -84,10 +77,10 @@ If the user requests a change, addition, or correction during execution:
 
 1. **STOP** — do not implement the change directly
 2. Invoke `sdd-superpowers:sdd-spec-update` to classify impact (PATCH / MINOR / MAJOR) and version the spec
-3. Propagate the change to `plan.md` as directed by `sdd-spec-update` (and `tasks.md` if it exists)
-4. Resume execution from the updated tasks
+3. Propagate the change to `plan.md` as directed by `sdd-spec-update`
+4. Resume execution from the updated work units
 
-Never update tasks or plan directly without running `sdd-superpowers:sdd-spec-update` first.
+Never update work units or plan directly without running `sdd-superpowers:sdd-spec-update` first.
 
 ## Remember
 
@@ -118,13 +111,12 @@ Required sub-skills during execution:
 ## Constraints
 
 - Does NOT start implementation on main/master — branch must be verified before any subagent is dispatched
-- Does NOT skip tasks from the task list — if a task seems unnecessary, surface the question before bypassing it
+- Does NOT skip work units — if a unit seems unnecessary, surface the question before bypassing it
 - Does NOT begin a new task until the prior task's verification step has passed
 
 ## Error Handling
 
-- **tasks.md does not exist**: Activate plan-driven mode — read `plan.md` + `spec.md` and derive work units. Do NOT redirect to `sdd-tasks`.
-- **plan.md does not exist and tasks.md does not exist**: Surface error: "No plan.md found at docs/specs/NNN-feature/plan.md. Run sdd-plan first." Halt.
+- **plan.md does not exist**: Surface error: "No plan.md found at docs/specs/NNN-feature/plan.md. Run sdd-plan first." Halt.
 - **plan.md has no sections**: Surface error: "plan.md has no sections to derive work units from. Ensure plan.md follows the standard plan template." Halt.
 - **Current branch is main/master**: Stop. Ask the user to confirm the correct feature branch before any implementation begins.
 - **A task is blocked by an unresolved dependency**: Surface the blocker explicitly to the user; do not skip the task or reorder silently.
