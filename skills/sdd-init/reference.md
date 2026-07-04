@@ -160,7 +160,7 @@ If any manifest files were not yet read, read them now: `package.json` (dependen
 
 Produce a **Stack Context** string: language(s), frameworks, test runners, linters, and notable tools. Example: "TypeScript, Next.js 14, Prisma, Jest, ESLint/Prettier".
 
-**Fallback:** If no manifest files are found and Step 1.5 returned "Empty project", ask exactly one question: "What is the primary language and framework for this project?" Use the answer as Stack Context. No further questions.
+**Fallback:** If no manifest files are found and Step 1.5 returned "Empty project — no context detected.", ask exactly one question: "What is the primary language and framework for this project?" Use the answer as Stack Context. No further questions.
 
 ### Step 4.2: Dispatch Research Subagents (Parallel)
 
@@ -209,10 +209,11 @@ Dispatch exactly **three subagents concurrently** (not sequentially), each recei
 >
 > Search the web for:
 > 1. Common pre-commit checks for this stack (lint, format, type check)
-> 2. Test-on-push patterns
-> 3. Community-recommended Claude Code hook setups for this stack
+> 2. Format-on-save patterns
+> 3. Test-on-push patterns
+> 4. Community-recommended Claude Code hook setups for this stack
 >
-> Return a structured list of hooks for Claude Code's `settings.json`. For each hook:
+> Return a structured list of hooks for Claude Code's `.claude/settings.json`. For each hook:
 > - `event`: one of `PreToolUse`, `PostToolUse`, `Stop`, `Notification`
 > - `matcher` (optional): tool name pattern to match
 > - `command`: the shell command to run
@@ -227,6 +228,8 @@ After all three subagents complete, present proposals in two sections. Do NOT wr
 
 **Section A — Rule files (from Subagent 1 results):**
 
+**If Subagent 1 returned no results:** Skip Section A entirely. Show the user: "No convention rule files could be generated for your stack — you can create `.claude/rules/` files manually later." Proceed directly to Section B.
+
 For each proposed `.claude/rules/` file, present in sequence:
 
 ```
@@ -237,13 +240,15 @@ Proposed: .claude/rules/[subdir/]filename.md
 Approve as-is, tweak the content, or skip this file? (approve / tweak / skip)
 ```
 
+**Conflict check:** Before presenting each file, check whether it already exists at `.claude/rules/[subdir/]filename.md`. If it does, note this in the presentation: "Note: this file already exists — approving will overwrite it." The user's approve/tweak/skip response covers both the content decision and the overwrite decision.
+
 - **approve**: mark for writing; move to next file
 - **tweak**: show content in editable block; when user confirms, mark for writing; move to next file
 - **skip**: mark as skipped; do not prompt for this file again; move to next file
 
-**Section B — settings.json (from Subagents 2 and 3):**
+**Section B — `.claude/settings.json` (from Subagents 2 and 3):**
 
-Merge both subagents' results into a single `settings.json` block:
+Merge both subagents' results into a single `.claude/settings.json` block:
 
 ```json
 {
@@ -260,11 +265,13 @@ Merge both subagents' results into a single `settings.json` block:
 }
 ```
 
-**Conflict check:** Before presenting, check whether `settings.json` already exists at the project root.
-- If it exists: announce "A `settings.json` already exists. Choose: (merge) add proposed entries alongside existing ones, (overwrite) replace the file entirely, or (skip) leave the file unchanged."
+**Conflict check:** Before presenting, check whether `.claude/settings.json` already exists.
+- If it exists: announce "A `.claude/settings.json` already exists. Choose: (merge) add proposed entries alongside existing ones, (overwrite) replace the file entirely, or (skip) leave the file unchanged."
 - If it does not exist: present the block directly.
 
-Then ask: "Approve this settings.json block, tweak it, or skip it? (approve / tweak / skip)"
+When a conflict handling mode (merge / overwrite / skip) has been chosen, the subsequent "approve / tweak / skip" prompt governs the **content** of the proposed block only. "Approve" means accept the content as written; "tweak" means edit the content; "skip" overrides any prior conflict choice and writes nothing.
+
+Then ask: "Approve this `.claude/settings.json` block, tweak it, or skip it? (approve / tweak / skip)"
 
 ### Step 4.4: Write Approved Files (Atomic)
 
@@ -272,10 +279,9 @@ Write all approved files in one uninterrupted pass — no user interaction betwe
 
 1. **Rule files:** For each approved rule file:
    - Create parent directory if needed (e.g. `mkdir -p .claude/rules/frontend/`)
-   - If a file already exists at that path: prompt "`.claude/rules/[path]` exists — overwrite or skip?" before writing
    - Write the approved content
 
-2. **settings.json:**
+2. **`.claude/settings.json`:**
    - If approved with **merge**: read existing file, merge entries (union lists for arrays, no duplicates), write merged result
    - If approved with **overwrite**: write proposed block as new file
    - If approved with **no conflict**: write proposed block as new file
@@ -284,9 +290,9 @@ Write all approved files in one uninterrupted pass — no user interaction betwe
 After writing, announce:
 > "Rules generation complete:
 > - `.claude/rules/` — [N] files written ([list filenames])
-> - `settings.json` — [written / merged / skipped]"
+> - `.claude/settings.json` — [written / merged / skipped]"
 
-Then: "Proceed to Step 5."
+Proceed to Step 5.
 
 ## Step 5: Scaffold Creation
 

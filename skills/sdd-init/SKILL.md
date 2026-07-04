@@ -38,7 +38,7 @@ Files created by sdd-init:
 | `CLAUDE.md` | Project context and judgment-based SDD guide — edit "About This Project" section after init |
 | `docs/git-convention.md` | Branch naming + commit format rules |
 | `.claude/rules/*.md` | Per-topic rule files — best practices, anti-patterns, conventions inferred from stack |
-| `settings.json` | Allowed/blocked tools, ignore patterns, and automation hooks inferred from stack |
+| `.claude/settings.json` | Allowed/blocked tools, ignore patterns, and automation hooks inferred from stack |
 
 Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-constrained sessions.
 
