@@ -101,7 +101,7 @@ Never ignore BLOCKED. Never force retry without changing something.
 **3c. Spec-compliance review**
 
 Dispatch a spec-reviewer subagent. Provide:
-- The task text
+- The work unit text
 - The spec file contents (or relevant sections)
 - The git diff since before the task: `git diff <before-sha>`
 
@@ -174,11 +174,11 @@ If the user requests a change, addition, or correction during execution:
 1. **STOP** the current task (do not implement the change directly)
 2. Invoke `sdd-superpowers:sdd-spec-update` — classify PATCH / MINOR / MAJOR, version the spec
 3. Propagate to `plan.md` as directed by `sdd-spec-update`
-4. Resume execution from the updated tasks
+4. Resume execution from the updated work units
 
-**MAJOR bump** (architectural change): re-evaluate the entire task list before resuming.
-**MINOR bump** (new scope): add tasks, continue sequential execution.
-**PATCH bump** (clarification): update task text in place, continue.
+**MAJOR bump** (architectural change): re-evaluate all derived work units before resuming.
+**MINOR bump** (new scope): add work units, continue sequential execution.
+**PATCH bump** (clarification): update work unit text in place, continue.
 
 Never touch plan or tasks directly — `sdd-spec-update` owns that propagation.
 

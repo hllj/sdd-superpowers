@@ -78,9 +78,9 @@ If the user requests a change, addition, or correction during execution:
 1. **STOP** — do not implement the change directly
 2. Invoke `sdd-superpowers:sdd-spec-update` to classify impact (PATCH / MINOR / MAJOR) and version the spec
 3. Propagate the change to `plan.md` as directed by `sdd-spec-update`
-4. Resume execution from the updated tasks
+4. Resume execution from the updated work units
 
-Never update tasks or plan directly without running `sdd-superpowers:sdd-spec-update` first.
+Never update work units or plan directly without running `sdd-superpowers:sdd-spec-update` first.
 
 ## Remember
 
@@ -111,7 +111,7 @@ Required sub-skills during execution:
 ## Constraints
 
 - Does NOT start implementation on main/master — branch must be verified before any subagent is dispatched
-- Does NOT skip tasks from the task list — if a task seems unnecessary, surface the question before bypassing it
+- Does NOT skip work units — if a unit seems unnecessary, surface the question before bypassing it
 - Does NOT begin a new task until the prior task's verification step has passed
 
 ## Error Handling
