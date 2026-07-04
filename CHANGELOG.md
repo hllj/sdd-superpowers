@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.1] - 2026-07-04
+
+### Fixed
+
+- **Bash rule compliance in all hook scripts** — replaced every `[ ]` conditional with `[[ ]]` across `pre-write-plan-gate.sh`, `pre-write-tasks-gate.sh`, `post-write-memory-validate.sh`, `post-write-tasks-check.sh`, `stop.sh`, `session-start.sh`, `subagent-start.sh`, and the shared lib
+- **`ls` parsing removed from `detect-active-spec.sh`** — glob iteration replaces `ls -d` for branch-prefix matching; `find`+`stat -f %m` replaces `ls -dt` for mtime-sorted fallback; eliminates word-splitting risk on spec directory names
+- **Missing test for `pre-write-edit-state` hook** — added `tests/hooks/test_pre_write_edit_state.sh` with 5 assertions covering SDD/non-SDD detection, Write and Edit flag creation, and zero stdout guarantee
+- **Test scripts now include `set -uo pipefail`** — all 9 test files and `run_all.sh` gain `-uo pipefail`; `-e` intentionally omitted so tests can assert on non-zero exit codes
+- **`sdd-workflow` frontmatter** — removed non-standard `user-invocable: false` field; frontmatter now contains only the required `name` and `description` fields per skill-writing rules
+- **`writing-skills` `@path` references** — two `@file` force-load references replaced with plain inline file references per skill-writing rules
+
+---
+
 ## [2.8.0] - 2026-06-24
 
 ### Added
