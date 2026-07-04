@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.0] - 2026-07-04
+
+### Added
+
+- **`session-wrap` Quick Mode auto-digest** (spec 024) — scans the conversation and presents a ≤5-bullet digest of memory and lesson candidates labeled by type, with Save all / Select / Skip / Deep mode offered in one step; existing flow preserved as Deep Mode with explicit invocation routing gates for both modes
+- **`finishing-a-development-branch` session-wrap handoff** — Step 6 added to the Quick Reference table; closing instruction now invokes `session-wrap` quick mode after any of the four integration options completes
+- **"Ending a session" routing** — `sdd-workflow/SKILL.md` and `routing.md` both gain a row pointing to `sdd-superpowers:session-wrap`
+
+### Fixed
+
+- **`reference.md` required-reading enforcement** — all skill files that link to a `reference.md` now mark it as required reading before proceeding, instead of an optional "see also" pointer
+
 ## [2.9.0] - 2026-07-04
 
 ### Added
