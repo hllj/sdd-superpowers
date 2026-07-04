@@ -497,6 +497,7 @@ After all scaffold files are written, stage and commit the foundation:
 
 ```bash
 git add .claude/memory/foundation.md .claude/memory/steering/ docs/specs/.gitkeep .claude/CLAUDE.md docs/git-convention.md
+git add .claude/rules/ .claude/settings.json 2>/dev/null || true
 git commit -m "chore: initial SDD scaffold with mission charter, steering files, and git convention"
 ```
 
