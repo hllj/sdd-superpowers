@@ -313,7 +313,6 @@ Done!
 
 **Upstream (provides input to this skill):**
 - `sdd-superpowers:sdd-plan` — creates `plan.md` (plan-driven mode source of truth)
-- `sdd-superpowers:sdd-tasks` — creates `tasks.md` when it exists (task-driven mode, backward-compatible)
 
 ## Constraints
 

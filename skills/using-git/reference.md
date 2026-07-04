@@ -47,7 +47,7 @@ Wait for selection, then run the corresponding operation.
 
 ## Operation A — Branch Creation
 
-**Invoked by:** `sdd-superpowers:sdd-tasks` Step 5, or directly via menu option (1)
+**Invoked by:** `sdd-superpowers:sdd-execute`, or directly via menu option (1)
 
 **Inputs:** spec folder path (`docs/specs/NNN-slug/`), optional ticket ID
 
@@ -91,7 +91,7 @@ Wait for selection, then run the corresponding operation.
 
 ## Operation B — Doc-First Commit
 
-**Invoked by:** `sdd-superpowers:sdd-tasks` Step 5 immediately after Operation A
+**Invoked by:** `sdd-superpowers:sdd-execute` immediately after Operation A
 
 **Inputs:** spec folder path (`docs/specs/NNN-slug/`)
 

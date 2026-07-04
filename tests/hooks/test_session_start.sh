@@ -18,12 +18,6 @@ cat > "$TMP/docs/specs/011-plugin-hooks/spec.md" <<'SPEC'
 ## Problem Statement
 Test spec content line 3
 SPEC
-cat > "$TMP/docs/specs/011-plugin-hooks/tasks.md" <<'TASKS'
-- [x] done task
-- [ ] open task 1
-- [ ] open task 2
-TASKS
-
 INPUT=$(jq -n --arg cwd "$TMP" \
   '{"hook_event_name":"SessionStart","session_id":"t1","cwd":$cwd}')
 
@@ -36,15 +30,6 @@ assert_contains "$OUTPUT" "Memory" "AC-2.1: MEMORY.md injected from .claude/memo
 OUTPUT=$(cd "$TMP" && git() { echo "011-plugin-hooks"; }; export -f git; \
          CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" CWD="$TMP" bash "$SCRIPT" <<< "$INPUT")
 assert_contains "$OUTPUT" "Feature 011" "spec.md first 50 lines injected"
-
-# unchecked tasks injected, checked excluded
-assert_contains "$OUTPUT" "open task 1" "unchecked task 1 included"
-assert_contains "$OUTPUT" "open task 2" "unchecked task 2 included"
-if echo "$OUTPUT" | grep -q "done task"; then
-  FAIL=$((FAIL + 1)); echo "  FAIL: checked task must not appear"
-else
-  PASS=$((PASS + 1)); echo "  PASS: checked task excluded"
-fi
 
 # AC-2.2: silent outside SDD project
 TMP_NOSDD=$(mktemp -d)

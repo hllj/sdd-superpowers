@@ -32,8 +32,8 @@ All SDD git operations run through this skill. It enforces the convention in `do
 
 | Operation | Invoked by | Menu option |
 |-----------|-----------|-------------|
-| A — Branch Creation | `sdd-superpowers:sdd-tasks`, user | 1 |
-| B — Doc-First Commit | `sdd-superpowers:sdd-tasks` (after A), user | 2 (ad-hoc) |
+| A — Branch Creation | `sdd-superpowers:sdd-execute`, user | 1 |
+| B — Doc-First Commit | `sdd-superpowers:sdd-execute` (after A), user | 2 (ad-hoc) |
 | C — Per-Task Commit | `sdd-superpowers:sdd-execute` (delegation only) | not in menu |
 | D — Merge Commit Message | `sdd-superpowers:finishing-a-development-branch`, user | 3 |
 | Show convention | user | 4 |

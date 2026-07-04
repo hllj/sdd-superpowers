@@ -192,7 +192,7 @@ After propagating all changes:
 |------|----------------|
 | PATCH | Continue exactly where you left off |
 | MINOR | Complete all existing tasks first, then execute new task group |
-| MAJOR | Stop current execution; re-run `sdd-superpowers:sdd-plan` for affected phases, then `sdd-superpowers:sdd-tasks` for affected scope, then resume |
+| MAJOR | Stop current execution; re-run `sdd-superpowers:sdd-plan` for affected phases, then `sdd-superpowers:sdd-execute` to resume |
 
 ---
 

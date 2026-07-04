@@ -113,7 +113,7 @@ If changes requested: update the spec and re-review.
 
 ## Step 7: Note on Branch Creation
 
-Branch creation happens **after all documentation is complete** — at the end of `sdd-superpowers:sdd-tasks`, not here. When `sdd-superpowers:sdd-tasks` finishes generating the task list, it will:
+Branch creation happens **after all documentation is complete** — at the start of `sdd-superpowers:sdd-execute`, not here. When `sdd-superpowers:sdd-execute` begins implementation, it will:
 1. Read `docs/git-convention.md` for the naming convention
 2. Suggest branch names based on this spec's NNN and slug
 3. Create the branch with your chosen name

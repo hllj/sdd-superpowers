@@ -103,8 +103,7 @@ Before claiming the plan is ready, confirm:
 >
 > **Next steps:**
 > 1. Run `sdd-superpowers:sdd-review` (spec mode) to validate plan-spec alignment before execution
-> 2. Run `sdd-superpowers:sdd-tasks` to generate a flat, executable task list
-> 3. Run `sdd-superpowers:sdd-execute` to implement with subagent dispatch and two-stage review"
+> 2. Run `sdd-superpowers:sdd-execute` to implement with subagent dispatch and two-stage review"
 
 ## Plan Quality Rules
 
