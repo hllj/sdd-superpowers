@@ -54,7 +54,7 @@ Response pattern:
 
 Push back when suggestion breaks functionality, reviewer lacks context, violates YAGNI, or conflicts with prior architectural decisions. Use technical reasoning, not defensiveness.
 
-See [reference.md](reference.md) for source-specific handling (human partner vs. external reviewers), YAGNI check procedure, implementation ordering, pushback technique, and real examples.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — source-specific handling (human partner vs. external reviewers), YAGNI check procedure, implementation ordering, pushback technique, and real examples.
 
 ## Constraints
 

@@ -34,6 +34,10 @@ Implement a feature by dispatching a fresh subagent per task, with two-stage rev
 Do NOT start implementation on main/master. Verify branch before any subagent dispatch.
 </HARD-GATE>
 
+<HARD-GATE>
+Never implement work units directly in this session. Every work unit requires a fresh subagent dispatched via sdd-superpowers:subagent-driven-development. Implementing directly bypasses TDD, spec-compliance review, and commit discipline.
+</HARD-GATE>
+
 ## Quick Reference
 
 Execution flow:
@@ -59,7 +63,7 @@ Implementer status handling:
 | NEEDS_CONTEXT | Provide context, re-dispatch |
 | BLOCKED | Assess: context / model upgrade / split task / escalate |
 
-See [reference.md](reference.md) for the full dispatch procedure, parallel group safety checks, model selection guide, and repeated-failure escalation paths.
+**REQUIRED READING before first dispatch:** [reference.md](reference.md) — full subagent prompt construction, parallel group safety checks, model selection guide, and repeated-failure escalation paths.
 
 ## When to Stop and Ask
 

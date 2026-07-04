@@ -43,7 +43,7 @@ Spec sections: Problem Statement → Goals → Non-Goals → Users and Context �
 
 **Fast-path:** if `design.md` exists from `sdd-superpowers:sdd-brainstorm`, Steps 2–3 are skipped — the design is formalized directly.
 
-See [reference.md](reference.md) for the full process (Steps 1–8), spec.md template, self-review checklist, placeholder anti-patterns, and handoff options.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — the full process (Steps 1–8), spec.md template, self-review checklist, placeholder anti-patterns, and handoff options.
 
 ## Remember
 

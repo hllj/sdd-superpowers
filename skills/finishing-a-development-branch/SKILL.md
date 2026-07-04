@@ -65,7 +65,7 @@ Which option?
 | Deleting work without confirmation | Require typed "discard" for Option 4 |
 | Force-pushing without explicit request | Never force push unless user explicitly asked |
 
-See [reference.md](reference.md) for full step-by-step commands for each option, worktree cleanup detail, and integration notes.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — full step-by-step commands for each option, worktree cleanup detail, and integration notes.
 
 ## Constraints
 

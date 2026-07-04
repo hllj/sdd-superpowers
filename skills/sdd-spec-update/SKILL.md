@@ -105,7 +105,7 @@ After propagating changes:
 
 > "Spec updated to vX.Y.Z. [List updated artifacts]. Resuming from [next unaffected task / re-planning needed]. Run `sdd-superpowers:sdd-execute` (or `sdd-superpowers:sdd-plan`) to continue."
 
-See [reference.md](reference.md) for the full classification guide, per-artifact update procedures, spec version header format, and task resume rules.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — the full classification guide, per-artifact update procedures, spec version header format, and task resume rules.
 
 ## Constraints
 
