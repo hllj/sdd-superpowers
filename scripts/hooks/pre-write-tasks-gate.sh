@@ -18,7 +18,7 @@ esac
 
 SPEC_DIR=$(dirname "$FILE_PATH")
 
-if [ ! -f "${SPEC_DIR}/plan.md" ]; then
+if [[ ! -f "${SPEC_DIR}/plan.md" ]]; then
   jq -n --arg reason "SDD Gate: plan.md not found in ${SPEC_DIR}. Run sdd-plan first." '{
     hookSpecificOutput: {
       hookEventName: "PreToolUse",

@@ -1,7 +1,6 @@
 ---
 name: sdd-workflow
 description: Use when starting any conversation in an SDD project
-user-invocable: false
 ---
 
 <SUBAGENT-STOP>

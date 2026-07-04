@@ -29,7 +29,7 @@ deny() {
   exit 0
 }
 
-if [ ! -f "${SPEC_DIR}/spec.md" ]; then
+if [[ ! -f "${SPEC_DIR}/spec.md" ]]; then
   deny "SDD Gate: spec.md not found in ${SPEC_DIR}. Run sdd-specify first."
 fi
 

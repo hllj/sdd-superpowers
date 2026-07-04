@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -uo pipefail  # intentionally omits -e: tests call commands that return non-zero
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/helpers.sh"
 PLUGIN_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"

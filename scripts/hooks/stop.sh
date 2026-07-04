@@ -19,7 +19,7 @@ if [ -f "$STATE_FILE" ]; then
   rm -f "$STATE_FILE" 2>/dev/null || true
 fi
 
-[ "$HAD_WRITES" = "true" ] || exit 0
+[[ "$HAD_WRITES" = "true" ]] || exit 0
 
 jq -n '{
   systemMessage: "Session end checklist (writes occurred this session):\n1. Memory: Save any new learnings, decisions, or feedback to .claude/memory/ files now.\n2. Verification: Run verification-before-completion before claiming any work is done."

@@ -28,7 +28,7 @@ case "$FILE_PATH" in
   .claude/memory/steering/*.md|*/.claude/memory/steering/*.md) exit 0 ;;
 esac
 
-[ -f "$FILE_PATH" ] || exit 0
+[[ -f "$FILE_PATH" ]] || exit 0
 
 ISSUES=""
 add_issue() { ISSUES="${ISSUES}\n- $1"; }
@@ -49,7 +49,7 @@ else
     sed "s/^name:[[:space:]]*//" | tr -d '"'"'")
 
   if [ -n "$NAME_SLUG" ]; then
-    if [ ! -f "${CWD}/.claude/memory/MEMORY.md" ]; then
+    if [[ ! -f "${CWD}/.claude/memory/MEMORY.md" ]]; then
       add_issue ".claude/memory/MEMORY.md does not exist. Create it and add: '- [Title]($(basename "$FILE_PATH")) — description'"
     elif ! grep -q "$NAME_SLUG" "${CWD}/.claude/memory/MEMORY.md"; then
       add_issue "Name slug '${NAME_SLUG}' not found in .claude/memory/MEMORY.md. Add: '- [Title]($(basename "$FILE_PATH")) — one-line description'"
@@ -57,7 +57,7 @@ else
   fi
 fi
 
-[ -n "$ISSUES" ] || exit 0
+[[ -n "$ISSUES" ]] || exit 0
 
 jq -n --arg issues "$(printf '%b' "$ISSUES")" '{
   hookSpecificOutput: {

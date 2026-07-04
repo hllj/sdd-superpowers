@@ -19,7 +19,7 @@ case "$FILE_PATH" in
   *) exit 0 ;;
 esac
 
-[ -f "$FILE_PATH" ] || exit 0
+[[ -f "$FILE_PATH" ]] || exit 0
 
 CLEANED_CONTENT=$(sed '/^[[:space:]]*```/,/^[[:space:]]*```/d' "$FILE_PATH")
 echo "$CLEANED_CONTENT" | grep -qE '^[[:space:]]*[-*+][[:space:]]+\[ \]' && exit 0

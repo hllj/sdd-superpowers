@@ -37,10 +37,10 @@ fi
 
 if [ -n "$ACTIVE_SPEC_DIR" ] && [ -f "${ACTIVE_SPEC_DIR}/tasks.md" ]; then
   OPEN=$(grep '^- \[ \]' "${ACTIVE_SPEC_DIR}/tasks.md" 2>/dev/null || true)
-  [ -n "$OPEN" ] && append_section "Open tasks" "$OPEN"
+  [[ -n "$OPEN" ]] && append_section "Open tasks" "$OPEN"
 fi
 
-[ -n "$CONTEXT" ] || exit 0
+[[ -n "$CONTEXT" ]] || exit 0
 
 CONTEXT=$(printf '%s' "$CONTEXT" | head -c "$MAX_CHARS")
 
