@@ -92,6 +92,7 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
 | Before writing any implementation code — subagent or direct | `sdd-superpowers:test-driven-development` |
+| Ending a session | `sdd-superpowers:session-wrap` |
 
 ```
 NO PLAN without an approved spec
