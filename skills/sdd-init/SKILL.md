@@ -56,7 +56,7 @@ Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-con
 Do NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written.
 </HARD-GATE>
 
-See [reference.md](reference.md) for the full initialisation procedure, Mission Charter ceremony, steering file templates, scaffold templates, and error scenarios.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — the full initialisation procedure, Mission Charter ceremony, steering file templates, scaffold templates, and error scenarios.
 
 ## Constraints
 

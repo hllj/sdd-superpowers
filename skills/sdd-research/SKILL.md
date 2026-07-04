@@ -43,7 +43,7 @@ Research document sections:
 
 After research, update `spec.md` to replace resolved `[NEEDS CLARIFICATION]` markers with concrete requirements.
 
-See [reference.md](reference.md) for the full investigation procedure, research.md template, per-domain investigation guides (library comparison, performance, security, integration), and quality standards.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — the full investigation procedure, research.md template, per-domain investigation guides (library comparison, performance, security, integration), and quality standards.
 
 ## Constraints
 

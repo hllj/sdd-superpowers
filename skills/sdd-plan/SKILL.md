@@ -56,7 +56,7 @@ Plan structure: Goal → Architecture → Tech Stack → File Structure → Comp
 
 Pre-implementation gates checked before planning: Simplicity Gate (≤3 components), Anti-Abstraction Gate (no unnecessary wrappers), Integration-First Gate (contracts before code).
 
-See [reference.md](reference.md) for pre-implementation gate checklists, full plan template, data-model and contracts templates, self-review checklist, and verification gate.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — pre-implementation gate checklists, full plan template, data-model and contracts templates, self-review checklist, and verification gate.
 
 ## File Structure
 

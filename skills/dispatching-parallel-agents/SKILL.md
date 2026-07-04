@@ -71,7 +71,7 @@ NOT safe to parallelize:
 
 After agents return: review each summary → check for conflicts → spec compliance review per unit (spec-reviewer-prompt.md) → code quality review per unit (requesting-code-review) → run full suite → mark units complete in TodoWrite.
 
-See [reference.md](reference.md) for the full dispatch pattern, agent prompt template, worked example, and post-dispatch review procedure.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — the full dispatch pattern, agent prompt template, worked example, and post-dispatch review procedure.
 
 ## Integration
 

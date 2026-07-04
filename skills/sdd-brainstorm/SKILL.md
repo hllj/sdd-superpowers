@@ -51,7 +51,7 @@ Brainstorm outputs one artifact: `docs/specs/NNN-<feature-slug>/design.md`
 
 Key principles: one question per message, YAGNI ruthlessly, always 2-3 approaches before settling, decompose multi-subsystem ideas before brainstorming any single piece.
 
-See [reference.md](reference.md) for full checklist, process flow diagram, design.md template, spec review loop procedure, and visual companion guide.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — full checklist, process flow diagram, design.md template, spec review loop procedure, and visual companion guide.
 
 ## Constraints
 

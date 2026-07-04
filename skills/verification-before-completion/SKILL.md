@@ -71,7 +71,7 @@ Claiming work is complete without running verification is dishonesty, not effici
 | Partial verification ("ran some tests") | Full suite, full output |
 | "Just this once" | No exceptions, ever |
 
-See [reference.md](reference.md) for rationalization patterns, red flags, TDD red-green verification, and why this matters.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — rationalization patterns, red flags, TDD red-green verification, and why this matters.
 
 ## Constraints
 
