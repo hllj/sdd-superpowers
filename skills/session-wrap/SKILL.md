@@ -42,7 +42,7 @@ Body text here.
 
 For each candidate, ask: "Approve (write as-is), Edit (write your version), or Skip?" Only approved or edited entries are written.
 
-**On approval:** Write `.claude/memory/<slug>.md` with the frontmatter above. Add a line to `.claude/memory/MEMORY.md`: `- [Description](slug.md) — one-line summary`.
+**On approval:** Write `.claude/memory/<slug>.md` with the frontmatter above. Add a line to `.claude/memory/MEMORY.md`: `- [<name>](<slug>.md) — <description>`.
 
 **Collision check:** If `.claude/memory/<slug>.md` already exists, warn before writing: "A memory file with this name already exists — overwrite or choose a new slug?"
 
@@ -87,7 +87,7 @@ tags: [tag1, tag2]
 
 For each candidate, ask: "Approve, Edit, or Skip?"
 
-**On approval:** If `docs/lessons/` does not exist, create it. Write the file to `docs/lessons/YYYY-MM-DD-<slug>.md`.
+**On approval:** If `docs/lessons/` does not exist, create it. Write the file to `docs/lessons/YYYY-MM-DD-<slug>.md` (replacing `YYYY-MM-DD` with the current date in ISO 8601 format).
 
 **If no candidates found:** Report "No lesson candidates found."
 
