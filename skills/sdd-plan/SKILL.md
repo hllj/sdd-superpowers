@@ -1,6 +1,8 @@
 ---
 name: sdd-plan
 description: Use when a feature spec exists and needs to become a technical implementation plan
+model: opus
+effort: high
 ---
 
 # SDD: Plan

@@ -1,6 +1,6 @@
 # Skill Writing Rules
 
-✓ Every SKILL.md must open with YAML frontmatter containing exactly `name` and `description`. Total frontmatter under 1024 chars.
+✓ Every SKILL.md must open with YAML frontmatter containing at minimum `name` and `description`. Total frontmatter under 1024 chars. Additional fields (e.g. `model`, `effort`) may be added deliberately to pin a stronger model/effort for reasoning-heavy skills.
 ✓ The `description` field must start with `"Use when..."` and describe triggering conditions, never the internal workflow.
 ✓ The skill body must have exactly one `# Heading` (the skill title). Use `##` for sections, `###` for subsections. Never skip heading levels.
 ✓ Include at most one code example per concept — complete, annotated, drawn from a real scenario.
