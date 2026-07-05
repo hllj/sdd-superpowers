@@ -159,7 +159,7 @@ Read complete output. Count failures. If any fail: use `sdd-superpowers:systemat
 
 Invoke `sdd-superpowers:verification-before-completion` — capture fresh test evidence before any completion claim. This is a **hard gate**: no completion claim without running this.
 
-Dispatch `sdd-superpowers:sdd-review` (implementation mode) to build the coverage matrix.
+Dispatch `sdd-superpowers:sdd-review` (implementation mode) to build the coverage matrix. Building the matrix (mapping acceptance criteria to tests) is mechanical enough to use a cheap model (e.g. haiku); if the reviewer reports ambiguity that requires judgment to resolve, re-dispatch on the calling session's model instead.
 
 ## Step 5: Finish
 
