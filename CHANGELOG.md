@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.11.0] - 2026-07-05
+
+### Added
+
+- **Skill-level model/effort pinning** — `sdd-plan`, `sdd-research`, `sdd-brainstorm` pinned to `model: opus` / `effort: high` for the SDD workflow's architecture, research, and design-exploration judgment; `sdd-execute`, `test-driven-development`, `subagent-driven-development`, `dispatching-parallel-agents`, `systematic-debugging`, `finishing-a-development-branch`, `requesting-code-review`, `receiving-code-review` pinned to `model: sonnet` / `effort: high` for implementation and code-review work; `.claude/rules/skill-writing.md` updated to permit additional frontmatter fields beyond `name`/`description` for this purpose
+
+### Changed
+
+- **Subagent model-selection guidance** — implementer subagents (in `subagent-driven-development` and `dispatching-parallel-agents`) now default to inheriting the calling session's model instead of picking cheap/standard/capable tiers by task complexity; spec-reviewer and code-quality-reviewer subagents may still use a cheaper model
+- **`sdd-review` coverage-matrix dispatch** — pinned to a cheap model (e.g. haiku) inside `sdd-execute`, since building the acceptance-criteria-to-test matrix is mechanical; re-dispatches on the calling session's model if the reviewer flags ambiguity needing judgment
+
+### Fixed
+
+- **Skill doc style consistency** — capitalized word after bold label across skill files
+
+---
+
 ## [2.10.0] - 2026-07-04
 
 ### Added
