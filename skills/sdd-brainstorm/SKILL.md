@@ -1,6 +1,8 @@
 ---
 name: sdd-brainstorm
 description: Use when an idea is fuzzy, exploratory, or has competing approaches that need design exploration before specification
+model: opus
+effort: high
 ---
 
 # SDD: Brainstorm

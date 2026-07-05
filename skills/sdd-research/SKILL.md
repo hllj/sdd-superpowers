@@ -1,6 +1,8 @@
 ---
 name: sdd-research
 description: Use when a spec has unresolved technology choices, performance targets, security requirements, or external integrations that need investigation before planning
+model: opus
+effort: high
 ---
 
 # SDD: Research
