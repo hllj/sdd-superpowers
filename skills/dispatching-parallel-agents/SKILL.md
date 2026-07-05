@@ -71,6 +71,8 @@ NOT safe to parallelize:
 
 After agents return: review each summary → check for conflicts → spec compliance review per unit (spec-reviewer-prompt.md) → code quality review per unit (requesting-code-review) → run full suite → mark units complete in TodoWrite.
 
+**Model selection:** Omit the `model` param on each parallel dispatch — these agents do the actual implementation work, so they inherit the calling session's model rather than a cheaper one. (The spec-compliance and code-quality reviewers dispatched afterward may use a cheaper model — see `sdd-superpowers:subagent-driven-development`.)
+
 **REQUIRED READING before proceeding:** [reference.md](reference.md) — the full dispatch pattern, agent prompt template, worked example, and post-dispatch review procedure.
 
 ## Integration
