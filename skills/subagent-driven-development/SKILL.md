@@ -109,9 +109,9 @@ digraph process {
 
 ## Model Selection
 
-**Implementer subagents:** omit the `model` param — they inherit the calling session's model. Implementation is the highest-stakes role (writes the code that ships), so don't downgrade it to save cost.
+**Implementer subagents:** Omit the `model` param — they inherit the calling session's model. Implementation is the highest-stakes role (writes the code that ships), so don't downgrade it to save cost.
 
-**Spec-reviewer and code-quality-reviewer subagents:** may use a cheaper model. Their job is narrower — checking compliance against a known spec or known quality criteria, not open-ended building — so a fast/cheap model is usually sufficient.
+**Spec-reviewer and code-quality-reviewer subagents:** May use a cheaper model. Their job is narrower — checking compliance against a known spec or known quality criteria, not open-ended building — so a fast/cheap model is usually sufficient.
 
 **Exception — escalation:** If an implementer reports BLOCKED because the task requires more reasoning than it's getting, re-dispatch with an explicit, more capable `model` override (see Handling Implementer Status below).
 
