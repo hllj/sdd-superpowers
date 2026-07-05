@@ -1,6 +1,8 @@
 ---
 name: receiving-code-review
 description: Use when receiving code review feedback, before implementing review suggestions
+model: sonnet
+effort: high
 ---
 
 # Code Review Reception

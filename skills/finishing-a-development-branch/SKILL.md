@@ -1,6 +1,8 @@
 ---
 name: finishing-a-development-branch
 description: Use when implementation is complete, all tests pass, and a decision is needed on how to integrate the work
+model: sonnet
+effort: high
 ---
 
 # Finishing a Development Branch

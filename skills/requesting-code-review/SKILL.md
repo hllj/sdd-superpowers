@@ -1,6 +1,8 @@
 ---
 name: requesting-code-review
 description: Use when completing a development phase or major feature, and before merging to main
+model: sonnet
+effort: high
 ---
 
 # Requesting Code Review
