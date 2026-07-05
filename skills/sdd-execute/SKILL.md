@@ -1,6 +1,8 @@
 ---
 name: sdd-execute
 description: Use when a plan is approved and implementation should begin
+model: sonnet
+effort: high
 ---
 
 # SDD: Execute
