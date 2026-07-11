@@ -224,6 +224,52 @@ Check whether the current session already has a tool for creating or entering an
 - **If available:** use it. Skip E.3 entirely — running `git worktree add` when a native tool exists creates phantom state the harness can't track or clean up.
 - **If not available:** continue to E.3.
 
+### E.3 Manual Git Worktree Fallback
+
+**Only reached when E.2 found no native tool.**
+
+**Directory selection**, in priority order:
+
+1. A worktree directory preference already declared in the user's instructions — use it without asking.
+2. An existing project-local directory:
+   ```bash
+   ls -d .worktrees 2>/dev/null     # preferred (hidden)
+   ls -d worktrees 2>/dev/null      # alternative
+   ```
+   If found, use it. If both exist, `.worktrees` wins.
+3. If neither exists, default to `.worktrees/` at the project root.
+
+**Safety verification** (project-local directories only) — must run before creating the worktree:
+
+```bash
+git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
+```
+
+If **not** ignored: add the directory to `.gitignore` and commit that change before proceeding.
+
+**Resolve the branch name:**
+
+- If the caller supplied a branch name, use it.
+- Otherwise, suggest a default: derive it from the active feature/spec context if known (e.g. the current `docs/specs/NNN-slug/` in progress), or fall back to a generic name (e.g. `worktree-<short-timestamp>`) if no feature context is available.
+- Validate the resolved name against `branch_pattern` from `docs/git-convention.md` (same rule `using-git` Operation A already applies). If it doesn't match, warn and re-prompt.
+- Confirm the name with the user before creating anything.
+- If the resolved branch name or target path already exists:
+  > "Branch `<name>` (or path `<path>`) already exists. Options:
+  > 1. Reuse the existing branch/worktree
+  > 2. Choose a different name
+  > 3. Abort"
+  Wait for selection. Never silently overwrite or fail.
+
+**Create the worktree:**
+
+```bash
+path="$LOCATION/$BRANCH_NAME"
+git worktree add "$path" -b "$BRANCH_NAME"
+cd "$path"
+```
+
+**Sandbox fallback:** if `git worktree add` fails with a permission error (sandbox denial), report that the sandbox blocked worktree creation and that work will continue in the current directory instead. Then proceed to E.4 in place — project setup and baseline verification still run.
+
 ## Error Reference
 
 | Scenario | Behavior |
