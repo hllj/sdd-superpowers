@@ -35,7 +35,8 @@ When invoked without a specified operation, present:
 > 1. Create branch
 > 2. Ad-hoc commit
 > 3. Merge commit message
-> 4. Show convention"
+> 4. Show convention
+> 5. Set up isolated workspace (worktree)"
 
 Wait for selection, then run the corresponding operation.
 
@@ -322,3 +323,9 @@ git branch -d feat/my-feature
 | Commit message violates convention | Show violation + corrected suggestion + re-prompt |
 | Commit fails (nothing staged, git error) | Report exact git output; halt until resolved |
 | Git not initialised | Detect; offer `git init && git add -A && git commit -m "chore: initial commit"` |
+| Already in a linked worktree (Operation E) | Report existing path/branch; do not create a new worktree |
+| In a git submodule (Operation E) | Treat as a normal checkout, not pre-existing isolation |
+| No native worktree tool found (Operation E) | Fall back to manual `git worktree add` (E.3) |
+| Worktree directory not gitignored (Operation E) | Add to `.gitignore`, commit, then proceed |
+| `git worktree add` fails with permission/sandbox error (Operation E) | Report the denial; continue in the current directory; still run E.4/E.5 |
+| Baseline test run fails (Operation E) | Report failures; ask whether to proceed or investigate |
