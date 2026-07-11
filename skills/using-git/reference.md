@@ -270,6 +270,44 @@ cd "$path"
 
 **Sandbox fallback:** if `git worktree add` fails with a permission error (sandbox denial), report that the sandbox blocked worktree creation and that work will continue in the current directory instead. Then proceed to E.4 in place — project setup and baseline verification still run.
 
+### E.4 Project Setup
+
+Auto-detect and run the appropriate install command:
+
+```bash
+if [ -f package.json ]; then npm install; fi
+if [ -f Cargo.toml ]; then cargo build; fi
+if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+if [ -f pyproject.toml ]; then poetry install; fi
+if [ -f go.mod ]; then go mod download; fi
+```
+
+No recognized manifest → skip without error.
+
+### E.5 Verify Clean Baseline
+
+Run the project's test command (e.g. `npm test`, `cargo test`, `pytest`, `go test ./...`, or this repo's `tests/hooks/run_all.sh`).
+
+- **Tests fail:** report failures and ask whether to proceed or investigate. Do not continue silently.
+- **Tests pass:** report:
+  ```
+  Worktree ready at <full-path>
+  Tests passing (<N> tests, 0 failures)
+  Ready to implement <feature-name>
+  ```
+
+**Output:** workspace path, isolation method used (native tool / manual worktree / sandbox fallback in place), and baseline test result — reported to the caller or user.
+
+### Removing a Worktree
+
+```bash
+# From the main repo root
+git worktree remove .worktrees/my-feature
+
+# Delete the branch if no longer needed
+git branch -d feat/my-feature
+```
+
 ## Error Reference
 
 | Scenario | Behavior |
@@ -284,31 +322,3 @@ cd "$path"
 | Commit message violates convention | Show violation + corrected suggestion + re-prompt |
 | Commit fails (nothing staged, git error) | Report exact git output; halt until resolved |
 | Git not initialised | Detect; offer `git init && git add -A && git commit -m "chore: initial commit"` |
-
-## Advanced: Parallel Workstreams with Worktrees
-
-> **This is not part of the standard SDD workflow.** Use only when you need multiple branches checked out simultaneously.
-
-### Before creating a worktree
-
-Verify the target directory is gitignored:
-
-```bash
-git check-ignore -q .worktrees
-```
-
-If not ignored, add `.worktrees/` to `.gitignore` and commit before proceeding.
-
-### Create a worktree
-
-```bash
-git worktree add .worktrees/my-feature -b feat/my-feature
-cd .worktrees/my-feature
-```
-
-### Remove a worktree
-
-```bash
-git worktree remove .worktrees/my-feature
-git branch -d feat/my-feature
-```
