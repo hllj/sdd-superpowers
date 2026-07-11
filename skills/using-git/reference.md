@@ -290,7 +290,7 @@ Run the project's test command (e.g. `npm test`, `cargo test`, `pytest`, `go tes
 
 - **Tests fail:** report failures and ask whether to proceed or investigate. Do not continue silently.
 - **Tests pass:** report:
-  ```
+  ```text
   Worktree ready at <full-path>
   Tests passing (<N> tests, 0 failures)
   Ready to implement <feature-name>
