@@ -188,6 +188,42 @@ Wait for selection, then run the corresponding operation.
 
 **Output:** Confirmed message returned to caller
 
+## Operation E — Isolated Workspace Setup (Worktree)
+
+**Invoked by:** directly via menu option (5), or another SDD skill via an explicit, named delegation request for "Isolated Workspace Setup" — never invoked automatically as part of another skill's standard flow
+
+**Inputs:** none required; an optional branch name if the caller already knows it
+
+### E.1 Detect Existing Isolation
+
+Before creating anything, check whether the current workspace is already isolated:
+
+```bash
+GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd -P)
+GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
+BRANCH=$(git branch --show-current)
+```
+
+**Submodule guard:** `GIT_DIR != GIT_COMMON` is also true inside git submodules. Before concluding "already in a worktree," verify this is not a submodule:
+
+```bash
+git rev-parse --show-superproject-working-tree 2>/dev/null
+```
+
+If this returns a path, treat the workspace as a normal checkout — not pre-existing isolation.
+
+- **If `GIT_DIR != GIT_COMMON` (and not a submodule):** already isolated.
+  - On a branch: report "Already in isolated workspace at `<path>` on branch `<name>`." Stop — do not create a new worktree.
+  - Detached HEAD: report "Already in isolated workspace at `<path>` (detached HEAD). Branch creation needed at finish time." Stop.
+- **If `GIT_DIR == GIT_COMMON` (or in a submodule):** normal checkout. Continue to E.2.
+
+### E.2 Prefer a Native Worktree Tool
+
+Check whether the current session already has a tool for creating or entering an isolated workspace — it may be named `EnterWorktree`, `WorktreeCreate`, a `/worktree` command, or a `--worktree` flag.
+
+- **If available:** use it. Skip E.3 entirely — running `git worktree add` when a native tool exists creates phantom state the harness can't track or clean up.
+- **If not available:** continue to E.3.
+
 ## Error Reference
 
 | Scenario | Behavior |
