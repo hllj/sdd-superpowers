@@ -1,6 +1,6 @@
 # Using Git: Full Operations Reference
 
-> Complete convention loading, all four operations, error table, and worktrees guide. See [SKILL.md](SKILL.md) for the summary.
+> Complete convention loading, all five operations, error table, and worktrees guide. See [SKILL.md](SKILL.md) for the summary.
 
 ## Step 0: Load Steering Context
 
@@ -35,7 +35,8 @@ When invoked without a specified operation, present:
 > 1. Create branch
 > 2. Ad-hoc commit
 > 3. Merge commit message
-> 4. Show convention"
+> 4. Show convention
+> 5. Set up isolated workspace (worktree)"
 
 Wait for selection, then run the corresponding operation.
 
@@ -188,6 +189,128 @@ Wait for selection, then run the corresponding operation.
 
 **Output:** Confirmed message returned to caller
 
+## Operation E — Isolated Workspace Setup (Worktree)
+
+**Invoked by:** directly via menu option (5), or another SDD skill via an explicit, named delegation request for "Isolated Workspace Setup" — never invoked automatically as part of another skill's standard flow
+
+**Inputs:** none required; an optional branch name if the caller already knows it
+
+### E.1 Detect Existing Isolation
+
+Before creating anything, check whether the current workspace is already isolated:
+
+```bash
+GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd -P)
+GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
+BRANCH=$(git branch --show-current)
+```
+
+**Submodule guard:** `GIT_DIR != GIT_COMMON` is also true inside git submodules. Before concluding "already in a worktree," verify this is not a submodule:
+
+```bash
+git rev-parse --show-superproject-working-tree 2>/dev/null
+```
+
+If this returns a path, treat the workspace as a normal checkout — not pre-existing isolation.
+
+- **If `GIT_DIR != GIT_COMMON` (and not a submodule):** already isolated.
+  - On a branch: report "Already in isolated workspace at `<path>` on branch `<name>`." Stop — do not create a new worktree.
+  - Detached HEAD: report "Already in isolated workspace at `<path>` (detached HEAD). Branch creation needed at finish time." Stop.
+- **If `GIT_DIR == GIT_COMMON` (or in a submodule):** normal checkout. Continue to E.2.
+
+### E.2 Prefer a Native Worktree Tool
+
+Check whether the current session already has a tool for creating or entering an isolated workspace — it may be named `EnterWorktree`, `WorktreeCreate`, a `/worktree` command, or a `--worktree` flag.
+
+- **If available:** use it. Skip E.3 entirely — running `git worktree add` when a native tool exists creates phantom state the harness can't track or clean up.
+- **If not available:** continue to E.3.
+
+### E.3 Manual Git Worktree Fallback
+
+**Only reached when E.2 found no native tool.**
+
+**Directory selection**, in priority order:
+
+1. A worktree directory preference already declared in the user's instructions — use it without asking.
+2. An existing project-local directory:
+   ```bash
+   ls -d .worktrees 2>/dev/null     # preferred (hidden)
+   ls -d worktrees 2>/dev/null      # alternative
+   ```
+   If found, use it. If both exist, `.worktrees` wins.
+3. If neither exists, default to `.worktrees/` at the project root.
+
+The directory chosen by the priority above is referred to as `<dir>` below.
+
+**Safety verification** (project-local directories only) — must run before creating the worktree:
+
+```bash
+git check-ignore -q "<dir>" 2>/dev/null
+```
+
+If **not** ignored: add `<dir>` to `.gitignore` and commit that change before proceeding.
+
+**Resolve the branch name:**
+
+- If the caller supplied a branch name, use it.
+- Otherwise, suggest a default: derive it from the active feature/spec context if known (e.g. the current `docs/specs/NNN-slug/` in progress), or fall back to a generic name (e.g. `worktree-<short-timestamp>`) if no feature context is available.
+- Validate the resolved name against `branch_pattern` from `docs/git-convention.md` (same rule `using-git` Operation A already applies). If it doesn't match, warn and re-prompt.
+- Confirm the name with the user before creating anything.
+- If the resolved branch name or target path already exists:
+  > "Branch `<name>` (or path `<path>`) already exists. Options:
+  > 1. Reuse the existing branch/worktree
+  > 2. Choose a different name
+  > 3. Abort"
+  Wait for selection. Never silently overwrite or fail.
+
+**Create the worktree:**
+
+```bash
+path="<dir>/$BRANCH_NAME"
+git worktree add "$path" -b "$BRANCH_NAME"
+cd "$path"
+```
+
+**Sandbox fallback:** if `git worktree add` fails with a permission error (sandbox denial), report that the sandbox blocked worktree creation and that work will continue in the current directory instead. Then proceed to E.4 in place — project setup and baseline verification still run.
+
+### E.4 Project Setup
+
+Auto-detect and run the appropriate install command:
+
+```bash
+if [ -f package.json ]; then npm install; fi
+if [ -f Cargo.toml ]; then cargo build; fi
+if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+if [ -f pyproject.toml ]; then poetry install; fi
+if [ -f go.mod ]; then go mod download; fi
+```
+
+No recognized manifest → skip without error.
+
+### E.5 Verify Clean Baseline
+
+Run the project's test command (e.g. `npm test`, `cargo test`, `pytest`, `go test ./...`, or this repo's `tests/hooks/run_all.sh`).
+
+- **Tests fail:** report failures and ask whether to proceed or investigate. Do not continue silently.
+- **Tests pass:** report:
+  ```text
+  Worktree ready at <full-path>
+  Tests passing (<N> tests, 0 failures)
+  Ready to implement <feature-name>
+  ```
+
+**Output:** workspace path, isolation method used (native tool / manual worktree / sandbox fallback in place), and baseline test result — reported to the caller or user.
+
+### Removing a Worktree
+
+```bash
+# From the main repo root
+git worktree remove .worktrees/my-feature
+
+# Delete the branch if no longer needed
+git branch -d feat/my-feature
+```
+
 ## Error Reference
 
 | Scenario | Behavior |
@@ -202,31 +325,9 @@ Wait for selection, then run the corresponding operation.
 | Commit message violates convention | Show violation + corrected suggestion + re-prompt |
 | Commit fails (nothing staged, git error) | Report exact git output; halt until resolved |
 | Git not initialised | Detect; offer `git init && git add -A && git commit -m "chore: initial commit"` |
-
-## Advanced: Parallel Workstreams with Worktrees
-
-> **This is not part of the standard SDD workflow.** Use only when you need multiple branches checked out simultaneously.
-
-### Before creating a worktree
-
-Verify the target directory is gitignored:
-
-```bash
-git check-ignore -q .worktrees
-```
-
-If not ignored, add `.worktrees/` to `.gitignore` and commit before proceeding.
-
-### Create a worktree
-
-```bash
-git worktree add .worktrees/my-feature -b feat/my-feature
-cd .worktrees/my-feature
-```
-
-### Remove a worktree
-
-```bash
-git worktree remove .worktrees/my-feature
-git branch -d feat/my-feature
-```
+| Already in a linked worktree (Operation E) | Report existing path/branch; do not create a new worktree |
+| In a git submodule (Operation E) | Treat as a normal checkout, not pre-existing isolation |
+| No native worktree tool found (Operation E) | Fall back to manual `git worktree add` (E.3) |
+| Worktree directory not gitignored (Operation E) | Add to `.gitignore`, commit, then proceed |
+| `git worktree add` fails with permission/sandbox error (Operation E) | Report the denial; continue in the current directory; still run E.4/E.5 |
+| Baseline test run fails (Operation E) | Report failures; ask whether to proceed or investigate |
