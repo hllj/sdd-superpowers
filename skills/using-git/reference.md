@@ -1,6 +1,6 @@
 # Using Git: Full Operations Reference
 
-> Complete convention loading, all four operations, error table, and worktrees guide. See [SKILL.md](SKILL.md) for the summary.
+> Complete convention loading, all five operations, error table, and worktrees guide. See [SKILL.md](SKILL.md) for the summary.
 
 ## Step 0: Load Steering Context
 

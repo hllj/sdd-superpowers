@@ -42,7 +42,7 @@ All SDD git operations run through this skill. It enforces the convention in `do
 
 Convention file: `docs/git-convention.md` (YAML frontmatter with `branch_pattern`, `commit_format`, `allowed_types`). Missing file on new project → halt, run `sdd-superpowers:sdd-init`. Missing on existing project → offer 4-question creation dialogue.
 
-**REQUIRED READING before proceeding:** [reference.md](reference.md) — convention loading detail, full operation procedures (A–D), error reference table, and worktrees guide.
+**REQUIRED READING before proceeding:** [reference.md](reference.md) — convention loading detail, full operation procedures (A–E), error reference table, and worktrees guide.
 
 ## Constraints
 
