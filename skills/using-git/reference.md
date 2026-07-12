@@ -240,13 +240,15 @@ Check whether the current session already has a tool for creating or entering an
    If found, use it. If both exist, `.worktrees` wins.
 3. If neither exists, default to `.worktrees/` at the project root.
 
+The directory chosen by the priority above is referred to as `<dir>` below.
+
 **Safety verification** (project-local directories only) — must run before creating the worktree:
 
 ```bash
-git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
+git check-ignore -q "<dir>" 2>/dev/null
 ```
 
-If **not** ignored: add the directory to `.gitignore` and commit that change before proceeding.
+If **not** ignored: add `<dir>` to `.gitignore` and commit that change before proceeding.
 
 **Resolve the branch name:**
 
@@ -264,7 +266,7 @@ If **not** ignored: add the directory to `.gitignore` and commit that change bef
 **Create the worktree:**
 
 ```bash
-path="$LOCATION/$BRANCH_NAME"
+path="<dir>/$BRANCH_NAME"
 git worktree add "$path" -b "$BRANCH_NAME"
 cd "$path"
 ```
