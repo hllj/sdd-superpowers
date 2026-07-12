@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.12.0] - 2026-07-12
+
+### Added
+
+- **Worktree isolation operation in `using-git`** — new Operation E ("Isolated Workspace Setup"), adopting the fuller `using-git-worktrees` skill logic from the `obra/superpowers` plugin: detects pre-existing isolation (git-dir/git-common-dir comparison with a submodule guard), prefers a native harness worktree tool over raw `git worktree` commands, falls back to a directory-priority-aware manual flow with gitignore safety and branch-name resolution/validation/collision handling, handles sandbox/permission denial gracefully, and verifies a clean baseline (dependency install + test run) before reporting the workspace ready. Reachable only via menu option 5 or an explicit named delegation — never auto-triggered by `sdd-execute`, `sdd-workflow`, or any other skill, preserving spec 003's original opt-in decision. Replaces the thinner "Advanced: Parallel Workstreams with Worktrees" section added by spec 003.
+
 ## [2.11.0] - 2026-07-05
 
 ### Added
