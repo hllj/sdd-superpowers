@@ -87,7 +87,7 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | About to claim done | `sdd-superpowers:verification-before-completion` |
 | Merge decision | `sdd-superpowers:finishing-a-development-branch` |
 | Any git operation (branch, commit, convention) | `sdd-superpowers:using-git` |
-| User says 'review this'/'can you review', OR at any phase boundary | `sdd-superpowers:requesting-code-review` |
+| User says 'review this'/'can you review' | `sdd-superpowers:requesting-code-review` |
 | Review feedback received (from human or reviewer subagent) — before implementing any change | `sdd-superpowers:receiving-code-review` |
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
