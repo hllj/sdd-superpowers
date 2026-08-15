@@ -14,7 +14,7 @@ Rescan on every invocation — custom files added after init are discovered auto
 
 Before planning:
 1. `docs/specs/<NNN>-<feature-slug>/spec.md` must exist and be approved
-2. `docs/specs/<NNN>-<feature-slug>/research.md` should exist if research was done
+2. One or more `docs/adr/<NNN>-*.md` files should exist if technical decisions were made during brainstorming
 3. No `[NEEDS CLARIFICATION]` markers should remain in the spec
 
 Once prerequisites are confirmed, call `EnterPlanMode`. Steps 1–4 below (reading inputs, checking gates, drafting supporting documents and the main plan) all happen inside Plan Mode — nothing is written to `docs/specs/.../plan.md` until the draft is approved (see Step 4).
@@ -25,7 +25,7 @@ If `EnterPlanMode`/`ExitPlanMode` are unavailable in the current environment: sk
 
 Read in order:
 1. `docs/specs/<NNN>-<feature-slug>/spec.md`
-2. `docs/specs/<NNN>-<feature-slug>/research.md` (if exists)
+2. Any `docs/adr/<NNN>-*.md` files (if they exist)
 3. Any existing project architecture docs or CLAUDE.md
 
 Map each functional requirement to a technical component. If a requirement has no obvious technical home, flag it before planning.
