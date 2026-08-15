@@ -19,7 +19,7 @@ Built on the [superpowers](https://github.com/obra/superpowers) framework: skill
 SDD inverts the traditional relationship between specs and code. Instead of writing code and hoping it matches intent, you write precise specifications first, then generate code from them. The spec is the authoritative artifact; code is its expression in a particular language and framework.
 
 **Key principles:**
-- **Specifications as lingua franca** — PRD and implementation plan are the primary artifacts
+- **Specifications as lingua franca** — PRD, specification, and implementation plan are the primary artifacts
 - **Executable specifications** — specs are precise enough to generate working, testable code
 - **Test-first always** — no implementation code without a prior failing test
 - **Traceability** — every technical decision traces back to a specific requirement
@@ -39,9 +39,8 @@ NO COMPLETION CLAIM without fresh verification evidence
 |-------|-------------|
 | `sdd-workflow` | Start of any conversation — establishes mandatory skill invocation |
 | `sdd-init` | New project with no CLAUDE.md or docs/specs/ → mission charter ceremony + steering scaffold |
-| `sdd-brainstorm` | Idea is fuzzy/exploratory → dialogue + 2-3 approaches + design.md |
-| `sdd-specify` | Idea is clear, or design.md exists → structured PRD (spec.md) |
-| `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
+| `sdd-brainstorm` | Idea is fuzzy/exploratory, or a technical decision needs investigating → dialogue + 2-3 approaches + prd.md + docs/adr/ |
+| `sdd-specify` | Idea is clear, or prd.md exists → structured specification (spec.md) |
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-execute` | Plan approved → invokes `subagent-driven-development` to orchestrate per-task subagents with spec-compliance + code-quality review |
 | `sdd-spec-update` | Change or addition to an approved spec → classify impact (PATCH/MINOR/MAJOR), version spec, propagate downstream |
@@ -56,7 +55,8 @@ Idea (fuzzy)                    Idea (clear)
  ▼                               │
 sdd-brainstorm ──────────────────┤
  │  dialogue + 2-3 approaches    │
- │  design.md + spec-review      │
+ │  prd.md + docs/adr/*.md       │
+ │  + spec-review                │
  │                               │
  └───────────────────────────────┘
                                  │
@@ -110,7 +110,7 @@ Skills run only when Claude is asked to invoke them. Hooks run unconditionally, 
 ```bash
 # Fuzzy idea path:
 # 1. Invoke sdd-brainstorm with your idea
-# 2. Answer questions, pick from 2-3 approaches, approve design
+# 2. Answer questions, pick from 2-3 approaches, approve the PRD and any ADRs
 # 3. sdd-brainstorm automatically invokes sdd-specify (fast-path)
 
 # Clear idea path:

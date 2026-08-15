@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-08-15
+
+### Changed
+
+- **BREAKING: merged `sdd-research` into `sdd-brainstorm`** — one pre-spec skill now covers idea exploration, technical investigation, and formal architecture decisions. `design.md` and `research.md` are replaced by `prd.md` (product-level why/what) and a durable `docs/adr/<NNN>-<slug>.md` log (one file per significant technical decision, Michael Nygard ADR format: Status/Context/Options Considered/Decision/Consequences). `sdd-research` skill directory removed; `sdd-workflow`, `sdd-specify`, `sdd-plan`, `sdd-init`, and the `tech-stack.md` steering file updated to the new routing and artifact names. Existing `design.md`/`research.md` files from features brainstormed before this change are left as-is — this is forward-only, not migrated.
+
+---
+
 ## [2.12.0] - 2026-07-12
 
 ### Added
