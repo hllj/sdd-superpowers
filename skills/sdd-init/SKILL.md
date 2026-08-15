@@ -30,7 +30,7 @@ Files created by sdd-init:
 | File | Purpose |
 |------|---------|
 | `.claude/memory/foundation.md` | Foundation file — mission statement + 3–5 project-specific principles |
-| `.claude/memory/steering/tech-stack.md` | Tech stack context — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review |
+| `.claude/memory/steering/tech-stack.md` | Tech stack context — loaded by sdd-brainstorm, sdd-specify, sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/test-strategy.md` | Test philosophy — loaded by sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |

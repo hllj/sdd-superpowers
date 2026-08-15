@@ -1,6 +1,6 @@
 ---
 scope: tech-stack
-loaded-by: sdd-specify, sdd-plan, sdd-execute, sdd-research, sdd-review
+loaded-by: sdd-brainstorm, sdd-specify, sdd-plan, sdd-execute, sdd-review
 ---
 
 # Tech Stack

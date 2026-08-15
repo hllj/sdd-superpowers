@@ -1,7 +1,7 @@
 # Implementation Plan: <Feature Name>
 
 **Spec:** docs/specs/<NNN>-<feature-slug>/spec.md
-**Research:** docs/specs/<NNN>-<feature-slug>/research.md (if applicable)
+**Decisions:** docs/adr/<NNN>-*.md (if applicable)
 **Created:** YYYY-MM-DD
 
 ---

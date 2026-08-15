@@ -8,7 +8,7 @@ For using the plugin in your own project, see `CLAUDE.md`.
 SDD inverts the traditional relationship between specs and code. Instead of writing code and hoping it matches intent, you write precise specifications first, then generate code from them. The spec is the authoritative artifact; code is its expression in a particular language and framework.
 
 Key principles:
-- **Specifications as lingua franca** — PRD and implementation plan are the primary artifacts
+- **Specifications as lingua franca** — PRD, specification, and implementation plan are the primary artifacts
 - **Executable specifications** — specs are precise enough to generate working, testable code
 - **Test-first always** — no implementation code without a prior failing test
 - **Traceability** — every technical decision traces back to a specific requirement
@@ -19,9 +19,8 @@ Key principles:
 | Skill | When to Use |
 |-------|-------------|
 | `sdd-workflow` | Start of any conversation — establishes mandatory skill invocation |
-| `sdd-brainstorm` | Idea is fuzzy/exploratory → dialogue + 2-3 approaches + design.md |
-| `sdd-specify` | Idea is clear, or design.md exists → structured PRD (spec.md) |
-| `sdd-research` | Unresolved tech choices, performance/security requirements before planning |
+| `sdd-brainstorm` | Idea is fuzzy/exploratory, or a technical decision needs investigating → dialogue + 2-3 approaches + prd.md + docs/adr/ |
+| `sdd-specify` | Idea is clear, or prd.md exists → structured specification (spec.md) |
 | `sdd-plan` | Spec exists → architecture, contracts, data models, test-first plan |
 | `sdd-tasks` | Plan exists → flat executable task list with parallelization hints |
 | `sdd-execute` | Tasks exist → subagent dispatch with spec-compliance + code-quality review |
@@ -36,18 +35,15 @@ Idea (fuzzy)                    Idea (clear)
  ▼                               │
 sdd-brainstorm ──────────────────┤
  │  dialogue + 2-3 approaches    │
- │  design.md + spec-review      │
+ │  prd.md + docs/adr/*.md       │
+ │  + spec-review                │
  │                               │
  └───────────────────────────────┘
                                  │
                                  ▼
 sdd-specify ──────────────────► docs/specs/NNN-feature/spec.md
- │  (fast-path if design.md       + feature branch created
+ │  (fast-path if prd.md          + feature branch created
  │   already exists)
- │
- ├─(complex features)──────────►
- │                              sdd-research ──► docs/specs/NNN-feature/research.md
- │ ◄────────────────────────────┘
  │
  ├─(optional pre-plan check)───►
  │                              sdd-review (spec mode)
@@ -103,8 +99,8 @@ docs/
   contributing.md   # This file
   specs/
     001-feature-name/
-      spec.md          # PRD — the source of truth
-      research.md      # Technical investigation (optional)
+      prd.md           # Pre-spec product framing + links to ADRs (optional, from sdd-brainstorm)
+      spec.md          # Specification — the source of truth
       plan.md          # Implementation plan
       data-model.md    # Entity definitions (optional)
       contracts/       # API/event contracts (optional)
@@ -114,7 +110,6 @@ skills/
   sdd-workflow/
   sdd-brainstorm/
   sdd-specify/
-  sdd-research/
   sdd-plan/
   sdd-tasks/
   sdd-execute/
@@ -130,7 +125,7 @@ skills/
 ```
 # Fuzzy idea path:
 1. "Use sdd-brainstorm to explore: [your idea]"
-2. Answer questions, pick from 2-3 approaches, approve design
+2. Answer questions, pick from 2-3 approaches, approve the PRD and any ADRs
 3. sdd-brainstorm automatically invokes sdd-specify (fast-path)
 
 # Clear idea path:

@@ -9,7 +9,7 @@ description: Use when a user describes a new feature, idea, or problem without a
 
 ## Overview
 
-Turn ideas into precise, executable Product Requirements Documents (PRDs). The specification is the source of truth — code serves specs, not the other way around. A spec written here drives all downstream planning and code generation.
+Turn ideas (or an approved PRD from `sdd-superpowers:sdd-brainstorm`) into a precise, executable specification. The specification is the source of truth — code serves specs, not the other way around. A spec written here drives all downstream planning and code generation.
 
 <examples>
 <example>
@@ -31,8 +31,8 @@ Do NOT write any implementation code, scaffold any project, or make any architec
 ## When to Use
 
 - A new feature, idea, or problem needs to be formalized
-- `sdd-superpowers:sdd-brainstorm` has completed and `design.md` exists (fast-path)
-- NOT when spec already exists — go to `sdd-superpowers:sdd-plan` or `sdd-superpowers:sdd-research`
+- `sdd-superpowers:sdd-brainstorm` has completed and `prd.md` exists (fast-path)
+- NOT when spec already exists — go to `sdd-superpowers:sdd-plan`
 - NOT when the idea is still fuzzy — run `sdd-superpowers:sdd-brainstorm` first
 
 ## Quick Reference
@@ -41,7 +41,7 @@ Spec output: `docs/specs/NNN-<slug>/spec.md`
 
 Spec sections: Problem Statement → Goals → Non-Goals → Users and Context → User Stories (with acceptance criteria) → Functional Requirements → Non-Functional Requirements → Error Scenarios → Open Questions → Out of Scope
 
-**Fast-path:** if `design.md` exists from `sdd-superpowers:sdd-brainstorm`, Steps 2–3 are skipped — the design is formalized directly.
+**Fast-path:** if `prd.md` exists from `sdd-superpowers:sdd-brainstorm`, Steps 2–3 are skipped — the PRD is formalized directly.
 
 **REQUIRED READING before proceeding:** [reference.md](reference.md) — the full process (Steps 1–8), spec.md template, self-review checklist, placeholder anti-patterns, and handoff options.
 
@@ -71,7 +71,7 @@ After the user explicitly approves the spec:
 ## Constraints
 
 - Does NOT write implementation code, scaffold any project, or make architectural decisions — this skill produces only spec.md
-- Does NOT proceed to sdd-plan, sdd-research, or any downstream skill before the spec is explicitly approved
+- Does NOT proceed to sdd-plan or any downstream skill before the spec is explicitly approved
 - Does NOT leave [NEEDS CLARIFICATION] items unresolved in the final approved spec
 
 ## Error Handling
