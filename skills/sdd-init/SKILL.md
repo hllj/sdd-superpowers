@@ -35,7 +35,7 @@ Files created by sdd-init:
 | `.claude/memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |
 | `docs/specs/.gitkeep` | Spec directory scaffold |
-| `CLAUDE.md` | Project context and judgment-based SDD guide — edit "About This Project" section after init |
+| `CLAUDE.md` | Real project docs from the `init` skill (build/test/lint commands, code style, structure) plus an appended SDD workflow/memory/gates block |
 | `docs/git-convention.md` | Branch naming + commit format rules |
 | `.claude/rules/*.md` | Per-topic rule files — best practices, anti-patterns, conventions inferred from stack |
 | `.claude/settings.json` | Allowed/blocked tools, ignore patterns, and automation hooks inferred from stack |

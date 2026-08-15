@@ -1,11 +1,4 @@
 <!-- sdd-init: generated -->
-# [Project Name]
-
-## About This Project
-
-[Brief description of what this project does, its purpose, and key components.
-Edit this section after init to give Claude context about your codebase.]
-
 ## Working in This Project
 
 For small tasks (typo fixes, config tweaks, answering questions, quick edits) —
