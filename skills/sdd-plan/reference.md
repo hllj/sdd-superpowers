@@ -17,6 +17,10 @@ Before planning:
 2. `docs/specs/<NNN>-<feature-slug>/research.md` should exist if research was done
 3. No `[NEEDS CLARIFICATION]` markers should remain in the spec
 
+Once prerequisites are confirmed, call `EnterPlanMode`. Steps 1–4 below (reading inputs, checking gates, drafting supporting documents and the main plan) all happen inside Plan Mode — nothing is written to `docs/specs/.../plan.md` until the draft is approved (see Step 4).
+
+If `EnterPlanMode`/`ExitPlanMode` are unavailable in the current environment: skip them, but do not skip approval. Present the completed draft as a normal message and get explicit user approval before writing anything to disk — the gate is "no unapproved write," not "must use Plan Mode."
+
 ## Step 1: Read All Inputs
 
 Read in order:
@@ -28,7 +32,7 @@ Map each functional requirement to a technical component. If a requirement has n
 
 ## Step 2: Pre-Implementation Gates
 
-Validate these gates. Document any failures in the plan's "Complexity Tracking" section.
+Validate these gates. Document any failures as a Complexity Tracking note under the specific phase where the violation occurs.
 
 **Simplicity Gate:**
 - [ ] Can this be implemented with ≤3 major components/modules?
@@ -43,7 +47,7 @@ Validate these gates. Document any failures in the plan's "Complexity Tracking" 
 - [ ] Are API contracts defined before implementation starts?
 - [ ] Are contract tests written before implementation code?
 
-If a gate fails and the complexity is genuinely justified, document why in "Complexity Tracking."
+If a gate fails and the complexity is genuinely justified, document why in that phase's Complexity Tracking note.
 
 ## Step 3: Write Supporting Documents
 
@@ -59,15 +63,17 @@ See [contracts-api-template.md](contracts-api-template.md) for the canonical con
 
 ## Step 4: Write the Main Plan
 
-Generate `docs/specs/<NNN>-<feature-slug>/plan.md`:
+Draft `docs/specs/<NNN>-<feature-slug>/plan.md`:
 
-See [template.md](template.md) for the canonical plan.md structure. Fill in every section.
+See [template.md](template.md) for the canonical plan.md structure. Fill in every phase.
+
+Once the draft is complete and has passed Step 5 (Self-Review) and Step 6 (Verification Gate) below, call `ExitPlanMode` to request the user's approval. Only after approval, write `plan.md` to disk at `docs/specs/<NNN>-<feature-slug>/plan.md` (and any supporting documents from Step 3).
 
 ## Step 5: Self-Review
 
 After writing all documents, check the plan against the spec:
 
-**Structural compliance:** Does the generated `plan.md` contain all required sections from `template.md` in order (Goal → Architecture → Tech Stack → File Structure → Complexity Tracking → Phase 0 → implementation phases → Integration Verification → Quickstart Validation)? Fix any missing or reordered sections before continuing.
+**Structural compliance:** Does the generated `plan.md` contain all required sections from `template.md` in order (Goal → Phase 0 → implementation phases → Integration Verification → Quickstart Validation)? Every phase header carries `Implements`/`Satisfies`/`Files`. There are no standalone Architecture, Tech Stack, or File Structure sections — that content lives inside each phase's goal line and `Files:` entry instead. Fix any missing or reordered sections before continuing.
 
 **Optional document compliance (conditional):** If `data-model.md` was created, does it contain all required sections from `data-model-template.md` in order (Entities heading → EntityName subheadings with field tables → Indexes, Relationships, Spec requirement per entity)? If `contracts/api.md` was created, does it contain all required sections from `contracts-api-template.md` in order (endpoint heading with Purpose/Spec requirement → Request → Response → Error Responses)?
 
@@ -103,7 +109,7 @@ Before claiming the plan is ready, confirm:
 >
 > **Next steps:**
 > 1. Run `sdd-superpowers:sdd-review` (spec mode) to validate plan-spec alignment before execution
-> 2. Run `sdd-superpowers:sdd-execute` to implement with subagent dispatch and two-stage review"
+> 2. Run `sdd-superpowers:sdd-execute` to implement — TDD-only per unit, one spec-alignment review at the end"
 
 ## Plan Quality Rules
 

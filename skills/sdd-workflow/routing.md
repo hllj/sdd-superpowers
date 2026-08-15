@@ -45,7 +45,6 @@ Before evaluating any routing or skill invocation, check whether this project is
 | A task fails or behavior is unexpected | `sdd-superpowers:systematic-debugging` |
 | About to claim a feature is complete | `sdd-superpowers:verification-before-completion` |
 | Implementation complete, deciding how to merge | `sdd-superpowers:finishing-a-development-branch` |
-| At a phase boundary during execution, before starting the next phase | `sdd-superpowers:requesting-code-review` |
 | Implementing fixes after a code review flagged issues | `sdd-superpowers:receiving-code-review` |
 | Dispatching 2+ independent tasks concurrently | `sdd-superpowers:dispatching-parallel-agents` |
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
@@ -155,10 +154,10 @@ The following tables map exact user phrases and agent-action signals to bundled 
 - All tasks in `tasks.md` are complete — REQUIRED before `finishing-a-development-branch` (implementation review mode)
 
 **`sdd-superpowers:requesting-code-review` is mandatory when:**
-- Completing a phase in `sdd-superpowers:sdd-execute` before starting the next phase
+- The user says "review this" / "can you review" — not called by `sdd-superpowers:sdd-execute`'s internal flow
 
 **`sdd-superpowers:receiving-code-review` is mandatory when:**
-- A spec-compliance or code-quality review returns issues requiring fixes
+- `sdd-superpowers:sdd-review` (Mode B) returns issues during `sdd-superpowers:sdd-execute`'s follow-up loop, or `sdd-superpowers:requesting-code-review` returns issues in an ad hoc review
 
 **`sdd-superpowers:dispatching-parallel-agents` is mandatory when:**
 - Dispatching a parallel task group in `sdd-superpowers:sdd-execute` (2+ independent tasks concurrently)

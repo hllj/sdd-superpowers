@@ -1,6 +1,6 @@
 ---
 name: requesting-code-review
-description: Use when completing a development phase or major feature, and before merging to main
+description: Use when the user asks for a code review directly, before merging to main, or after completing a major feature
 model: sonnet
 effort: high
 ---
@@ -24,7 +24,7 @@ effort: high
 
 Dispatch a `sdd-superpowers:code-reviewer` subagent with precisely crafted context to catch issues before they cascade. The reviewer gets the work product, not your session history — keeping review focused and your context uncluttered.
 
-In SDD this is the **code quality** review stage — invoked after spec compliance review passes. Spec compliance is handled separately by `spec-reviewer-prompt.md` in `sdd-superpowers:subagent-driven-development`.
+This is a standalone, ad hoc review — SDD's execution flow (`sdd-superpowers:sdd-execute`) does not call this skill per unit or per phase; TDD is the quality gate during execution, and `sdd-superpowers:sdd-review` (Mode B) is the one spec-alignment check afterward. Use this skill when a human asks for a review directly, or as an optional pre-merge sanity check.
 
 **Core principle:** Review early, review often.
 
@@ -33,9 +33,7 @@ In SDD this is the **code quality** review stage — invoked after spec complian
 ## When to Use
 
 **Mandatory:**
-- After spec compliance passes for each task in `sdd-superpowers:subagent-driven-development`
-- After spec compliance passes for each parallel task in `sdd-superpowers:dispatching-parallel-agents`
-- After completing a phase in `sdd-superpowers:sdd-execute` (blocking gate before next phase starts)
+- User says "review this" / "can you review"
 - Before merge to main
 - After completing a major feature
 
@@ -70,9 +68,9 @@ HEAD_SHA=$(git rev-parse HEAD)
 
 | Mistake | Fix |
 |---------|-----|
-| Skipping review because "it's simple" | Always review at phase boundaries in sdd-execute |
+| Skipping review because "it's simple" | If the user asked for a review, dispatch the structured reviewer — don't substitute an ad hoc read |
 | Ignoring Critical issues | Fix immediately — do not proceed |
-| Proceeding with unfixed Important issues | Fix before starting the next phase |
+| Proceeding with unfixed Important issues | Fix before merging or moving on |
 | Accepting wrong feedback without pushback | Use technical reasoning and show evidence |
 
 See template at: `requesting-code-review/code-reviewer.md`
@@ -80,13 +78,12 @@ See template at: `requesting-code-review/code-reviewer.md`
 ## Integration
 
 **Called by:**
-- `sdd-superpowers:subagent-driven-development` — code quality review after spec compliance passes per task
-- `sdd-superpowers:dispatching-parallel-agents` — code quality review after spec compliance passes per parallel task
-- `sdd-superpowers:sdd-execute` — phase boundary review
+- The user, directly ("review this" / "can you review")
+- Anyone wanting an optional pre-merge or post-feature sanity check
 
 **After review:**
 - Critical/Important issues → `sdd-superpowers:receiving-code-review` to implement fixes, then re-dispatch this reviewer
-- All issues resolved → mark task complete, continue with `sdd-superpowers:sdd-execute`
+- All issues resolved → proceed with whatever prompted the review (e.g. merging)
 
 ## Constraints
 

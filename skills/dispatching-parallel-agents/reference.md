@@ -113,16 +113,15 @@ Agent 3 → Task 3: Refresh token rotation
 - Agent 2: DONE — session.ts implemented, 4/4 tests passing, committed
 - Agent 3: DONE_WITH_CONCERNS — refresh.ts done, flagged that rotation window may be too short per spec
 
-**Integration:** Review concerns from Agent 3 → run spec compliance review for each task → run code quality review → all tasks marked complete
+**Integration:** Review concerns from Agent 3 → each task's own tests already passed (TDD), so commit directly → all tasks marked complete
 
-## After Agents Return (SDD Review Process)
+## After Agents Return
 
 1. **Review each summary** — Read status and concerns; address BLOCKED/NEEDS_CONTEXT before proceeding
-2. **Check for conflicts** — Did agents edit the same files? Resolve before reviewing
-3. **Spec compliance review per task** — Dispatch using `spec-reviewer-prompt.md` from `sdd-superpowers:subagent-driven-development`; fix failures with `sdd-superpowers:receiving-code-review`
-4. **Code quality review per task** — Dispatch using `sdd-superpowers:requesting-code-review` after spec compliance passes per task
-5. **Run full test suite** — Verify all parallel implementations work together
-6. **Mark tasks complete** — Update TodoWrite; continue to next phase with `sdd-superpowers:sdd-execute`
+2. **Check for conflicts** — Did agents edit the same files? Resolve before continuing
+3. **Commit each unit directly** — each unit's own TDD cycle already passed; no per-unit review gate
+4. **Run full test suite** — Verify all parallel implementations work together
+5. **Mark tasks complete** — Update TodoWrite; continue to next phase with `sdd-superpowers:sdd-execute`
 
 ## Key Benefits
 

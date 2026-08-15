@@ -91,46 +91,18 @@ Provide the subagent with:
 
 | Status | Action |
 |--------|--------|
-| DONE | Mark unit complete in TodoWrite, then proceed to spec-compliance review |
-| DONE_WITH_CONCERNS | Mark unit complete in TodoWrite; if correctness concern, address before review; if observational, proceed |
+| DONE | Commit directly (3c), then mark unit complete in TodoWrite |
+| DONE_WITH_CONCERNS | If correctness concern, address before committing; if observational, commit and note it; mark unit complete in TodoWrite |
 | NEEDS_CONTEXT | Provide missing context, re-dispatch same task |
 | BLOCKED | Assess: context problem → provide context; wrong model → upgrade; task too large → split; plan wrong → escalate to human |
 
 Never ignore BLOCKED. Never force retry without changing something.
 
-**3c. Spec-compliance review**
-
-Dispatch a spec-reviewer subagent. Provide:
-- The work unit text
-- The spec file contents (or relevant sections)
-- The git diff since before the task: `git diff <before-sha>`
-
-The reviewer must answer:
-1. Does the implementation satisfy all requirements this task was supposed to address?
-2. Did the implementation add anything not in the spec (scope creep)?
-3. Are tests actually testing the spec requirements (not just testing the implementation)?
-
-If spec-compliance fails: invoke `sdd-superpowers:receiving-code-review` with the reviewer's findings, then dispatch the original implementer to fix. Re-review until passing.
-
-**3d. Code-quality review**
-
-After spec-compliance passes, dispatch a code-quality reviewer. Provide:
-- The git diff
-- The relevant spec sections
-
-The reviewer checks: naming clarity, test coverage completeness, no magic numbers, no dead code, error handling correct per spec.
-
-If quality review fails: invoke `sdd-superpowers:receiving-code-review`, send implementer to fix. Re-review until approved.
-
-**3e. Commit completed task**
+**3c. Commit completed task**
 
 Invoke `sdd-superpowers:using-git` — **Per-Task Commit**. Pass: prior commit SHA (`git rev-parse HEAD` recorded before dispatch) and task description. `sdd-superpowers:using-git` handles conflict detection, staging, message validation, and commit execution.
 
-**3f. Phase boundary review**
-
-When all tasks in a phase complete, before starting the next phase:
-
-Invoke `sdd-superpowers:requesting-code-review`. Blocking gate — critical issues must be resolved before proceeding.
+The implementer's own TDD cycle (failing test → passing test) is the quality gate for this unit — no review subagent runs between DONE and commit, and no gate runs at phase boundaries. Proceed straight to the next work unit.
 
 ### Parallel Task Groups
 
@@ -145,9 +117,7 @@ If any check fails: execute sequentially.
 
 1. Dispatch all tasks concurrently (one subagent each)
 2. Wait for ALL implementers to finish
-3. Run spec-compliance review for each (can be concurrent)
-4. Run code-quality review for each (can be concurrent)
-5. Fix issues via `sdd-superpowers:receiving-code-review`, re-review
+3. Commit each unit directly once its own tests pass (can be concurrent per unit)
 
 ## Step 4: Final Verification
 
@@ -161,9 +131,31 @@ Invoke `sdd-superpowers:verification-before-completion` — capture fresh test e
 
 Dispatch `sdd-superpowers:sdd-review` (implementation mode) to build the coverage matrix. Building the matrix (mapping acceptance criteria to tests) is mechanical enough to use a cheap model (e.g. haiku); if the reviewer reports ambiguity that requires judgment to resolve, re-dispatch on the calling session's model instead.
 
+This is the **only** review in the entire execution flow. No spec-compliance, code-quality, or phase-boundary review precedes it.
+
+## Step 4b: Follow-Up Loop
+
+If `sdd-superpowers:sdd-review` reports SPEC-ALIGNED: go to Step 5.
+
+If it reports `DRIFT DETECTED` or `INCOMPLETE`:
+
+1. From the reviewer's coverage matrix and drift findings, derive the corrective/missing work units — do not guess; use the reviewer's stated gaps directly
+2. Dispatch implementer subagents for those units via `sdd-superpowers:subagent-driven-development` (each following TDD, per Step 3)
+3. Commit each unit directly once its own tests pass (Step 3c)
+4. Re-run the full test suite, then re-dispatch `sdd-superpowers:sdd-review` (Mode B)
+5. Record this round's unresolved-AC set (the ACs marked ✗ Missing or ⚠ Partial in the coverage matrix), keeping the sets from the last 3 rounds (drop older ones)
+6. Evaluate:
+   - If this round's set is empty: SPEC-ALIGNED — go to Step 5
+   - If any single AC appears in the unresolved sets of 2 of the last 3 rounds (consecutive or not — this catches an AC that oscillates between resolved and unresolved, not just one that repeats back-to-back): **stop looping**. Surface that specific AC to the user and ask how to proceed — do not dispatch another automatic round
+   - Otherwise: repeat from step 1
+
+Fewer than 3 rounds have happened yet? Just compare against whatever rounds exist so far (e.g. on round 2, check whether any AC from round 1 also appears in round 2's set).
+
+Do not ask the user for confirmation before starting a follow-up round — only hitting the 2-of-3 threshold escalates.
+
 ## Step 5: Finish
 
-After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED, use `sdd-superpowers:finishing-a-development-branch`. Do not merge, push, or delete branches directly.
+After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED (whether on the first dispatch or after follow-up rounds), use `sdd-superpowers:finishing-a-development-branch`. Do not merge, push, or delete branches directly.
 
 ---
 
@@ -191,8 +183,7 @@ Never touch plan or tasks directly — `sdd-spec-update` owns that propagation.
 | Single file, clear spec, 1-2 functions | Fast/cheap model |
 | Multiple files, needs integration judgment | Standard model |
 | Architecture decisions, broad codebase knowledge | Most capable model |
-| Spec-compliance review | Standard model |
-| Code-quality review | Standard model |
+| sdd-review (Mode B) coverage-matrix build | Fast/cheap model — escalate to calling session's model if ambiguity needs judgment (see Step 4) |
 
 ---
 
@@ -218,10 +209,9 @@ If an implementer is BLOCKED after re-dispatch with context or model upgrade:
 - `sdd-superpowers:verification-before-completion` — before reporting DONE
 
 **During execution:**
-- `sdd-superpowers:requesting-code-review` — at every phase boundary (blocking gate)
-- `sdd-superpowers:receiving-code-review` — whenever review feedback requires fixes
 - `sdd-superpowers:dispatching-parallel-agents` — before every parallel group dispatch
+- `sdd-superpowers:receiving-code-review` — whenever sdd-review (Mode B) findings require fixes, during the follow-up loop
 
 **On failure:** `sdd-superpowers:systematic-debugging`
 
-**On completion:** `sdd-superpowers:sdd-review` → `sdd-superpowers:finishing-a-development-branch`
+**On completion:** `sdd-superpowers:sdd-review` (once, plus follow-up rounds if needed) → `sdd-superpowers:finishing-a-development-branch`

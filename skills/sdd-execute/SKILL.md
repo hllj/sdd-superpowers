@@ -24,7 +24,7 @@ effort: high
 </example>
 </examples>
 
-Implement a feature by dispatching a fresh subagent per task, with two-stage review after each: spec-compliance first, then code quality. Parallel task groups run concurrently. Subagents never inherit session context — you construct exactly what they need.
+Implement a feature by dispatching a fresh subagent per task; each subagent's own TDD cycle is the quality gate. Parallel task groups run concurrently. Subagents never inherit session context — you construct exactly what they need. Exactly one review happens in the whole flow: `sdd-superpowers:sdd-review` (Mode B), after all units are committed.
 
 ## When to Use
 
@@ -37,7 +37,7 @@ Do NOT start implementation on main/master. Verify branch before any subagent di
 </HARD-GATE>
 
 <HARD-GATE>
-Never implement work units directly in this session. Every work unit requires a fresh subagent dispatched via sdd-superpowers:subagent-driven-development. Implementing directly bypasses TDD, spec-compliance review, and commit discipline.
+Never implement work units directly in this session. Every work unit requires a fresh subagent dispatched via sdd-superpowers:subagent-driven-development. Implementing directly bypasses TDD and commit discipline.
 </HARD-GATE>
 
 ## Quick Reference
@@ -49,18 +49,19 @@ Verify branch + baseline
 → Read plan.md + spec.md → derive work units → record in TodoWrite
 → Restart detection: check git log for completed work units → skip matched units
 → Sequential units: one subagent at a time
-→ Parallel units: dispatch concurrently, wait for all, then review
-→ After each unit: spec-compliance → code-quality → commit (include plan section heading in commit message)
-→ Phase boundary: requesting-code-review (blocking gate)
+→ Parallel units: dispatch concurrently, wait for all
+→ After each unit: commit directly once its own tests pass (include plan section heading in commit message)
 → Mid-flight change: STOP → sdd-spec-update → resume
-After all units: verification-before-completion → sdd-review → finishing-a-development-branch
+After all units: verification-before-completion → sdd-review (once)
+→ If gaps: derive fixes, re-dispatch, re-run sdd-review — repeat until aligned; escalate to user if the same AC is unresolved in 2 of the last 3 rounds
+→ finishing-a-development-branch
 ```
 
 Implementer status handling:
 
 | Status | Action |
 |--------|--------|
-| DONE | Mark unit complete in TodoWrite, then proceed to spec-compliance review |
+| DONE | Commit directly, then mark unit complete in TodoWrite |
 | DONE_WITH_CONCERNS | Mark unit complete in TodoWrite; if correctness concern fix first; if observational proceed |
 | NEEDS_CONTEXT | Provide context, re-dispatch |
 | BLOCKED | Assess: context / model upgrade / split task / escalate |
@@ -105,12 +106,11 @@ Required sub-skills during execution:
 | Executing tasks in current session | `sdd-superpowers:subagent-driven-development` |
 | Dispatching a parallel task group (2+ tasks) | `sdd-superpowers:dispatching-parallel-agents` |
 | Per-task commits | `sdd-superpowers:using-git` |
-| Phase boundary | `sdd-superpowers:requesting-code-review` |
-| Implementing fixes after review feedback | `sdd-superpowers:receiving-code-review` |
+| Implementing fixes after sdd-review (Mode B) finds gaps | `sdd-superpowers:receiving-code-review` |
 | Task fails or behavior unexpected | `sdd-superpowers:systematic-debugging` |
 | About to claim done | `sdd-superpowers:verification-before-completion` |
-| All tasks complete | `sdd-superpowers:sdd-review` (required before merge) |
-| sdd-review passes | `sdd-superpowers:finishing-a-development-branch` |
+| All tasks complete | `sdd-superpowers:sdd-review` (once, required before merge) |
+| sdd-review reports SPEC-ALIGNED | `sdd-superpowers:finishing-a-development-branch` |
 
 > **Note:** `sdd-superpowers:test-driven-development` is mandated for **implementer subagents** dispatched by `subagent-driven-development` — not invoked directly by the controller.
 
