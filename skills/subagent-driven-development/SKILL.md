@@ -93,6 +93,35 @@ digraph process {
 
 `sdd-execute` runs the single spec-alignment review (`sdd-review` Mode B) and `finishing-a-development-branch` after this skill returns control — not this skill itself.
 
+## Pre-Dispatch Conflict Scan
+
+Before dispatching the first work unit, scan `plan.md` once for conflicts and
+write down what you checked:
+
+- tasks/phases that contradict each other or the plan's Global Constraints
+  block (see `sdd-superpowers:sdd-plan`)
+- anything a task explicitly mandates that would fail `sdd-review`'s rubric
+  (a test that asserts nothing, verbatim duplication of a logic block)
+
+Record the scan in TodoWrite before dispatching the first unit: one entry per
+pair of units that share a file or interface (what one produces against what
+the other consumes, and what you found), one entry per unit (whether its own
+text agrees with itself). If the scan is clean, proceed without comment. If
+it surfaces a conflict, rule on it — the spec is the binding authority, the
+plan is its argument — and record the ruling before dispatching Task 1. The
+end-of-execution `sdd-review` remains the net for conflicts that only emerge
+from implementation.
+
+## Batching Small Same-Shape Work
+
+When the plan lists several tasks that are each a small, independent edit of
+the same kind — the same one-line fix, constant change, or field addition
+repeated across files — do not dispatch one subagent per task. Compose ONE
+dispatch brief listing every file and its change, send the whole batch to a
+single implementer subagent, and treat its diff as one unit for commit and
+TodoWrite purposes. Reserve one-dispatch-per-task for work that needs its
+own judgment, its own tests, or its own review surface.
+
 ## Model Selection
 
 **Implementer subagents:** Omit the `model` param — they inherit the calling session's model. Implementation is the highest-stakes role (writes the code that ships), so don't downgrade it to save cost.
@@ -220,6 +249,7 @@ Done!
 - Skip TDD (write implementation before a failing test exists)
 - Proceed with a failing test suite
 - Dispatch multiple implementation subagents in parallel (conflicts) — use `sdd-superpowers:dispatching-parallel-agents` instead
+- Let an implementer subagent spawn its own subagents (helpers or reviewers) — escalate to the controller instead
 - Make subagent read plan file (provide full text instead)
 - Skip scene-setting context (subagent needs to understand where task fits)
 - Ignore subagent questions (answer before letting them proceed)

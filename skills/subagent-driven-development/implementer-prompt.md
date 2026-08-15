@@ -38,6 +38,11 @@ Task tool (general-purpose):
 
     Work from: [directory]
 
+    **Never dispatch your own subagents** — not helpers, not a reviewer. If
+    you need a second opinion or hit something beyond this task, report
+    NEEDS_CONTEXT or BLOCKED instead; the controller decides whether to
+    bring in another agent.
+
     **While you work:** If you encounter something unexpected or unclear, **ask questions**.
     It's always OK to pause and clarify. Don't guess or make assumptions.
 
