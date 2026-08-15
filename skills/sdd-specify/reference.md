@@ -26,12 +26,13 @@ Before anything else:
 1. Check the `docs/specs/` directory for existing feature numbers
 2. Determine the next available number (NNN)
 3. Check for related or overlapping specs that might affect scope
-4. **Fast-path detection:** Check if `docs/specs/NNN-<feature-slug>/design.md` exists (produced by `sdd-superpowers:sdd-brainstorm`)
-   - If YES → validate the design doc:
-     - Does it contain all required sections: **Problem**, **Chosen Approach**, **Trade-offs & Rationale**, **Key Design Decisions**, **Out of Scope**?
+4. **Fast-path detection:** Check if `docs/specs/NNN-<feature-slug>/prd.md` exists (produced by `sdd-superpowers:sdd-brainstorm`)
+   - If YES → validate the PRD and its linked ADRs:
+     - Does `prd.md` contain all required sections: **Problem**, **Users & Context**, **Goals**, **Non-Goals**, **Success Criteria**, **Architecture Decisions**, **Out of Scope**?
+     - Does every ADR linked from "Architecture Decisions" exist under `docs/adr/` with `Status: Accepted`?
      - Is each section non-empty?
-     - If **valid** → skip Steps 2 and 3 entirely. Read `design.md`, extract each section, formalize directly into `spec.md`. Jump to Step 4.
-     - If **invalid** → warn the user: *"Found design.md but it appears incomplete. Proceeding with normal spec dialogue."* Continue with Steps 2–3.
+     - If **valid** → skip Steps 2 and 3 entirely. Read `prd.md` and its linked ADRs, extract each section, formalize directly into `spec.md`. Jump to Step 4.
+     - If **invalid** → warn the user: *"Found prd.md but it appears incomplete. Proceeding with normal spec dialogue."* Continue with Steps 2–3.
    - If NO → normal path: proceed with Steps 2 and 3 as usual.
 
 ## Step 2: Understand the Idea
@@ -127,13 +128,10 @@ After branch creation:
 
 > "Specification complete and saved to `docs/specs/NNN-feature-slug/spec.md` on branch `NNN-feature-slug`.
 >
-> **Option A — Research first (recommended for complex features):**
-> Use `sdd-superpowers:sdd-research` to investigate technology options, performance implications, and constraints before planning.
->
-> **Option B — Review the spec first:**
+> **Option A — Review the spec first:**
 > Use `sdd-superpowers:sdd-review` (spec mode) for an independent completeness check before planning.
 >
-> **Option C — Plan directly:**
+> **Option B — Plan directly:**
 > Use `sdd-superpowers:sdd-plan` to create the implementation plan from this spec.
 >
 > Which would you like?"
