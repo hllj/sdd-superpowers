@@ -4,6 +4,13 @@
 **Decisions:** docs/adr/<NNN>-*.md (if applicable)
 **Created:** YYYY-MM-DD
 
+## Global Constraints
+
+<Project-wide rules from spec.md that bind every phase — version floors,
+naming/copy rules, dependency limits, exact values — one line each, copied
+verbatim from the spec. Every phase's requirements implicitly include this
+section.>
+
 ---
 
 ## Goal
@@ -16,6 +23,7 @@
 
 **Implements:** <FRs> | **Satisfies:** <ACs>
 **Files:** `path/to/contract-test.ts`, `path/to/integration-test.ts`
+**Interfaces:** Consumes: <what this phase uses from earlier phases — exact signatures, or "nothing" for Phase 0>. Produces: <what later phases rely on — exact function/type names, since an implementer subagent sees only its own phase text>.
 
 <1-3 sentence goal: what this phase locks down before any implementation exists.>
 
@@ -30,6 +38,7 @@
 
 **Implements:** FR-1, FR-2 | **Satisfies:** AC-1.1, AC-1.2
 **Files:** `src/path/file.ts`, `tests/path/test.ts`
+**Interfaces:** Consumes: <what this phase uses from earlier phases — exact signatures, or "nothing" for Phase 0>. Produces: <what later phases rely on — exact function/type names, since an implementer subagent sees only its own phase text>.
 
 <1-3 sentence goal: what this phase accomplishes and why it belongs here.>
 

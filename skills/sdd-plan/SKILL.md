@@ -70,6 +70,15 @@ Before defining tasks, map every file that will be created or modified and its s
 - Files that change together should live together
 - In existing codebases, follow established patterns
 
+## Phase Right-Sizing
+
+A phase is the smallest unit that carries its own test cycle and is worth a
+fresh reviewer's gate. When drawing phase boundaries: fold setup,
+configuration, scaffolding, and documentation steps into the phase whose
+deliverable needs them; split only where a reviewer could meaningfully
+reject one phase while approving its neighbor. Each phase ends with an
+independently testable deliverable.
+
 ## No Placeholders
 
 These are plan failures — never write them:
