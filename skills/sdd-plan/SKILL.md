@@ -54,7 +54,9 @@ Outputs produced by sdd-plan:
 | `contracts/api.md` | `docs/specs/NNN-slug/contracts/api.md` | If feature exposes an API |
 | `quickstart.md` | `docs/specs/NNN-slug/quickstart.md` | Recommended |
 
-Plan structure: Goal → Architecture → Tech Stack → File Structure → Complexity Tracking → Phases (contracts-first → implementation → integration verification).
+Call `EnterPlanMode` before drafting; call `ExitPlanMode` (the approval flow) once the draft is ready, before writing `plan.md` to disk.
+
+Plan structure: Goal → Phases (each: `Implements`/`Satisfies`/`Files` header + a short goal + only the necessary code/contract snippets → contracts-first → implementation → integration verification). No mandatory standalone Architecture, Tech Stack, or File Structure sections — fold anything essential into the phase text; Complexity Tracking is an optional per-phase note, not a required top-level section.
 
 Pre-implementation gates checked before planning: Simplicity Gate (≤3 components), Anti-Abstraction Gate (no unnecessary wrappers), Integration-First Gate (contracts before code).
 
