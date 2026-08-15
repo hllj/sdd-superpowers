@@ -19,6 +19,8 @@ Before planning:
 
 Once prerequisites are confirmed, call `EnterPlanMode`. Steps 1–4 below (reading inputs, checking gates, drafting supporting documents and the main plan) all happen inside Plan Mode — nothing is written to `docs/specs/.../plan.md` until the draft is approved (see Step 4).
 
+If `EnterPlanMode`/`ExitPlanMode` are unavailable in the current environment: skip them, but do not skip approval. Present the completed draft as a normal message and get explicit user approval before writing anything to disk — the gate is "no unapproved write," not "must use Plan Mode."
+
 ## Step 1: Read All Inputs
 
 Read in order:
@@ -107,7 +109,7 @@ Before claiming the plan is ready, confirm:
 >
 > **Next steps:**
 > 1. Run `sdd-superpowers:sdd-review` (spec mode) to validate plan-spec alignment before execution
-> 2. Run `sdd-superpowers:sdd-execute` to implement with subagent dispatch and two-stage review"
+> 2. Run `sdd-superpowers:sdd-execute` to implement — TDD-only per unit, one spec-alignment review at the end"
 
 ## Plan Quality Rules
 

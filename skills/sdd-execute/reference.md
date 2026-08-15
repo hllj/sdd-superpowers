@@ -143,12 +143,15 @@ If it reports `DRIFT DETECTED` or `INCOMPLETE`:
 2. Dispatch implementer subagents for those units via `sdd-superpowers:subagent-driven-development` (each following TDD, per Step 3)
 3. Commit each unit directly once its own tests pass (Step 3c)
 4. Re-run the full test suite, then re-dispatch `sdd-superpowers:sdd-review` (Mode B)
-5. Compare this round's unresolved-AC set to the previous round's:
-   - If the set shrank or changed and is now empty: SPEC-ALIGNED — go to Step 5
-   - If the *same* acceptance criterion appears unresolved in this round **and** the immediately preceding round: **stop looping**. Surface that specific AC to the user and ask how to proceed — do not attempt a third automatic round
-   - Otherwise (still shrinking, different gaps than last round): repeat from step 1
+5. Record this round's unresolved-AC set (the ACs marked ✗ Missing or ⚠ Partial in the coverage matrix), keeping the sets from the last 3 rounds (drop older ones)
+6. Evaluate:
+   - If this round's set is empty: SPEC-ALIGNED — go to Step 5
+   - If any single AC appears in the unresolved sets of 2 of the last 3 rounds (consecutive or not — this catches an AC that oscillates between resolved and unresolved, not just one that repeats back-to-back): **stop looping**. Surface that specific AC to the user and ask how to proceed — do not dispatch another automatic round
+   - Otherwise: repeat from step 1
 
-Do not ask the user for confirmation before starting a follow-up round — only the two-consecutive-identical-gap case escalates.
+Fewer than 3 rounds have happened yet? Just compare against whatever rounds exist so far (e.g. on round 2, check whether any AC from round 1 also appears in round 2's set).
+
+Do not ask the user for confirmation before starting a follow-up round — only hitting the 2-of-3 threshold escalates.
 
 ## Step 5: Finish
 
@@ -180,8 +183,7 @@ Never touch plan or tasks directly — `sdd-spec-update` owns that propagation.
 | Single file, clear spec, 1-2 functions | Fast/cheap model |
 | Multiple files, needs integration judgment | Standard model |
 | Architecture decisions, broad codebase knowledge | Most capable model |
-| Spec-compliance review | Standard model |
-| Code-quality review | Standard model |
+| sdd-review (Mode B) coverage-matrix build | Fast/cheap model — escalate to calling session's model if ambiguity needs judgment (see Step 4) |
 
 ---
 

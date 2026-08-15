@@ -53,7 +53,7 @@ Verify branch + baseline
 → After each unit: commit directly once its own tests pass (include plan section heading in commit message)
 → Mid-flight change: STOP → sdd-spec-update → resume
 After all units: verification-before-completion → sdd-review (once)
-→ If gaps: derive fixes, re-dispatch, re-run sdd-review — repeat until aligned; escalate to user if the same AC is unresolved 2 rounds running
+→ If gaps: derive fixes, re-dispatch, re-run sdd-review — repeat until aligned; escalate to user if the same AC is unresolved in 2 of the last 3 rounds
 → finishing-a-development-branch
 ```
 

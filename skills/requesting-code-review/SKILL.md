@@ -1,6 +1,6 @@
 ---
 name: requesting-code-review
-description: Use when the user asks for a code review directly, or as an optional check before merging or after completing a major feature
+description: Use when the user asks for a code review directly, before merging to main, or after completing a major feature
 model: sonnet
 effort: high
 ---

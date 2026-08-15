@@ -104,6 +104,7 @@ After saving `plan.md`, offer:
 
 ## Error Handling
 
+- **`EnterPlanMode`/`ExitPlanMode` are unavailable in the current environment**: Fall back to presenting the `plan.md` draft as a normal message and asking for explicit approval before writing it to disk. Never write `plan.md` without approval, with or without Plan Mode.
 - **Spec has [NEEDS CLARIFICATION] items**: Resolve them in spec.md before planning begins.
 - **research.md is recommended but missing for a feature with unresolved tech choices**: Offer to run sdd-research first; note that planning without research may require plan revision.
 - **User requests gate bypass**: The gate is "no plan without an approved spec." Explain that a plan built on a Draft spec will need rework when the spec changes. Offer to resolve the open items first — it is faster than reworking the plan.

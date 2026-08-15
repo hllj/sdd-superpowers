@@ -4,20 +4,20 @@
 
 ## Source-Specific Handling
 
-### From Reviewer Subagents (SDD — most common in sdd-execute / subagent-driven-development)
+### From Reviewer Subagents (SDD — sdd-review Mode B follow-up, or an ad hoc requesting-code-review dispatch)
 
-Reviewer subagents are dispatched by the controller and are authoritative within their domain:
+These are authoritative within their domain:
 
-- **Spec compliance reviewer** — its findings are ground truth against `docs/specs/NNN-feature/spec.md`. If it says something is missing or extra, it is.
-- **Code quality reviewer** — its findings are advisory; use technical judgment to evaluate severity.
+- **`sdd-superpowers:sdd-review` (Mode B)** — its coverage-matrix findings (drift, missing/partial ACs) are ground truth against `docs/specs/NNN-feature/spec.md`. If it says something is missing or extra, it is. Encountered during `sdd-superpowers:sdd-execute`'s follow-up loop when a round reports `DRIFT DETECTED` or `INCOMPLETE`.
+- **`sdd-superpowers:requesting-code-review`'s code-reviewer subagent** — its findings are advisory (code quality, not spec compliance); use technical judgment to evaluate severity. Encountered only in ad hoc, standalone reviews — it is not part of `sdd-execute`'s internal flow.
 
 ```
 BEFORE implementing:
   1. Read the reviewer's findings carefully
   2. Verify against the actual code (don't just trust the finding)
-  3. If spec compliance: cross-check against spec.md directly
+  3. If from sdd-review: cross-check against spec.md directly
   4. Implement fixes one at a time, test each
-  5. Re-dispatch the SAME reviewer subagent to verify fixes before moving on
+  5. Re-dispatch the SAME reviewer (sdd-review Mode B, or requesting-code-review) to verify fixes before moving on
 ```
 
 **Never skip the re-dispatch.** Fixes must be verified by the reviewer, not self-assessed.
@@ -160,11 +160,9 @@ When replying to inline review comments on GitHub, reply in the comment thread (
 ## Integration
 
 **Called by:**
-- `sdd-superpowers:sdd-execute` — when spec compliance or code quality review returns issues
-- `sdd-superpowers:subagent-driven-development` — when per-task review loop finds failures
+- `sdd-superpowers:sdd-execute` — when `sdd-review` (Mode B) returns `DRIFT DETECTED`/`INCOMPLETE` during the follow-up loop
+- `sdd-superpowers:requesting-code-review` — when an ad hoc review returns issues
 
 **After implementing fixes:**
-- Re-dispatch the reviewer subagent (`sdd-superpowers:requesting-code-review`) to verify
-- Only proceed to next stage once reviewer approves (✅)
-- If spec compliance passes, proceed to code quality review
-- If code quality passes, mark task complete in TodoWrite
+- Re-dispatch the reviewer that found the issue — `sdd-superpowers:sdd-review` (Mode B) if from the follow-up loop, `sdd-superpowers:requesting-code-review` if ad hoc
+- Only proceed once the reviewer reports `SPEC-ALIGNED` (sdd-review) or approves (✅, requesting-code-review)

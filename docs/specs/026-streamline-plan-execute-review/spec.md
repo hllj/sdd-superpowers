@@ -20,7 +20,7 @@ This feature collapses the lifecycle to: a compact, Plan-Mode-driven `plan.md` �
 - `sdd-execute` keeps subagent dispatch (`subagent-driven-development`, `dispatching-parallel-agents`), per-unit commits, and restart detection unchanged
 - Exactly one review occurs after code exists in the whole lifecycle: `sdd-review` Mode B, run once after all phases are committed
 - If that single review reports `DRIFT DETECTED` or `INCOMPLETE`, `sdd-execute` automatically derives corrective work units, dispatches implementers, commits, and re-runs `sdd-review` Mode B — repeating without asking the user — until it reports `SPEC-ALIGNED`
-- The follow-up loop is bounded: if the *same* acceptance criterion is still unresolved after two consecutive `sdd-review` Mode B rounds, `sdd-execute` stops looping and escalates to the user instead of trying a third time. (This cap is a design inference to prevent an unbounded loop; flagged here for approval rather than left as an open question.)
+- The follow-up loop is bounded: if the *same* acceptance criterion appears unresolved in any 2 of the last 3 `sdd-review` Mode B rounds, `sdd-execute` stops looping and escalates to the user. (Widened from a strict "2 consecutive rounds" rule after code review found that rule doesn't catch an AC that oscillates — unresolved, then resolved, then unresolved again — which could loop indefinitely without ever triggering a strictly-consecutive check. The 3-round rolling window catches oscillation while still allowing genuinely different gaps to be fixed round over round.)
 
 ## Non-Goals
 
@@ -29,7 +29,7 @@ This feature collapses the lifecycle to: a compact, Plan-Mode-driven `plan.md` �
 - Changing the `data-model.md` / `contracts/api.md` template structures — still produced only when a feature needs them
 - Restoring or further modifying `sdd-tasks` (already retired by spec 023)
 - Changing branch or commit conventions in `docs/git-convention.md`
-- Making the follow-up-loop escalation threshold user-configurable — fixed at two consecutive identical-gap rounds
+- Making the follow-up-loop escalation threshold user-configurable — fixed at "same AC unresolved in 2 of the last 3 rounds"
 
 **Amendment (approved in-session during planning):** `subagent-driven-development` and `dispatching-parallel-agents` were originally listed as Non-Goals, but their own SKILL.md content — not just `sdd-execute`'s — defines the per-unit two-stage review as a core, mandatory behavior. Removing per-unit review (Goals above) is impossible without editing them. See FR-12 through FR-15.
 
@@ -93,7 +93,7 @@ This feature collapses the lifecycle to: a compact, Plan-Mode-driven `plan.md` �
 **Acceptance criteria:**
 
 - [ ] **AC-4.1** Given `sdd-review` Mode B reports `DRIFT DETECTED` or `INCOMPLETE` When `sdd-execute` receives this result Then it derives corrective/missing work units from the reviewer's findings, dispatches implementer subagents (following TDD), commits, and re-runs `sdd-review` Mode B — without asking the user to confirm each round
-- [ ] **AC-4.2** Given a second consecutive `sdd-review` Mode B round reports the same unresolved acceptance criterion When `sdd-execute` evaluates the result Then it stops looping and escalates to the user with the specific unresolved AC, instead of attempting a third automatic round
+- [ ] **AC-4.2** Given the same acceptance criterion has been reported unresolved in 2 of the last 3 `sdd-review` Mode B rounds (whether consecutive or with an intervening round where it was resolved) When `sdd-execute` evaluates the latest result Then it stops looping and escalates to the user with the specific unresolved AC, instead of attempting another automatic round
 - [ ] **AC-4.3** Given `sdd-review` Mode B reports `SPEC-ALIGNED` after one or more follow-up rounds When `sdd-execute` receives this result Then it proceeds to `finishing-a-development-branch`
 
 ---
@@ -144,10 +144,10 @@ This feature collapses the lifecycle to: a compact, Plan-Mode-driven `plan.md` �
 
 ### FR-8: Loop escalation rule
 
-`sdd-execute/reference.md` must describe an escalation rule: if the same acceptance criterion remains unresolved across two consecutive `sdd-review` Mode B rounds, stop looping and surface it to the user with the specific AC.
+`sdd-execute/reference.md` must describe an escalation rule: track the unresolved-AC set for each of the last 3 `sdd-review` Mode B rounds; if the same acceptance criterion appears unresolved in 2 of those 3 rounds (consecutive or not), stop looping and surface it to the user with the specific AC.
 
 **Must not:**
-- Attempt a third automatic follow-up round for the same unresolved AC
+- Attempt another automatic follow-up round once an AC has hit the 2-of-3 threshold
 
 ### FR-9: Execution-flow diagram updated
 
@@ -189,7 +189,7 @@ This feature collapses the lifecycle to: a compact, Plan-Mode-driven `plan.md` �
 
 ### Reliability
 
-- **NFR-3** The follow-up loop must have a bounded worst case (FR-8's two-round escalation rule) — it must never be able to run indefinitely without eventually surfacing to the user.
+- **NFR-3** The follow-up loop must have a bounded worst case (FR-8's 2-of-3-rounds escalation rule) — it must never be able to run indefinitely without eventually surfacing to the user, including when the unresolved AC oscillates rather than repeating on strictly consecutive rounds.
 
 ---
 
@@ -197,7 +197,7 @@ This feature collapses the lifecycle to: a compact, Plan-Mode-driven `plan.md` �
 
 | Scenario | Expected Behavior |
 |----------|-------------------|
-| `sdd-review` Mode B reports the same acceptance criterion unresolved twice in a row | Escalate to the user with the specific AC; do not attempt a third automatic fix round |
+| `sdd-review` Mode B reports the same acceptance criterion unresolved in 2 of the last 3 rounds | Escalate to the user with the specific AC; do not attempt another automatic fix round |
 | Plan Mode is unavailable in the current environment | Fall back to presenting the `plan.md` draft as a normal message for explicit approval before writing it to disk — never write without approval |
 | A work unit's own tests pass locally but the single final `sdd-review` Mode B still finds drift | Treat `sdd-review` Mode B as authoritative over unit-level test results; derive corrective work units from its findings, not from re-litigating unit tests |
 | `plan.md` does not exist when `sdd-execute` is invoked | Unchanged from current behavior: surface "No plan.md found... Run sdd-plan first." Halt |
