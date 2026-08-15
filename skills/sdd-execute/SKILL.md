@@ -70,13 +70,24 @@ Implementer status handling:
 
 ## When to Stop and Ask
 
-**STOP executing immediately when:**
-- A dependency is missing or broken
-- A test fails repeatedly with no clear fix path
-- An instruction in the plan is unclear or contradictory
-- A plan gap prevents you from starting a task
+Four things stop execution — nothing else:
 
-Ask for clarification rather than guessing. Don't force through blockers.
+- An irreversible or destructive operation
+- A security-sensitive action
+- A side effect outside the current worktree that norms say you ask about
+  first (a merge, a push to a shared branch, a publish)
+- A plan so broken that every path forward is a guess
+
+Everything else — an unclear instruction, a plan gap, a conflict between two
+work units, a cap you'd otherwise ask to exceed — gets a ruling, not a stop.
+Decide it yourself: the spec is the binding authority, the plan is its
+argument, and your judgment settles what neither answers. Record every
+ruling in TodoWrite (or the commit message for the unit it affects) as
+`Ruling: <what you decided> — <why> — <what it costs if wrong>`, and keep
+executing. A wrong ruling costs rework your human partner can see and undo;
+a session parked on a question costs their whole day and buys nothing.
+
+For the four things above: stop and ask.
 
 ## Mid-Flight Spec Changes
 
