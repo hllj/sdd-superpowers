@@ -1,4 +1,4 @@
-# Design: <Feature Name>
+# PRD: <Feature Name>
 
 **Date:** YYYY-MM-DD
 **Feature:** NNN-<feature-slug>
@@ -7,17 +7,27 @@
 
 <What problem this solves and who experiences it.>
 
-## Chosen Approach
+## Users & Context
 
-<The approach selected from the options explored, written out concretely.>
+<Who the users are, what they're trying to accomplish, and what existing systems this touches.>
 
-## Trade-offs & Rationale
+## Goals
 
-<Why this approach was chosen over the alternatives. What was given up.>
+<What this feature must achieve, as a list.>
 
-## Key Design Decisions
+## Non-Goals
 
-<Specific decisions made during brainstorming that constrain implementation.>
+<What this feature explicitly will NOT do, as a list.>
+
+## Success Criteria
+
+<How we'll know this worked — observable outcomes, not implementation details.>
+
+## Architecture Decisions
+
+<One line per decision, linking to its ADR file.>
+
+- [<Decision title>](../../adr/NNN-<slug>.md) — <one-line summary of what was decided and why>
 
 ## Out of Scope
 
