@@ -75,9 +75,8 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 
 | Situation | Invoke |
 |-----------|--------|
-| Fuzzy or exploratory idea | `sdd-superpowers:sdd-brainstorm` |
+| Fuzzy or exploratory idea, or unresolved technical/architecture decision | `sdd-superpowers:sdd-brainstorm` |
 | Clear idea | `sdd-superpowers:sdd-specify` |
-| Unresolved tech choices | `sdd-superpowers:sdd-research` |
 | Spec exists | `sdd-superpowers:sdd-plan` |
 | Plan approved | `sdd-superpowers:sdd-execute` |
 | **Change or addition to an approved spec** | `sdd-superpowers:sdd-spec-update` |

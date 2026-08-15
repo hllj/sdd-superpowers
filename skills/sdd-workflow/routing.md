@@ -34,9 +34,8 @@ Before evaluating any routing or skill invocation, check whether this project is
 
 | Situation | Invoke |
 |-----------|--------|
-| Idea is fuzzy, exploratory, or has competing approaches | `sdd-superpowers:sdd-brainstorm` |
+| Idea is fuzzy, exploratory, has competing approaches, or needs a technical decision investigated | `sdd-superpowers:sdd-brainstorm` |
 | Idea is clear and ready to formalize | `sdd-superpowers:sdd-specify` |
-| Need to investigate tech options before committing | `sdd-superpowers:sdd-research` |
 | Spec exists, need an implementation plan | `sdd-superpowers:sdd-plan` |
 | Plan approved, ready to implement | `sdd-superpowers:sdd-execute` |
 | User describes a change or addition to an approved spec | `sdd-superpowers:sdd-spec-update` |
@@ -57,12 +56,11 @@ Before evaluating any routing or skill invocation, check whether this project is
 
 **Process skills first, execution skills second:**
 
-1. `sdd-superpowers:sdd-brainstorm` (optional) → `sdd-superpowers:sdd-specify` — establish WHAT to build
-2. `sdd-superpowers:sdd-research` (optional) — investigate HOW before committing
-3. `sdd-superpowers:sdd-plan` — establish the technical approach
-4. `sdd-superpowers:sdd-execute` — actually build it
+1. `sdd-superpowers:sdd-brainstorm` (optional) — establish WHAT to build and decide HOW via ADRs
+2. `sdd-superpowers:sdd-plan` — establish the technical approach
+3. `sdd-superpowers:sdd-execute` — actually build it
    - **At any point after spec approval:** `sdd-superpowers:sdd-spec-update` — integrate mid-flight changes before continuing
-6. `sdd-superpowers:sdd-review` + `sdd-superpowers:verification-before-completion` — confirm it was built correctly
+4. `sdd-superpowers:sdd-review` + `sdd-superpowers:verification-before-completion` — confirm it was built correctly
 
 Never skip steps. "Let's just code it" means `sdd-superpowers:sdd-brainstorm` or `sdd-superpowers:sdd-specify` first.
 
@@ -126,15 +124,11 @@ The following tables map exact user phrases and agent-action signals to bundled 
 **`sdd-superpowers:sdd-brainstorm` is mandatory when:**
 - User explicitly asks to brainstorm or explore
 - (Advisory) Auto-detected fuzziness signals present and user chooses brainstorm path
+- A technical decision needs investigation before committing — non-functional requirements to validate (performance, security), or multiple viable technology paths
 
 **`sdd-superpowers:sdd-specify` is mandatory when:**
 - Idea is clear and concrete, OR
-- `sdd-superpowers:sdd-brainstorm` has completed and `design.md` exists
-
-**`sdd-superpowers:sdd-research` is mandatory when:**
-- Spec has `[NEEDS CLARIFICATION]` items requiring technical investigation
-- Non-functional requirements need validation (performance, security)
-- Multiple viable technology paths exist
+- `sdd-superpowers:sdd-brainstorm` has completed and `prd.md` exists
 
 **`sdd-superpowers:sdd-plan` is mandatory when:**
 - A spec exists and implementation hasn't started
