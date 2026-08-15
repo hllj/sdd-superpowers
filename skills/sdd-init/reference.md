@@ -506,21 +506,14 @@ Create `docs/specs/.gitkeep` (empty file so the directory is tracked by git).
 
 ### Step 5.4 Create or update .claude/CLAUDE.md
 
-**Detection order:**
-1. If `.claude/CLAUDE.md` does not exist → write from `skills/sdd-init/templates/claude-md.md`, substituting `[Project Name]` with the project name detected in Step 1.5
-2. If `.claude/CLAUDE.md` first line is `<!-- sdd-init: generated -->` → skip (already initialised by sdd-init)
-3. If `.claude/CLAUDE.md` exists without the sentinel → append the `## Project Foundation` block below after showing the user what will be appended and getting approval
+**Sub-step A — Codebase documentation.** Invoke the `init` skill. It explores the codebase and writes or refreshes `.claude/CLAUDE.md` with real project documentation — build/lint/test commands, code style, repo structure, and gotchas — the same content Claude Code's own init produces. Run this whether or not `.claude/CLAUDE.md` already exists; `init` updates existing files non-destructively.
 
-**`## Project Foundation` block to append (backward-compat path):**
+**Sub-step B — SDD add-on block.**
+1. Read `.claude/CLAUDE.md` after `init` completes.
+2. If the file already contains the sentinel `<!-- sdd-init: generated -->` anywhere → skip (SDD block already present).
+3. Otherwise → append the block from `skills/sdd-init/templates/claude-md.md` (it starts with that sentinel) after showing the user what will be appended and getting approval.
 
-```markdown
-## Project Foundation
-
-Before any feature work, read:
-- `.claude/memory/foundation.md` — Mission and principles. Loaded every session.
-- `.claude/memory/steering/` — Operational context. Loaded by skills when relevant.
-  Each file's `loaded-by` frontmatter shows which skills incorporate it silently.
-```
+This ordering means the top of the file is always real project documentation from `init`, with the SDD workflow/memory/gates block appended below it — never a placeholder.
 
 ### Step 5.5 Create docs/git-convention.md
 
@@ -598,7 +591,7 @@ After all scaffold files are created, report using "Created" for new files, "Upd
 > "Constitutional Foundation complete.
 > - `.claude/memory/foundation.md` — [Created/Updated] Foundation file: mission and principles loaded every session
 > - `docs/specs/` — [Created] ready for feature specifications
-> - `.claude/CLAUDE.md` — [Created/Updated/Skipped] SDD workflow instructions
+> - `.claude/CLAUDE.md` — [Created/Updated/Skipped] Project documentation (via `init`) plus SDD workflow instructions
 >
 > Returning to your original request now."
 
