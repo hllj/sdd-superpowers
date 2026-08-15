@@ -120,7 +120,7 @@ repeated across files — do not dispatch one subagent per task. Compose ONE
 dispatch brief listing every file and its change, send the whole batch to a
 single implementer subagent, and treat its diff as one unit for commit and
 TodoWrite purposes. Reserve one-dispatch-per-task for work that needs its
-own judgment, its own tests, or its own review surface.
+own judgment or its own tests.
 
 ## Model Selection
 

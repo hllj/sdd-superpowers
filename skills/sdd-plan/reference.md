@@ -73,7 +73,7 @@ Once the draft is complete and has passed Step 5 (Self-Review) and Step 6 (Verif
 
 After writing all documents, check the plan against the spec:
 
-**Structural compliance:** Does the generated `plan.md` contain all required sections from `template.md` in order (Goal → Phase 0 → implementation phases → Integration Verification → Quickstart Validation)? Every phase header carries `Implements`/`Satisfies`/`Files`. There are no standalone Architecture, Tech Stack, or File Structure sections — that content lives inside each phase's goal line and `Files:` entry instead. Fix any missing or reordered sections before continuing.
+**Structural compliance:** Does the generated `plan.md` contain all required sections from `template.md` in order (Global Constraints → Goal → Phase 0 → implementation phases → Integration Verification → Quickstart Validation)? Every phase header carries `Implements`/`Satisfies`/`Files`/`Interfaces`. There are no standalone Architecture, Tech Stack, or File Structure sections — that content lives inside each phase's goal line and `Files:` entry instead. Fix any missing or reordered sections before continuing.
 
 **Optional document compliance (conditional):** If `data-model.md` was created, does it contain all required sections from `data-model-template.md` in order (Entities heading → EntityName subheadings with field tables → Indexes, Relationships, Spec requirement per entity)? If `contracts/api.md` was created, does it contain all required sections from `contracts-api-template.md` in order (endpoint heading with Purpose/Spec requirement → Request → Response → Error Responses)?
 
@@ -94,6 +94,7 @@ Fix issues inline before presenting to user.
 Before claiming the plan is ready, confirm:
 - [ ] Every FR in spec has a corresponding plan phase
 - [ ] Every phase header lists the FR/story it implements
+- [ ] `plan.md` has a Global Constraints section, and every phase has an Interfaces line
 - [ ] Zero placeholders remain
 - [ ] Pre-implementation gates documented
 - [ ] All code in steps is complete, not pseudocode

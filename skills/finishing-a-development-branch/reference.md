@@ -119,17 +119,20 @@ Then: Cleanup worktree (Step 5)
 
 ## Step 5: Cleanup Worktree (if applicable)
 
-This step applies only if the branch was created inside a git worktree. In the standard SDD flow, branches are created directly in the main checkout — no worktree cleanup is needed; skip this step.
-
-**For Option 1 and confirmed discards (only if a worktree was used):**
+This step applies only if the branch was created inside a git worktree.
 
 ```bash
-git worktree list | grep $(git branch --show-current)
+GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd -P)
+GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
+WORKTREE_PATH=$(git rev-parse --show-toplevel)
 ```
 
-If yes:
+**If `GIT_DIR == GIT_COMMON`:** normal checkout, no worktree to clean up — done, skip the rest of this step.
+
+**If `GIT_DIR != GIT_COMMON`:** a worktree is in use. For Option 1 and confirmed discards only:
+
 ```bash
-git worktree remove <worktree-path>
+git worktree remove "$WORKTREE_PATH"
 ```
 
 **If removal is refused** (`contains modified or untracked files`): the

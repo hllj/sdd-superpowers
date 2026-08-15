@@ -72,11 +72,11 @@ Before defining tasks, map every file that will be created or modified and its s
 
 ## Phase Right-Sizing
 
-A phase is the smallest unit that carries its own test cycle and is worth a
-fresh reviewer's gate. When drawing phase boundaries: fold setup,
-configuration, scaffolding, and documentation steps into the phase whose
-deliverable needs them; split only where a reviewer could meaningfully
-reject one phase while approving its neighbor. Each phase ends with an
+A phase is the smallest unit that carries its own test cycle and produces an
+independently verifiable deliverable. When drawing phase boundaries: fold
+setup, configuration, scaffolding, and documentation steps into the phase
+whose deliverable needs them; split only where one phase's outcome could be
+judged correct while its neighbor's is not. Each phase ends with an
 independently testable deliverable.
 
 ## No Placeholders
