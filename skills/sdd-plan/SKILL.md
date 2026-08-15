@@ -39,7 +39,7 @@ If the spec covers multiple independent subsystems, suggest breaking it into sub
 
 - `spec.md` exists and the user has explicitly approved it
 - No `[NEEDS CLARIFICATION]` items remain in the spec
-- Optionally: `research.md` exists with tech investigation results
+- Optionally: one or more `docs/adr/<NNN>-*.md` files exist with technical decisions for this feature
 - NOT before a spec exists — run `sdd-superpowers:sdd-specify` first
 - NOT when spec has unresolved open questions — resolve them first
 
@@ -106,5 +106,5 @@ After saving `plan.md`, offer:
 
 - **`EnterPlanMode`/`ExitPlanMode` are unavailable in the current environment**: Fall back to presenting the `plan.md` draft as a normal message and asking for explicit approval before writing it to disk. Never write `plan.md` without approval, with or without Plan Mode.
 - **Spec has [NEEDS CLARIFICATION] items**: Resolve them in spec.md before planning begins.
-- **research.md is recommended but missing for a feature with unresolved tech choices**: Offer to run sdd-research first; note that planning without research may require plan revision.
+- **No ADR exists for a feature with unresolved tech choices**: Offer to invoke `sdd-superpowers:sdd-brainstorm` narrowly to produce the missing ADR first; note that planning without it may require plan revision.
 - **User requests gate bypass**: The gate is "no plan without an approved spec." Explain that a plan built on a Draft spec will need rework when the spec changes. Offer to resolve the open items first — it is faster than reworking the plan.
