@@ -13,11 +13,11 @@ effort: high
 <example>
 <context>All tasks in tasks.md are checked off but the test suite has two failing tests.</context>
 <correct>Halt. Fix the failing tests before presenting integration options — a branch with failing tests is not complete.</correct>
-<incorrect>Present the four integration options anyway and let the user decide — failing tests are a blocker, not a trade-off.</incorrect>
+<incorrect>Present the integration options anyway and let the user decide — failing tests are a blocker, not a trade-off.</incorrect>
 </example>
 </examples>
 
-Verify tests, prepare a merge commit message, and present four integration options: merge locally, create PR, keep, or discard.
+Verify tests, prepare a merge commit message, and present integration options: merge locally, create PR, or keep. Discard happens only on explicit request.
 
 **Core principle:** Verify tests → Prepare message → Present options → Execute choice → Clean up.
 
@@ -27,7 +27,7 @@ Verify tests, prepare a merge commit message, and present four integration optio
 
 - After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED and all tasks are complete
 - All tests passing on the feature branch
-- Choosing between merge / PR / keep / discard
+- Choosing between merge / PR / keep
 - **NOT** before tests pass — fix failures first
 - **NOT** before `sdd-superpowers:sdd-review` in the SDD workflow
 
@@ -38,7 +38,7 @@ Verify tests, prepare a merge commit message, and present four integration optio
 | 1 | Verify tests pass (`npm test` / `pytest` / etc.) |
 | 2 | Determine base branch |
 | 2.5 | Invoke `sdd-superpowers:using-git` — Merge Commit Message |
-| 3 | Present exactly 4 options |
+| 3 | Present exactly 3 options |
 | 4 | Execute chosen option |
 | 5 | Cleanup worktree (only if one was used) |
 | 6 | Invoke `sdd-superpowers:session-wrap` quick mode |

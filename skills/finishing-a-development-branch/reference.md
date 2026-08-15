@@ -121,7 +121,7 @@ Then: Cleanup worktree (Step 5)
 
 This step applies only if the branch was created inside a git worktree. In the standard SDD flow, branches are created directly in the main checkout — no worktree cleanup is needed; skip this step.
 
-**For Options 1, 2, 4 (only if a worktree was used):**
+**For Option 1 and confirmed discards (only if a worktree was used):**
 
 ```bash
 git worktree list | grep $(git branch --show-current)
