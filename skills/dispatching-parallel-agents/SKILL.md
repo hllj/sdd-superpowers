@@ -71,9 +71,9 @@ NOT safe to parallelize:
 - Tasks where one depends on another's output
 - Exploratory debugging (root cause unknown)
 
-After agents return: review each summary → check for conflicts → spec compliance review per unit (spec-reviewer-prompt.md) → code quality review per unit (requesting-code-review) → run full suite → mark units complete in TodoWrite.
+After agents return: review each summary → check for conflicts → commit each unit directly once its own tests pass → run full suite → mark units complete in TodoWrite.
 
-**Model selection:** Omit the `model` param on each parallel dispatch — these agents do the actual implementation work, so they inherit the calling session's model rather than a cheaper one. (The spec-compliance and code-quality reviewers dispatched afterward may use a cheaper model — see `sdd-superpowers:subagent-driven-development`.)
+**Model selection:** Omit the `model` param on each parallel dispatch — these agents do the actual implementation work, so they inherit the calling session's model rather than a cheaper one.
 
 **REQUIRED READING before proceeding:** [reference.md](reference.md) — the full dispatch pattern, agent prompt template, worked example, and post-dispatch review procedure.
 
@@ -87,9 +87,7 @@ After agents return: review each summary → check for conflicts → spec compli
 - `sdd-superpowers:using-git` — commit with proper convention
 
 **After all parallel agents return:**
-- Run spec compliance review per task — dispatch using `spec-reviewer-prompt.md` from `sdd-superpowers:subagent-driven-development`
-- Run code quality review per task — dispatch using `sdd-superpowers:requesting-code-review` (only after spec compliance passes)
-- Fix issues with `sdd-superpowers:receiving-code-review` if reviews fail
+- Commit each unit directly once its own tests pass (TDD already gated correctness)
 - Mark tasks complete in TodoWrite
 - Continue to next phase with `sdd-superpowers:sdd-execute`
 
