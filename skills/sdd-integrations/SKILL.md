@@ -28,9 +28,9 @@ Registers a user's custom skill against an SDD lifecycle skill name in `.claude/
 | Step | Action |
 |------|--------|
 | 1 | Scan `~/.claude/skills/` and the project's `.claude/skills/` for candidate skills |
-| 2 | Exclude candidates already registered in `.claude/integrations.md`, and skills bundled with sdd-superpowers itself (`skills/` in this plugin) |
+| 2 | Exclude candidates already registered in `.claude/integrations.md`, and candidates bundled with sdd-superpowers itself — a candidate is bundled if its `SKILL.md` resolves to a path under this same plugin's `skills/` directory (the parent of the directory containing this file, `sdd-integrations/SKILL.md`); compare resolved paths, not names |
 | 3 | For each remaining candidate, read its `SKILL.md` frontmatter `description` |
-| 4 | Recommend a trigger point from signals in the description (ticket/issue words → `sdd-specify` or `sdd-review`; doc/wiki words → `sdd-review` or `finishing-a-development-branch`); ask the user to confirm or choose a different SDD skill name |
+| 4 | Recommend exactly one trigger point per candidate, from signals in the description: ticket/issue words → `sdd-specify` (default) over `sdd-review`; doc/wiki words → `sdd-review` (default) over `finishing-a-development-branch`. When a description matches multiple categories, default to the earliest SDD lifecycle stage among the matches (earlier catches problems sooner). Ask the user to confirm the single recommendation or choose a different SDD skill name |
 | 5 | Append the confirmed row to `.claude/integrations.md` (create the file, matching the `sdd-init` scaffold, if it doesn't exist yet) |
 | 6 | Report what was registered |
 
@@ -38,12 +38,15 @@ Registers a user's custom skill against an SDD lifecycle skill name in `.claude/
 
 `.claude/integrations.md` is a GFM table with exactly three columns, in this order: `Trigger Skill` \| `Custom Skill` \| `Purpose`. This skill only appends rows — it never edits or removes an existing one. Users may hand-edit or delete rows directly since it's plain markdown.
 
+**No literal `|` in any column value.** The detection hook's parser splits on every `|` byte and does not support GFM's `\|` escape — a literal pipe in `Purpose` (or either other column) silently truncates the value instead of erroring. When writing a `Purpose`, keep it a short plain-text description with no `|` character.
+
 ## Constraints
 
 - Does NOT register a candidate skill without the user's explicit confirmation of the trigger point
 - Does NOT modify or remove any existing row in `.claude/integrations.md`
 - Does NOT validate that the chosen trigger-skill name matches a real SDD skill — a typo is accepted as-is and simply never matches at detection time
 - Does NOT run automatically — only invoked on direct user request
+- Does NOT write a `|` character into any manifest column value — the detection hook's parser does not support GFM's `\|` escape
 
 ## Error Handling
 

@@ -80,6 +80,22 @@ OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT") || EXIT_
 assert_exit_zero "$EXIT_CODE" "Reliability: malformed row does not crash the hook"
 assert_contains "$OUTPUT" "deploy-notify" "Reliability: well-formed row still matches despite malformed sibling"
 
+# Documented limitation: a literal "|" in Purpose (unescaped GFM pipe) truncates
+# the value at that pipe instead of crashing — this is a known, documented boundary
+# (see sdd-integrations/SKILL.md Constraints), not a regression risk to silently worsen.
+cat > "$TMP/.claude/integrations.md" <<'EOF'
+# Custom Integrations
+
+| Trigger Skill | Custom Skill | Purpose |
+|---|---|---|
+| sdd-review | pipe-purpose | Notify #eng | urgent flag set |
+EOF
+INPUT=$(make_input "$TMP" "sdd-review")
+EXIT_CODE=0
+OUTPUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" bash "$SCRIPT" <<< "$INPUT") || EXIT_CODE=$?
+assert_exit_zero "$EXIT_CODE" "Documented limitation: literal pipe in Purpose does not crash the hook"
+assert_contains "$OUTPUT" "pipe-purpose" "Documented limitation: custom skill name still matched despite pipe in Purpose"
+
 # Negative path: silent outside an SDD project (no docs/specs/)
 TMP_NON_SDD=$(mktemp -d)
 mkdir -p "$TMP_NON_SDD/.claude"
