@@ -7,6 +7,16 @@ description: Use when ending a session to capture memory candidates and narrativ
 
 **Announce at start:** "Starting session-wrap to capture session memory and lessons."
 
+## Overview
+
+<examples>
+<example>
+<context>The user says "let's wrap up" at the end of a session with several approach corrections and a couple of external references mentioned along the way.</context>
+<correct>Invoke session-wrap, scan for feedback/project/user/reference memory candidates and lesson candidates, present a labeled digest, and write only the candidates the user approves.</correct>
+<incorrect>Silently write observations to memory without presenting them for approval, or let the session close without checking whether anything is worth capturing.</incorrect>
+</example>
+</examples>
+
 Scan the conversation for knowledge worth preserving. Present candidates for approval. Write only what the user approves — skipped candidates produce no files.
 
 ## Quick Mode (auto-digest)
@@ -76,3 +86,9 @@ Report "N memories written, M lessons written." If files were written, suggest: 
 - Does NOT write any file the user has not explicitly approved
 - Does NOT re-propose skipped candidates
 - Quick Mode does NOT auto-write files — the user must explicitly choose "Save all" or "Select"
+
+## Error Handling
+
+- **Memory slug collision**: Warn before overwriting; ask whether to overwrite, rename, or skip.
+- **No candidates found in either phase**: Report "Nothing worth saving found this session" and close without prompting.
+- **User requests gate bypass**: The gate is "no memory or lesson write without explicit user approval." Explain that skipping approval risks writing candidates the user never reviewed. Offer Quick Mode's "Save all" as a faster path that still keeps them in control.
