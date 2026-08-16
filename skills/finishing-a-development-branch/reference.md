@@ -44,7 +44,7 @@ Store the confirmed message returned by `sdd-superpowers:using-git` as `<merge-c
 
 ## Step 3: Present Options
 
-Present exactly these 4 options:
+Present exactly these 3 options:
 
 ```
 Implementation complete. What would you like to do?
@@ -52,12 +52,14 @@ Implementation complete. What would you like to do?
 1. Merge back to <base-branch> locally
 2. Push and create a Pull Request
 3. Keep the branch as-is (I'll handle it later)
-4. Discard this work
 
 Which option?
 ```
 
-**Don't add explanation** - keep options concise.
+**Don't add explanation** - keep options concise. Discarding the work
+happens only in response to your human partner explicitly asking for it
+(see "If your human partner asks to discard the work" below) — never offer
+it as a fourth option.
 
 ## Step 4: Execute Choice
 
@@ -77,17 +79,14 @@ Then: Cleanup worktree (Step 5)
 
 ```bash
 git push -u origin <feature-branch>
-gh pr create --title "<merge-commit-message>" --body "$(cat <<'EOF'
-## Summary
-<2-3 bullets of what changed>
-
-## Test Plan
-- [ ] <verification steps>
-EOF
-)"
 ```
 
-Then: Cleanup worktree (Step 5)
+Create the pull/merge request against `<base-branch>` with the forge's
+tooling — its CLI if one is available (e.g. `gh pr create`), or the creation
+URL most forges print when you push — following the repo's PR template and
+conventions if present, and report the URL to your human partner.
+
+Keep the worktree — your human partner iterates on PR feedback there.
 
 ### Option 3: Keep As-Is
 
@@ -95,9 +94,11 @@ Report: "Keeping branch <name>. Worktree preserved at <path>."
 
 **Don't cleanup worktree.**
 
-### Option 4: Discard
+### If your human partner asks to discard the work
 
-**Confirm first:**
+This path exists only as a response to an explicit request to throw the
+work away. Confirm first:
+
 ```
 This will permanently delete:
 - Branch <name>
@@ -107,7 +108,8 @@ This will permanently delete:
 Type 'discard' to confirm.
 ```
 
-Wait for exact confirmation. If confirmed:
+Wait for that exact confirmation. If confirmed:
+
 ```bash
 git checkout <base-branch>
 git branch -D <feature-branch>
@@ -117,18 +119,44 @@ Then: Cleanup worktree (Step 5)
 
 ## Step 5: Cleanup Worktree (if applicable)
 
-This step applies only if the branch was created inside a git worktree. In the standard SDD flow, branches are created directly in the main checkout — no worktree cleanup is needed; skip this step.
-
-**For Options 1, 2, 4 (only if a worktree was used):**
+This step applies only if the branch was created inside a git worktree.
 
 ```bash
-git worktree list | grep $(git branch --show-current)
+GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd -P)
+GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
+WORKTREE_PATH=$(git rev-parse --show-toplevel)
 ```
 
-If yes:
+**If `GIT_DIR == GIT_COMMON`:** normal checkout, no worktree to clean up — done, skip the rest of this step.
+
+**If `GIT_DIR != GIT_COMMON`:** a worktree is in use. For Option 1 and confirmed discards only:
+
 ```bash
-git worktree remove <worktree-path>
+git worktree remove "$WORKTREE_PATH"
 ```
+
+**If removal is refused** (`contains modified or untracked files`): the
+worktree holds files that exist nowhere else — uncommitted plans, notes, or
+scratch work. Never `--force` on your own initiative. Show your human
+partner what is at stake and ask:
+
+```bash
+git -C "<worktree-path>" status --porcelain -uall
+```
+
+```
+Worktree removal refused — these files were never committed:
+
+<file list>
+
+1. Commit them to <branch> before cleanup
+2. Move them into the main repo root
+3. Delete them (unrecoverable)
+
+Which?
+```
+
+Carry out the choice, then remove the worktree.
 
 **For Option 3:** Keep worktree.
 

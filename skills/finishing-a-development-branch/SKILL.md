@@ -13,11 +13,11 @@ effort: high
 <example>
 <context>All tasks in tasks.md are checked off but the test suite has two failing tests.</context>
 <correct>Halt. Fix the failing tests before presenting integration options — a branch with failing tests is not complete.</correct>
-<incorrect>Present the four integration options anyway and let the user decide — failing tests are a blocker, not a trade-off.</incorrect>
+<incorrect>Present the integration options anyway and let the user decide — failing tests are a blocker, not a trade-off.</incorrect>
 </example>
 </examples>
 
-Verify tests, prepare a merge commit message, and present four integration options: merge locally, create PR, keep, or discard.
+Verify tests, prepare a merge commit message, and present integration options: merge locally, create PR, or keep. Discard happens only on explicit request.
 
 **Core principle:** Verify tests → Prepare message → Present options → Execute choice → Clean up.
 
@@ -27,7 +27,7 @@ Verify tests, prepare a merge commit message, and present four integration optio
 
 - After `sdd-superpowers:sdd-review` reports SPEC-ALIGNED and all tasks are complete
 - All tests passing on the feature branch
-- Choosing between merge / PR / keep / discard
+- Choosing between merge / PR / keep
 - **NOT** before tests pass — fix failures first
 - **NOT** before `sdd-superpowers:sdd-review` in the SDD workflow
 
@@ -38,12 +38,12 @@ Verify tests, prepare a merge commit message, and present four integration optio
 | 1 | Verify tests pass (`npm test` / `pytest` / etc.) |
 | 2 | Determine base branch |
 | 2.5 | Invoke `sdd-superpowers:using-git` — Merge Commit Message |
-| 3 | Present exactly 4 options |
+| 3 | Present exactly 3 options |
 | 4 | Execute chosen option |
 | 5 | Cleanup worktree (only if one was used) |
 | 6 | Invoke `sdd-superpowers:session-wrap` quick mode |
 
-**The 4 options (present verbatim):**
+**The options (present verbatim):**
 
 ```
 Implementation complete. What would you like to do?
@@ -51,24 +51,25 @@ Implementation complete. What would you like to do?
 1. Merge back to <base-branch> locally
 2. Push and create a Pull Request
 3. Keep the branch as-is (I'll handle it later)
-4. Discard this work
 
 Which option?
 ```
 
 **After the chosen option and any cleanup complete, invoke `sdd-superpowers:session-wrap` quick mode to capture session learnings before closing.**
 
-**Option 4 requires typed "discard" confirmation.** Never auto-delete.
+**Discarding the work happens only in response to an explicit request** to throw it away — it is never a standing menu item. See [reference.md](reference.md) for the discard flow and its typed-confirmation requirement.
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---------|-----|
 | Proceeding with failing tests | Always verify tests before offering options |
-| Open-ended question instead of 4 options | Present exactly the 4 options above, verbatim |
-| Cleaning up worktree for Option 2 or 3 | Only clean up for Options 1 and 4 (and only if a worktree was used) |
-| Deleting work without confirmation | Require typed "discard" for Option 4 |
+| Open-ended question instead of the 3 options | Present exactly the 3 options above, verbatim |
+| Cleaning up worktree for Option 2 or 3 | Only clean up for Option 1 (and confirmed discards), and only if a worktree was used |
+| Offering to discard because the feature "seems done" | The menu is complete as written; discard happens only when your human partner asks for it in so many words |
+| Deleting work without confirmation | Require typed "discard" for the discard flow |
 | Force-pushing without explicit request | Never force push unless user explicitly asked |
+| `git worktree remove --force` on refusal | The refusal means untracked files exist only there — show your human partner and ask, never force |
 
 **REQUIRED READING before proceeding:** [reference.md](reference.md) — per-option commands and worktree cleanup detail.
 

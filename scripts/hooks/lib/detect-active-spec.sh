@@ -38,7 +38,7 @@ detect_active_spec() {
   # Fallback: most recently modified spec directory (by directory mtime)
   local recent="" latest_time=0 mtime d
   while IFS= read -r -d '' d; do
-    mtime=$(stat -f %m "$d" 2>/dev/null || echo 0)
+    mtime=$(stat -c %Y "$d" 2>/dev/null || stat -f %m "$d" 2>/dev/null || echo 0)
     if [[ "$mtime" -gt "$latest_time" ]]; then
       latest_time="$mtime"
       recent="${d%/}"

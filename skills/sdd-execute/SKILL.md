@@ -70,13 +70,24 @@ Implementer status handling:
 
 ## When to Stop and Ask
 
-**STOP executing immediately when:**
-- A dependency is missing or broken
-- A test fails repeatedly with no clear fix path
-- An instruction in the plan is unclear or contradictory
-- A plan gap prevents you from starting a task
+Four things stop execution — nothing else:
 
-Ask for clarification rather than guessing. Don't force through blockers.
+- An irreversible or destructive operation
+- A security-sensitive action
+- A side effect outside the current worktree that norms say you ask about
+  first (a merge, a push to a shared branch, a publish)
+- A plan so broken that every path forward is a guess
+
+Everything else — an unclear instruction, a plan gap, a conflict between two
+work units, a cap you'd otherwise ask to exceed — gets a ruling, not a stop.
+Decide it yourself: the spec is the binding authority, the plan is its
+argument, and your judgment settles what neither answers. Record every
+ruling in TodoWrite (or the commit message for the unit it affects) as
+`Ruling: <what you decided> — <why> — <what it costs if wrong>`, and keep
+executing. A wrong ruling costs rework your human partner can see and undo;
+a session parked on a question costs their whole day and buys nothing.
+
+For the four things above: stop and ask.
 
 ## Mid-Flight Spec Changes
 
@@ -94,7 +105,7 @@ Never update work units or plan directly without running `sdd-superpowers:sdd-sp
 - Follow plan steps exactly — don't improvise or optimize away steps
 - Don't skip verifications
 - Reference sub-skills when the plan says to
-- Stop when blocked — never guess past a blocker
+- Rule on ambiguity and keep going — reserve stopping for the four things in "When to Stop and Ask"
 - Never start implementation on main/master without explicit user consent
 
 ## Integration
@@ -117,7 +128,7 @@ Required sub-skills during execution:
 ## Constraints
 
 - Does NOT start implementation on main/master — branch must be verified before any subagent is dispatched
-- Does NOT skip work units — if a unit seems unnecessary, surface the question before bypassing it
+- Does NOT skip work units — if a unit seems unnecessary, rule on it (record why in TodoWrite) rather than bypassing it silently
 - Does NOT begin a new task until the prior task's verification step has passed
 
 ## Error Handling
@@ -125,5 +136,5 @@ Required sub-skills during execution:
 - **plan.md does not exist**: Surface error: "No plan.md found at docs/specs/NNN-feature/plan.md. Run sdd-plan first." Halt.
 - **plan.md has no sections**: Surface error: "plan.md has no sections to derive work units from. Ensure plan.md follows the standard plan template." Halt.
 - **Current branch is main/master**: Stop. Ask the user to confirm the correct feature branch before any implementation begins.
-- **A task is blocked by an unresolved dependency**: Surface the blocker explicitly to the user; do not skip the task or reorder silently.
+- **A task is blocked by an unresolved dependency**: Rule on how to proceed (record the ruling in TodoWrite) rather than skipping the task or reordering silently — surface to the user only if the blocker is one of the four things in "When to Stop and Ask."
 - **User requests gate bypass**: The gate is "no implementation on main/master." Explain the risk of implementing directly on main. Offer to create the feature branch first.

@@ -6,8 +6,8 @@ TOTAL_PASS=0; TOTAL_FAIL=0
 shopt -s nullglob
 for test_file in "$SCRIPT_DIR"/test_*.sh; do
   echo "=== $(basename "$test_file") ==="
-  bash "$test_file"
-  EXIT=$?
+  EXIT=0
+  bash "$test_file" || EXIT=$?
   [[ $EXIT -eq 0 ]] && TOTAL_PASS=$((TOTAL_PASS + 1)) || TOTAL_FAIL=$((TOTAL_FAIL + 1))
   echo ""
 done

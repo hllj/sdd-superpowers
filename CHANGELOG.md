@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-08-15
+
+### Added
+
+- **Backported `obra/superpowers` v6.0.0-v6.3.0 improvements** — `sdd-execute` now rules on non-catastrophic plan ambiguity instead of stopping (four named stop conditions only: irreversible/destructive ops, security-sensitive actions, side effects outside the worktree, or a plan too broken to guess at); `subagent-driven-development` gained a pre-dispatch conflict scan, task-batching guidance for same-shape work, and a ban on implementer subagents spawning their own subagents; `sdd-plan` gained a Global Constraints block and per-phase Interfaces block in its plan template, plus phase right-sizing guidance; `sdd-brainstorm`'s visual companion was security-hardened (per-session auth key, cookie re-auth, sandboxed file serving, restart persistence, 4-hour idle timeout) via a file-for-file port of upstream's server — a third-party telemetry image call that rode along with the port was identified during review and stripped out; `test-driven-development`'s `testing-anti-patterns.md` was replaced by `writing-good-tests.md` (falsifiability discipline, mutation check, string-presence and change-detector traps); `writing-skills` gained "Match the Form to the Failure" and "Micro-Test Wording" guidance.
+
+### Changed
+
+- **`finishing-a-development-branch`'s menu** — "Discard this work" is no longer a standing 4th option; it's now available only in response to an explicit request. PR creation is forge-agnostic (uses whatever CLI is available, or the URL the push prints) instead of hardcoding `gh pr create`. Worktree removal that's refused for holding untracked files now stops and asks instead of ever force-removing.
+
+### Fixed
+
+- **`systematic-debugging`** — an unhyphenated "Ultrathink this" string was the exact keyword Claude Code scans for to force extended thinking, so every session loading the skill silently triggered it. Hyphenated to "Ultra-think this."
+
+---
+
 ## [3.0.0] - 2026-08-15
 
 ### Changed
