@@ -34,6 +34,7 @@ Files created by sdd-init:
 | `.claude/memory/steering/test-strategy.md` | Test philosophy — loaded by sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |
+| `.claude/integrations.md` | Empty custom-skill-integration manifest — populated later by `sdd-superpowers:sdd-integrations` |
 | `docs/specs/.gitkeep` | Spec directory scaffold |
 | `CLAUDE.md` (repo root) | Real project docs from the `init` skill (build/test/lint commands, code style, structure) |
 | `.claude/CLAUDE.md` | SDD workflow/memory/gates configuration block |
