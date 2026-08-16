@@ -92,6 +92,7 @@ When the invoked skill has a checklist, create a **TodoWrite task per checklist 
 | Executing tasks in current session with subagents | `sdd-superpowers:subagent-driven-development` |
 | Before writing any implementation code — subagent or direct | `sdd-superpowers:test-driven-development` |
 | Ending a session | `sdd-superpowers:session-wrap` |
+| User wants to connect/register a custom skill to the workflow | `sdd-superpowers:sdd-integrations` |
 
 ```
 NO PLAN without an approved spec
@@ -119,6 +120,10 @@ The skill itself tells you which type it is.
 - Responding to "review this" without invoking `sdd-superpowers:requesting-code-review` — the skill dispatches a structured reviewer, not an ad-hoc read
 - Implementing review feedback without invoking `sdd-superpowers:receiving-code-review` — the skill enforces verify-before-implement
 - Proposing a fix without first invoking `sdd-superpowers:systematic-debugging` — symptom fix without root cause = regression risk
+
+## Custom Skill Integrations
+
+If a completed skill's tool result carries `additionalContext` naming a registered custom skill integration (from `.claude/integrations.md`, surfaced via the `post-skill-integration-check.sh` hook), announce it and ask the user to confirm before invoking that skill — one skill, one confirmation, one invocation at a time, even when multiple integrations matched the same trigger. Declining a confirmation never blocks the SDD workflow; continue normally. If the named skill fails to invoke (e.g. no longer installed), report the failure to the user and continue — this is never a gate.
 
 Full routing rules and red flags: See [routing.md](routing.md)
 
