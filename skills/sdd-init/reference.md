@@ -487,6 +487,16 @@ loaded-by: sdd-plan, sdd-review, using-git
 [e.g., tag on main, semantic versioning — edit to match reality]
 
 
+**`.claude/integrations.md`**
+
+Write this file verbatim — it starts empty; `sdd-superpowers:sdd-integrations` populates it later, never `sdd-init` itself.
+
+# Custom Integrations
+
+| Trigger Skill | Custom Skill | Purpose |
+|---|---|---|
+
+
 After writing all four files, show a one-line summary per file:
 > "Steering files created in `.claude/memory/steering/`:
 > - `tech-stack.md` — pre-filled with detected stack

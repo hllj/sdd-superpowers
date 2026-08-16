@@ -3,6 +3,7 @@ set -euo pipefail
 
 SKILLS_DIR="skills"
 ERRORS=0
+SKILL_COUNT=0
 
 PHASE1_SKILLS=(
   "test-driven-development"
@@ -20,6 +21,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
 
   skill_file="$skill_dir/SKILL.md"
   if [ ! -f "$skill_file" ]; then continue; fi
+  SKILL_COUNT=$((SKILL_COUNT + 1))
 
   lines=$(wc -l < "$skill_file")
   if [ "$lines" -gt 500 ]; then
@@ -75,5 +77,5 @@ if [ "$ERRORS" -gt 0 ]; then
   echo "TOTAL: $ERRORS failure(s)"
   exit 1
 else
-  echo "All 19 skills pass structural validation."
+  echo "All $SKILL_COUNT skills pass structural validation."
 fi
