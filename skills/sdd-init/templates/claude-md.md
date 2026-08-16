@@ -1,4 +1,6 @@
 <!-- sdd-init: generated -->
+# SDD Configuration
+
 ## Working in This Project
 
 For small tasks (typo fixes, config tweaks, answering questions, quick edits) —

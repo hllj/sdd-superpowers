@@ -15,7 +15,7 @@ description: Use when starting a new project that has no CLAUDE.md and no docs/s
 </example>
 </examples>
 
-Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `.claude/memory/foundation.md`, auto-generates steering files in `.claude/memory/steering/`, and scaffolds `docs/specs/`, `CLAUDE.md`, and `docs/git-convention.md`. No feature work begins before the foundation file is approved.
+Establishes the project foundation for a new SDD project: guides the user through a 4-question Mission Charter ceremony, then writes `.claude/memory/foundation.md`, auto-generates steering files in `.claude/memory/steering/`, and scaffolds `docs/specs/`, a root `CLAUDE.md`, a `.claude/CLAUDE.md`, and `docs/git-convention.md`. Finishes with a `claude doctor` health check. No feature work begins before the foundation file is approved.
 
 ## When to Use
 
@@ -35,7 +35,8 @@ Files created by sdd-init:
 | `.claude/memory/steering/conventions.md` | Code conventions — loaded by sdd-specify, sdd-plan, sdd-execute, sdd-review |
 | `.claude/memory/steering/team-practices.md` | Team practices — loaded by sdd-plan, sdd-review, using-git |
 | `docs/specs/.gitkeep` | Spec directory scaffold |
-| `CLAUDE.md` | Real project docs from the `init` skill (build/test/lint commands, code style, structure) plus an appended SDD workflow/memory/gates block |
+| `CLAUDE.md` (repo root) | Real project docs from the `init` skill (build/test/lint commands, code style, structure) |
+| `.claude/CLAUDE.md` | SDD workflow/memory/gates configuration block |
 | `docs/git-convention.md` | Branch naming + commit format rules |
 | `.claude/rules/*.md` | Per-topic rule files — best practices, anti-patterns, conventions inferred from stack |
 | `.claude/settings.json` | Allowed/blocked tools, ignore patterns, and automation hooks inferred from stack |
@@ -49,8 +50,8 @@ Flags: `--fast` skips Q3 (failure modes) — use for returning users or time-con
 3. Draft foundation from answers → user approval gate → write `.claude/memory/foundation.md`
 4. Rules generation: detect stack → check for source files → up to 5 parallel subagents (3 web-research + 2 codebase exploration when source files exist) → merge findings (codebase patterns take precedence on conflict) → user review (approve/tweak/skip) → write `.claude/rules/*.md` and `settings.json`
 5. Auto-generate 4 steering files from detected context + research results → write `.claude/memory/steering/*.md`
-6. Create scaffold files (CLAUDE.md, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
-7. Initial commit → hand off to `sdd-superpowers:sdd-workflow`
+6. Create scaffold files (root CLAUDE.md via `init`, `.claude/CLAUDE.md`, docs/specs/.gitkeep, docs/git-convention.md) in one uninterrupted sequence
+7. Initial commit → run `claude doctor` health check → hand off to `sdd-superpowers:sdd-workflow`
 
 <HARD-GATE>
 Do NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written.
@@ -61,7 +62,7 @@ Do NOT create any feature specs, plans, or code until the foundation file is app
 ## Constraints
 
 - Does NOT create any feature specs, plans, or code until the foundation file is approved and the scaffold is written
-- Does NOT overwrite an existing CLAUDE.md or .claude/memory/foundation.md without explicit user confirmation
+- Does NOT overwrite an existing root CLAUDE.md, .claude/CLAUDE.md, or .claude/memory/foundation.md without explicit user confirmation
 
 ## Error Handling
 
